@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Migong0311 | Portfolio</title> <!-- Bootstrap 5 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css" /> <!-- Favicon (선택) -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+    <meta name="description" content="백엔드 개발 · 시스템 아키텍처 · 서비스 자동화 포트폴리오" />
+</head>
+
+<body> <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top shadow-sm">
+        <div class="container"> <a class="navbar-brand fw-semibold" href="/">Migong0311</a> <button
+                class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"> <span
+                    class="navbar-toggler-icon"></span> </button>
+            <div id="navMenu" class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#exp">Experience</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects">Pinned</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#skills">Tech</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#stats">Stats</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul> <button id="themeToggle" class="btn btn-outline-secondary ms-lg-3" title="Toggle dark mode"> 🌙
+                </button>
+            </div>
+        </div>
+    </nav> <!-- HERO -->
+    <header class="py-5 hero-grad">
+        <div class="container">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-7">
+                    <div class="typing-wrap mb-2"> <a href="https://git.io/typing-svg"><img
+                                src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=30&pause=1000&color=663BF7&width=435&lines=Welcome+to+my+Portfolio%F0%9F%98%83+"
+                                alt="Typing SVG" /></a> </div>
+                    <h1 class="display-5 fw-bold mb-3">Backend Developer · System Architecture · Automation</h1>
+                    <p class="lead text-secondary"> 일본어 전공에서 백엔드 개발자로 전향하여, 알고리즘과 아키텍처 설계로 문제를 해결합니다. </p>
+                    <div class="d-flex gap-2 mt-3"> <a href="#projects" class="btn btn-primary btn-lg">Pinned
+                            Projects</a> <a href="#contact" class="btn btn-outline-primary btn-lg">Contact</a> </div>
+                </div>
+                <div class="col-lg-5">
+                    <img src="/assets/img/profile.jpg" alt="프로필 사진"
+                        class="profile-photo rounded-circle mb-3 shadow-sm border" width="160" height="160"
+                        loading="lazy">
+                    <div class="p-4 bg-white rounded-4 shadow-sm border hero-card">
+                        <h6 class="text-uppercase text-muted mb-2">현재 포커스</h6>
+                        <ul class="small m-0 lh-lg">
+                            <li>Python 기반 알고리즘 문제 해결</li>
+                            <li>Spring Boot MSA 아키텍처 · RESTful API 설계</li>
+                            <li>서비스 자동화 · 보안(인증/인가) 강화</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header> <!-- ABOUT -->
+    <section id="about" class="py-5">
+        <div class="container">
+            <h2 class="h1 mb-4">👨🏻‍💻 About Me</h2>
+            <div class="row g-4">
+                <div class="col-lg-7">
+                    <ul class="list-unstyled fs-5">
+                        <li>🔍 <b>관심 분야</b>: 백엔드 개발 · 시스템 아키텍처 설계 · 서비스 자동화</li>
+                        <li>🧠 <b>학습 중</b>: Python 알고리즘 · Spring Boot MSA · RESTful API</li>
+                        <li>🤝 <b>협업 희망</b>: Python/Java 백엔드 · 알고리즘 · 보안 프로젝트</li>
+                        <li>💡 <b>특이사항</b>: 일본어 전공 → 백엔드 전향 · 배우는 과정이 즐거움</li>
+                    </ul>
+                </div>
+                <div class="col-lg-5">
+                    <div class="p-4 bg-white rounded-4 shadow-sm border">
+                        <h6 class="text-uppercase text-muted">연락처</h6> <a class="link-primary d-block"
+                            href="mailto:kimms000311@gmail.com">kimms000311@gmail.com</a> <a
+                            class="link-secondary d-block" href="https://github.com/Migong0311" target="_blank"
+                            rel="noreferrer"> github.com/Migong0311 </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> <!-- EXPERIENCE -->
+    <section id="exp" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="h1 mb-4">📚 Experience &amp; Education</h2>
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead>
+                        <tr>
+                            <th style="width:180px;">기간</th>
+                            <th>활동</th>
+                            <th>주요 내용</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>2019.03 ~ 2025.02</b></td>
+                            <td>신라대학교 일본어학과 졸업</td>
+                            <td>커뮤니케이션 능력 · 문해력·표현력 기반 문제 해결</td>
+                        </tr>
+                        <tr>
+                            <td><b>2024.09 ~ 2025.06</b></td>
+                            <td>NHN Academy AIoT 2기</td>
+                            <td>Spring/JPA/MSA 학습 · IoT 시스템 설계 · 쇼핑몰/블로그 프로젝트</td>
+                        </tr>
+                        <tr>
+                            <td><b>2025.07 ~ 진행 중</b></td>
+                            <td>SSAFY 14기</td>
+                            <td>Python 알고리즘 · AI/웹 개발 · AI 특화 프로젝트 수행</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section> <!-- PINNED REPOS -->
+    <section id="projects" class="py-5">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-end mb-4">
+                <h2 class="h1 m-0">📌 Pinned Repositories</h2> <a class="link-primary" target="_blank" rel="noreferrer"
+                    href="https://github.com/Migong0311">GitHub 전체 보기 →</a>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <article class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h3 class="h5">TIL</h3>
+                            <p class="text-secondary">Today I Learned 저장소. 학습 기록과 정리.</p> <img class="img-fluid rounded"
+                                alt="TIL"
+                                src="https://github-readme-stats.vercel.app/api/pin/?username=Migong0311&repo=TIL&theme=tokyonight" />
+                            <a class="stretched-link" href="https://github.com/Migong0311/TIL" target="_blank"
+                                rel="noreferrer"></a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <article class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h3 class="h5">ssafy-algorithm</h3>
+                            <p class="text-secondary">SSAFY 알고리즘 풀이 모음.</p> <img class="img-fluid rounded"
+                                alt="ssafy-algorithm"
+                                src="https://github-readme-stats.vercel.app/api/pin/?username=Migong0311&repo=ssafy-algorithm&theme=tokyonight" />
+                            <a class="stretched-link" href="https://github.com/Migong0311/ssafy-algorithm"
+                                target="_blank" rel="noreferrer"></a>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <article class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h3 class="h5">python_baekjoon</h3>
+                            <p class="text-secondary">백준 파이썬 풀이 모음.</p> <img class="img-fluid rounded"
+                                alt="python_baekjoon"
+                                src="https://github-readme-stats.vercel.app/api/pin/?username=Migong0311&repo=python_baekjoon&theme=tokyonight" />
+                            <a class="stretched-link" href="https://github.com/Migong0311/python_baekjoon"
+                                target="_blank" rel="noreferrer"></a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section> <!-- TECH STACK -->
+    <section id="skills" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="h1 mb-4">🛠 Tech Stack</h2>
+            <h5 class="mb-2">📦 Backend</h5>
+            <div class="badges mb-4"> <img alt="Spring Boot"
+                    src="https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white" />
+                <img alt="JWT"
+                    src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" />
+                <img alt="Django"
+                    src="https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white" />
+            </div>
+            <h5 class="mb-2">🗄 Database</h5>
+            <div class="badges mb-4"> <img alt="MySQL"
+                    src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" />
+                <img alt="SQLite"
+                    src="https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white" />
+            </div>
+            <h5 class="mb-2">🌐 Web / API</h5>
+            <div class="badges mb-4"> <img alt="REST API"
+                    src="https://img.shields.io/badge/REST%20API-02569B?style=for-the-badge" /> <img alt="JSON"
+                    src="https://img.shields.io/badge/JSON-000000?style=for-the-badge&logo=json&logoColor=white" />
+            </div>
+            <h5 class="mb-2">💡 Language</h5>
+            <div class="badges mb-4"> <img alt="Python"
+                    src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" />
+                <img alt="Java"
+                    src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=openjdk&logoColor=white" />
+                <img alt="JavaScript"
+                    src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
+            </div>
+            <h5 class="mb-2">🛠 Tools & IDE</h5>
+            <div class="badges mb-4"> <img alt="IntelliJ"
+                    src="https://img.shields.io/badge/IntelliJ-000000?style=for-the-badge&logo=intellijidea&logoColor=white" />
+                <img alt="PyCharm"
+                    src="https://img.shields.io/badge/PyCharm-000000?style=for-the-badge&logo=pycharm&logoColor=white" />
+                <img alt="VS Code"
+                    src="https://img.shields.io/badge/VS%20Code-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white" />
+                <img alt="GitHub"
+                    src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" />
+                <img alt="GitLab"
+                    src="https://img.shields.io/badge/GitLab-FC6D26?style=for-the-badge&logo=gitlab&logoColor=white" />
+            </div>
+            <h5 class="mb-2">💻 OS</h5>
+            <div class="badges"> <img alt="macOS"
+                    src="https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white" />
+                <img alt="Windows"
+                    src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white" />
+                <img alt="Ubuntu"
+                    src="https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white" />
+            </div>
+        </div>
+    </section> <!-- STATS -->
+    <section id="stats" class="py-5">
+        <div class="container">
+            <h2 class="h1 mb-4">📊 GitHub & Algorithm Activity</h2>
+            <div class="row g-4">
+                <div class="col-lg-6"> <img class="img-fluid rounded shadow-sm" alt="GitHub Stats"
+                        src="https://github-readme-stats.vercel.app/api?username=Migong0311&show_icons=true&theme=tokyonight&hide_border=true" />
+                </div>
+                <div class="col-lg-6"> <img class="img-fluid rounded shadow-sm" alt="Top Langs"
+                        src="https://github-readme-stats.vercel.app/api/top-langs/?username=Migong0311&layout=donut&theme=radical&hide_border=true" />
+                </div>
+            </div>
+            <h3 class="h5 mt-4">🏆 Baekjoon Online Judge</h3>
+            <div class="d-flex flex-wrap gap-3"> <a href="https://solved.ac/kms000311/" target="_blank"
+                    rel="noreferrer"> <img alt="Solved.ac Profile"
+                        src="http://mazassumnida.wtf/api/v2/generate_badge?boj=kms000311" /> </a> <a
+                    href="https://solved.ac/kms000311/" target="_blank" rel="noreferrer"> <img alt="mazandi"
+                        src="http://mazandi.herokuapp.com/api?handle=kms000311&theme=warm" /> </a> </div>
+            <div class="mt-4 p-3 rounded-4 bg-light border small"> <b>🌱 Commit Graph & Activity Tips</b><br /> 매일 알고리즘
+                풀이 업로드 · 오픈소스 기여(PR/Issue) · README/기술문서 작성 · 작은 프로젝트라도 레포 생성하여 기록 유지 </div>
+        </div>
+    </section> <!-- CONTACT -->
+    <section id="contact" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="h1 mb-4">📬 Contact</h2>
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="list-group list-group-flush"> <a class="list-group-item list-group-item-action"
+                            href="mailto:kimms000311@gmail.com"> ✉️ kimms000311@gmail.com </a> <a
+                            class="list-group-item list-group-item-action" href="https://github.com/Migong0311"
+                            target="_blank" rel="noreferrer"> 💻 github.com/Migong0311 </a> </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="py-4 border-top">
+        <div class="container small text-secondary"> © <span id="year"></span> Migong0311 · Hosted on GitHub Pages
+        </div>
+    </footer> <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Main JS -->
+    <script type="module" src="/assets/js/scripts.js"></script>
+</body>
+
+</html>
