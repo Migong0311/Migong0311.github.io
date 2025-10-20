@@ -127,3 +127,49 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     }
   });
 });
+// === Hero right: 학습 진행도 원형 게이지 & 날짜 표시 ===
+(function(){
+  const nodes = document.querySelectorAll('.radial[data-progress]');
+  nodes.forEach(node => {
+    const val = Math.max(0, Math.min(100, Number(node.getAttribute('data-progress') || 0)));
+    const deg = (val / 100) * 360;
+    node.style.setProperty('--deg', deg + 'deg');
+    const label = node.querySelector('.radial__label');
+    if (label) label.textContent = val + '%';
+  });
+  const upd = document.getElementById('aiProgressUpdated');
+  if (upd) {
+    const d = new Date();
+    const pad = n => String(n).padStart(2,'0');
+    upd.textContent = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+  }
+})();
+// ==== Scroll Buttons (Top / Bottom) ====
+(function(){
+  const btnTop = document.getElementById('scrollTopBtn');
+  const btnBottom = document.getElementById('scrollBottomBtn');
+
+  if (!btnTop || !btnBottom) return;
+
+  // 맨 위로 이동
+  btnTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // 맨 아래로 이동
+  btnBottom.addEventListener('click', () => {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  });
+
+  // 스크롤 위치 감지해서 버튼 표시/숨김
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY || document.documentElement.scrollTop;
+    const show = y > 200; // 200px 이상 스크롤 시 표시
+    btnTop.classList.toggle('hide', !show);
+    btnBottom.classList.toggle('hide', !show);
+  });
+
+  // 초기 상태
+  btnTop.classList.add('hide');
+  btnBottom.classList.add('hide');
+})();

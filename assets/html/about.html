@@ -9,27 +9,56 @@
     <!-- Main CSS -->
     <link rel="stylesheet" href="/assets/css/style.css" /> <!-- Favicon (선택) -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    <link rel="alternate icon" href="assets/icons/favicon.svg">
     <meta name="description" content="백엔드 개발 · 시스템 아키텍처 · 서비스 자동화 포트폴리오" />
 </head>
 
 <body> <!-- NAVBAR -->
+    <!-- 🔼 Scroll Top / Bottom Buttons -->
+    <button id="scrollTopBtn" class="scroll-btn" title="맨 위로">
+        <i class="bi bi-arrow-up-circle"></i>
+    </button>
+
+    <button id="scrollBottomBtn" class="scroll-btn scroll-btn-bottom" title="맨 아래로">
+        <i class="bi bi-arrow-down-circle"></i>
+    </button>
+
     <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top shadow-sm">
-        <div class="container"> <a class="navbar-brand fw-semibold" href="/">Migong0311</a> <button
-                class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"> <span
-                    class="navbar-toggler-icon"></span> </button>
+        <div class="container">
+            <a class="navbar-brand fw-semibold" href="../../index.html">Migong0311</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
             <div id="navMenu" class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#exp">Experience</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#projects">Pinned</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#skills">Tech</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#stats">Stats</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                </ul> <button id="themeToggle" class="btn btn-outline-secondary ms-lg-3" title="Toggle dark mode"> 🌙
-                </button>
+                    <li class="nav-item"><a class="nav-link" href="../../index.html#collab">협업</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="./about.html">나의 소개</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="../../ai_practice.html">AI 학습</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../index.html#projects">프로젝트</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../../index.html#contact">연락</a></li>
+                </ul>
+                <button id="themeToggle" class="btn btn-outline-secondary ms-lg-3" title="Toggle dark mode">🌙</button>
             </div>
         </div>
-    </nav> <!-- HERO -->
+    </nav>
+
+    <!-- ✅ 내부 섹션 바로가기 버튼 -->
+    <section class="py-3 bg-light border-bottom">
+        <div class="container text-center">
+            <div class="btn-group" role="group" aria-label="내부 섹션 바로가기">
+                <a href="#about" class="btn btn-outline-primary btn-sm"><i class="bi bi-person"></i> About</a>
+                <a href="#exp" class="btn btn-outline-primary btn-sm"><i class="bi bi-journal-text"></i> Experience</a>
+                <a href="#projects" class="btn btn-outline-primary btn-sm"><i class="bi bi-pin"></i> Pinned</a>
+                <a href="#skills" class="btn btn-outline-primary btn-sm"><i class="bi bi-tools"></i> Tech</a>
+                <a href="#stats" class="btn btn-outline-primary btn-sm"><i class="bi bi-graph-up"></i> Stats</a>
+                <a href="#contact" class="btn btn-outline-primary btn-sm"><i class="bi bi-envelope"></i> Contact</a>
+            </div>
+        </div>
+    </section>
+    <!-- HERO -->
     <header class="py-5 hero-grad">
         <div class="container">
             <div class="row align-items-center g-4">

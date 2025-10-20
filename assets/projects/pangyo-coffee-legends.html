@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pangyo Coffee Legends | 스마트 오피스 AIoT</title>
+  <meta name="description" content="AI + IoT 기반 스마트 오피스 시스템: 쾌적도 분석, 환경센싱, 근태/출입, ELK, 예약/알림" />
+  <!-- Bootstrap & Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+  <!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+<link rel="alternate icon" href="assets/icons/favicon.svg">
+  <style>
+    .kv-badges .badge { margin-right: .25rem; margin-bottom: .25rem; }
+    .feat-table td, .feat-table th { vertical-align: top; }
+    .team-table th, .team-table td { vertical-align: middle; }
+    .arch-wrap { background: var(--surface-1); border: 1px solid var(--border); border-radius: 1rem; }
+    .arch-fallback rect { fill: var(--surface-2); }
+    .chip { display: inline-block; padding: .25rem .5rem; border-radius: 999px; border: 1px solid var(--border); font-size: .8rem; }
+    /* ==== Scroll Buttons ==== */
+.scroll-btn {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 4rem;
+  z-index: 1050;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  font-size: 1.6rem;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all .3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,.1);
+}
+.scroll-btn:hover {
+  transform: translateY(-2px);
+  color: var(--accent-1);
+  box-shadow: 0 6px 14px rgba(0,0,0,.15);
+}
+.scroll-btn.scroll-btn-bottom {
+  bottom: 1.2rem;
+}
+
+/* 숨김 처리 (JS 제어용) */
+.scroll-btn.hide {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+}
+
+
+  </style>
+</head>
+<body>
+    <!-- 🔼 Scroll Top / Bottom Buttons -->
+<button id="scrollTopBtn" class="scroll-btn" title="맨 위로">
+  <i class="bi bi-arrow-up-circle"></i>
+</button>
+
+<button id="scrollBottomBtn" class="scroll-btn scroll-btn-bottom" title="맨 아래로">
+  <i class="bi bi-arrow-down-circle"></i>
+</button>
+
+  <!-- NAV -->
+  <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top shadow-sm">
+    <div class="container">
+      <a class="navbar-brand fw-semibold" href="/">Migong0311</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="navMenu" class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="../assets/html/about.html">나의 소개</a></li>
+          <li class="nav-item"><a class="nav-link" href="/ai_practice.html">AI 학습</a></li>
+          <li class="nav-item"><a class="nav-link" href="../projects/pangyo-coffee-legends.html">프로젝트</a></li>
+          <li class="nav-item"><a class="nav-link" href="/#contact">연락</a></li>
+        </ul>
+        <button id="themeToggle" class="btn btn-outline-secondary ms-lg-3" title="Toggle dark mode">🌙</button>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- HERO -->
+    <header class="py-5 hero-grad">
+      <div class="container">
+        <div class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-3">
+          <div>
+            <h1 class="h2 fw-bold mb-2">Pangyo Coffee Legends — 스마트 오피스 AIoT 시스템</h1>
+            <p class="lead text-secondary mb-0">“1년 뒤 판교 스타벅스에서 모이자!” — AI + IoT 기반의 스마트 오피스 통합 프로젝트</p>
+          </div>
+          <div class="kv-badges">
+            <span class="badge text-bg-primary">AIoT</span>
+            <span class="badge text-bg-dark">Case Study</span>
+            <span class="badge text-bg-success">Production-ready</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 개요 -->
+    <section class="section-pad">
+      <div class="container">
+        <h2 class="h4 fw-bold mb-3">🧠 프로젝트 개요</h2>
+        <p class="mb-3">
+          AI 및 IoT 기술을 융합하여 쾌적한 업무 환경과 효율적인 오피스 운영을 구현하는 통합 솔루션입니다.
+          실시간 센서 데이터, AI 분석, 자동화 제어, 대시보드 시각화를 통해 스마트 오피스를 실현합니다.
+        </p>
+        <div class="small text-secondary">
+          핵심 KPI: 쾌적도 지수(Comfort Score), 근태 정확도, 알림·예약 처리 성공률, 장애률/MTTR, 시스템 가용성 등
+        </div>
+      </div>
+    </section>
+
+    <!-- 주요 기능 -->
+    <section class="section-pad bg-light">
+      <div class="container">
+        <h2 class="h4 fw-bold mb-3">🎯 주요 기능</h2>
+        <div class="table-responsive">
+          <table class="table table-bordered feat-table align-middle">
+            <thead>
+              <tr>
+                <th style="width:220px">기능</th>
+                <th>설명</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>🌡️ 환경 센싱 및 저장</td>
+                <td>센서 데이터를 MQTT/Modbus로 수집하고 InfluxDB에 시계열 저장</td>
+              </tr>
+              <tr>
+                <td>🤖 AI 쾌적도 분석</td>
+                <td>온·습도/CO₂ 기반 쾌적도 예측 모델(XGBoost 등)로 가동/알림 정책 연계</td>
+              </tr>
+              <tr>
+                <td>🌍 환경 모니터링</td>
+                <td>기기/룰/장소 관리, 이상 탐지, 경보/자동 제어 규칙</td>
+              </tr>
+              <tr>
+                <td>🔐 출입 통제/근태 분석</td>
+                <td>출입 로그 기반 근무 시간 산출, 이상 패턴 탐지, 리포트 자동화</td>
+              </tr>
+              <tr>
+                <td>📊 ELK 로그 모니터링</td>
+                <td>Filebeat → Logstash → Elasticsearch → Kibana 대시보드 구성</td>
+              </tr>
+              <tr>
+                <td>🗓️ 회의실 예약 시스템</td>
+                <td>예약/입장/노쇼/연장 등 워크플로우 및 권한 관리</td>
+              </tr>
+              <tr>
+                <td>💬 실시간 채팅/알림</td>
+                <td>STOMP 기반 실시간 채팅, 운영 알림 팝업/푸시</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 시스템 아키텍처 -->
+    <section class="section-pad">
+      <div class="container">
+        <h2 class="h4 fw-bold mb-3">🏗️ 시스템 아키텍처</h2>
+        <div class="arch-wrap p-3">
+          <!-- 실제 이미지 파일이 있으면 아래 img가 표시됩니다. (경로: ../assets/img/pangyo-arch.png) -->
+          <img src="/assets/img/pangyo-arch.png" alt="시스템 아키텍처" class="img-fluid rounded d-block mb-2"
+               onerror="this.style.display='none'; document.getElementById('archFallback').style.display='block';">
+          <!-- fallback SVG (이미지 없을 때 표시) -->
+          <div id="archFallback" class="arch-fallback" style="display:none;">
+            <svg viewBox="0 0 800 360" width="100%" height="100%" role="img" aria-label="아키텍처 개략도">
+              <rect x="20" y="20" width="760" height="320" rx="12"></rect>
+              <rect x="40" y="50" width="220" height="100" rx="8"></rect>
+              <rect x="290" y="50" width="220" height="100" rx="8"></rect>
+              <rect x="540" y="50" width="220" height="100" rx="8"></rect>
+              <rect x="40" y="200" width="220" height="100" rx="8"></rect>
+              <rect x="290" y="200" width="220" height="100" rx="8"></rect>
+              <rect x="540" y="200" width="220" height="100" rx="8"></rect>
+              <text x="400" y="26" text-anchor="middle" fill="currentColor" font-size="14">Architecture Placeholder</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 기술 스택 -->
+    <section class="section-pad bg-light">
+      <div class="container">
+        <h2 class="h4 fw-bold mb-3">⚙️ 기술 스택</h2>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="p-3 rounded-4 border bg-white h-100">
+              <div class="mb-1 fw-semibold">📌 백엔드</div>
+              <div class="chip">Spring Boot</div>
+              <div class="chip">Spring Security</div>
+              <div class="chip">Spring Cloud Config</div>
+              <div class="chip">JPA</div>
+              <div class="mt-2 mb-1 fw-semibold">🎨 프론트엔드</div>
+              <div class="chip">HTML</div>
+              <div class="chip">CSS</div>
+              <div class="chip">JavaScript(Vanilla)</div>
+              <div class="chip">Bootstrap</div>
+              <div class="mt-2 mb-1 fw-semibold">🛠️ 인프라</div>
+              <div class="chip">Docker</div>
+              <div class="chip">Nginx</div>
+              <div class="chip">GitHub Actions</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 rounded-4 border bg-white h-100">
+              <div class="mb-1 fw-semibold">💾 DB/저장소</div>
+              <div class="chip">InfluxDB</div>
+              <div class="chip">MySQL</div>
+              <div class="chip">Elasticsearch</div>
+              <div class="chip">H2</div>
+              <div class="chip">Redis</div>
+              <div class="mt-2 mb-1 fw-semibold">🧠 AI/분석</div>
+              <div class="chip">Python</div>
+              <div class="chip">XGBoost</div>
+              <div class="chip">Pandas</div>
+              <div class="chip">FastAPI</div>
+              <div class="mt-2 mb-1 fw-semibold">📡 실시간</div>
+              <div class="chip">STOMP</div>
+              <div class="chip">MQTT</div>
+              <div class="chip">Rule Engine</div>
+              <div class="chip">RabbitMQ</div>
+              <div class="mt-2 mb-1 fw-semibold">📊 로그 시스템</div>
+              <div class="chip">Filebeat</div>
+              <div class="chip">Logstash</div>
+              <div class="chip">Kibana</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 나의 기여 (김미성 중심) -->
+    <section class="section-pad">
+      <div class="container">
+        <h2 class="h4 fw-bold mb-3">🙋‍♀️ 나의 기여 (김미성)</h2>
+        <ul class="list-unstyled small">
+          <li class="mb-2"><i class="bi bi-check2-circle me-1"></i><b>근태 분석 파이프라인</b>: 출입 로그 전처리 → 근무 시간 계산(지각/조퇴/초과 포함) → 이상 패턴 탐지 룰 정의</li>
+          <li class="mb-2"><i class="bi bi-check2-circle me-1"></i><b>리포트 자동화</b>: 일/주/월 단위 근태 리포트 템플릿 정의, CSV/HTML 요약 및 대시보드 지표 연동</li>
+          <li class="mb-2"><i class="bi bi-check2-circle me-1"></i><b>GenAI 기반 분석</b>: 근태/예약 로그를 요약·설명하는 자연어 리포트 초안 생성(질의응답 형태), 이상 이벤트 설명 보조</li>
+          <li class="mb-2"><i class="bi bi-check2-circle me-1"></i><b>품질 지표</b>: 근태 산출 정확도, 누락 로그 탐지율, 보고서 생성 시간 단축(예: 70%↓) 설정 및 측정</li>
+          <li class="mb-2"><i class="bi bi-check2-circle me-1"></i><b>문서화</b>: 데이터 스키마/룰 정의서, 운영 Runbook, 장애 대응 가이드 정리</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 팀원 소개 -->
+    <section class="section-pad bg-light">
+      <div class="container">
+        <h2 class="h4 fw-bold mb-3">👥 팀원 소개</h2>
+        <div class="table-responsive">
+          <table class="table table-striped team-table">
+            <thead>
+              <tr>
+                <th>이름</th>
+                <th>담당 역할</th>
+                <th>GitHub</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                
+                <td>최인호</td>
+                <td>쾌적도 AI · ELK 로그 · CI/CD · 통합 인프라</td>
+                <td><a href="https://github.com/dusen0528" target="_blank" rel="noreferrer">@dusen0528</a></td>
+              </tr>
+              <tr>
+                
+                <td>신현섭</td>
+                <td>채팅 시스템 · 실시간 알림</td>
+                <td><a href="https://github.com/HyunSubb" target="_blank" rel="noreferrer">@HyunSubb</a></td>
+              </tr>
+              <tr>
+                
+                <td>김경영</td>
+                <td>출입 통제 · 근태 분석</td>
+                <td><a href="https://github.com/rudduddl" target="_blank" rel="noreferrer">@rudduddl</a></td>
+              </tr>
+              <tr>
+                
+                <td><b>김미성</b></td>
+                <td><b>근태 분석 · 리포트 · GenAI 기반 분석</b></td>
+                <td><a href="https://github.com/Migong0311" target="_blank" rel="noreferrer">@Migong0311</a></td>
+              </tr>
+              <tr>
+                
+                <td>강승우</td>
+                <td>환경 모니터링 · 이상 탐지 · Rule Engine</td>
+                <td><a href="https://github.com/oculusK" target="_blank" rel="noreferrer">@oculusK</a></td>
+              </tr>
+              <tr>
+                
+                <td>박형호</td>
+                <td>환경 모니터링 · IoT 서비스 · JS 연동</td>
+                <td><a href="https://github.com/phh624" target="_blank" rel="noreferrer">@phh624</a></td>
+              </tr>
+              <tr>
+                
+                <td>전유림</td>
+                <td>회의실 예약 · 알림 · 대시보드</td>
+                <td><a href="https://github.com/Jyurim" target="_blank" rel="noreferrer">@Jyurim</a></td>
+              </tr>
+              <tr>
+                
+                <td>김지윤</td>
+                <td>회의실 CRUD · 회의실 예약 건 입실 통합관리 · 통계</td>
+                <td><a href="https://github.com/LEMON4DE" target="_blank" rel="noreferrer">@LEMON4DE</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="small text-secondary">* 프로필 이미지는 추후 업데이트 예정</div>
+      </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <section class="section-pad">
+      <div class="container">
+        <div class="p-4 rounded-4 border bg-white d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-2">
+          <div>
+            <div class="fw-semibold">프로젝트 관련하여 더 궁금하신가요?</div>
+            <div class="small text-secondary">데이터 샘플, 대시보드 스냅샷, 설계 문서를 요청하실 수 있습니다.</div>
+          </div>
+          <div class="d-flex gap-2">
+            <a href="mailto:kimms000311@gmail.com" class="btn btn-primary"><i class="bi bi-envelope me-1"></i>연락하기</a>
+        
+            <a href="https://github.com/nhnacademy-aiot2-pangyo-coffee-legends" class="btn btn-outline-secondary" target="_blank" rel="noreferrer"><i class="bi bi-github me-1"></i>GitHub</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-4 border-top">
+    <div class="container small text-secondary">
+      © <span id="year"></span> Migong0311 · Hosted on GitHub Pages
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- 공용 스크립트 -->
+  <script type="module" src="../assets/js/scripts.js"></script>
+</body>
+</html>

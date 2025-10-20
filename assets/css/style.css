@@ -78,3 +78,69 @@ html, body { background: var(--bg); color: var(--text); }
 
 /* 유틸 */
 .text-secondary { color: var(--muted) !important; }
+
+/* ===== Hero 오른쪽 스택 ===== */
+.hero-side.stack { display: grid; gap: 1rem; }
+.hero-side .card { background: var(--surface-1); border: 1px solid var(--border); }
+
+/* Radial progress */
+.radial {
+  --size: 110px;
+  --track: #e9ecef;
+  --bar: var(--bs-primary);
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+  margin: 0 auto;
+  border-radius: 50%;
+  background: conic-gradient(var(--bar) var(--deg, 0deg), var(--track) 0);
+  display: grid;
+  place-items: center;
+}
+.radial::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border-radius: 50%;
+  background: var(--surface-1);
+}
+.radial__label {
+  position: relative;
+  font-weight: 700;
+}
+
+/* ==== Scroll Buttons ==== */
+.scroll-btn {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 4rem;
+  z-index: 1050;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  font-size: 1.6rem;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all .3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,.1);
+}
+.scroll-btn:hover {
+  transform: translateY(-2px);
+  color: var(--accent-1);
+  box-shadow: 0 6px 14px rgba(0,0,0,.15);
+}
+.scroll-btn.scroll-btn-bottom {
+  bottom: 1.2rem;
+}
+
+/* 숨김 처리 (JS 제어용) */
+.scroll-btn.hide {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+}
+
