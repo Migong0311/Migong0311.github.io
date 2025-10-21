@@ -6,7 +6,7 @@
 
 ## 🏗️ 프로젝트 개요
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=30&pause=1200&color=EF31F7&width=435&lines=Build+once%2C+share+everywhere.)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=450&size=25&pause=1000&color=D50EF7&width=435&lines=Build+once+share+everywhere)](https://git.io/typing-svg)
 
 > 협업, 자기소개, AI 학습 여정, 그리고 프로젝트를 한 곳에서 정리하는 **정적 포트폴리오 서비스**입니다.
 
@@ -85,10 +85,15 @@ AI + IoT 기반의 스마트 오피스 시스템 구축 프로젝트로,
 ## 🌙 기능 요약
 
 ✅ 다크/라이트 테마 토글
+
 ✅ 협업 카드 기반 섹션
+
 ✅ AI 학습 타임라인 / 페이지네이션 / 모달 뷰
+
 ✅ 대표 프로젝트 카드
+
 ✅ “맨 위로 / 맨 아래로” 고정 스크롤 버튼
+
 ✅ 반응형 디자인 (모바일/데스크톱 대응)
 
 ---
