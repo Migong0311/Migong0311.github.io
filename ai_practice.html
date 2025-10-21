@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -17,12 +18,38 @@
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <style>
     /* 마크다운 본문 가독성 보강 */
-    .md-body h1, .md-body h2, .md-body h3 { margin-top: 1rem; }
-    .md-body pre code { white-space: pre-wrap; }
-    .md-body table { width: 100%; }
-    .md-body img { max-width: 100%; height: auto; }
-    .truncate-1 { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
-    .truncate-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .md-body h1,
+    .md-body h2,
+    .md-body h3 {
+      margin-top: 1rem;
+    }
+
+    .md-body pre code {
+      white-space: pre-wrap;
+    }
+
+    .md-body table {
+      width: 100%;
+    }
+
+    .md-body img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .truncate-1 {
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .truncate-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
 
     /* ==== Scroll Buttons ==== */
     .scroll-btn {
@@ -41,17 +68,27 @@
       place-items: center;
       cursor: pointer;
       transition: all .3s ease;
-      box-shadow: 0 4px 10px rgba(0,0,0,.1);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, .1);
     }
+
     .scroll-btn:hover {
       transform: translateY(-2px);
       color: var(--accent-1);
-      box-shadow: 0 6px 14px rgba(0,0,0,.15);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, .15);
     }
-    .scroll-btn.scroll-btn-bottom { bottom: 1.2rem; }
-    .scroll-btn.hide { opacity: 0; pointer-events: none; transform: translateY(10px); }
+
+    .scroll-btn.scroll-btn-bottom {
+      bottom: 1.2rem;
+    }
+
+    .scroll-btn.hide {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(10px);
+    }
   </style>
 </head>
+
 <body>
 
   <!-- 🔼 Scroll Top / Bottom Buttons -->
@@ -131,6 +168,15 @@
               <div class="small text-secondary">EDA, 전처리, 로지스틱, ROC-AUC, PCA+KMeans</div>
             </div>
           </div>
+          <!-- Step 6: day07 이미지 생성·평가·학습 -->
+          <div class="col-md-6 col-lg-4">
+            <div class="p-3 rounded-4 border bg-white h-100">
+              <div class="small text-secondary">Step 6</div>
+              <div class="fw-semibold">이미지 생성 · 평가 · 모델학습</div>
+              <div class="small text-secondary">Stable Diffusion · CLIP · ResNet18(Linear Probing)</div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -149,7 +195,7 @@
               <table class="table align-middle">
                 <thead>
                   <tr>
-                    <th style="width:80px;">#</th>
+                    <th style="width:80px;">No.</th>
                     <th>제목</th>
                     <th style="width:140px;">날짜</th>
                     <th style="width:120px;" class="text-center">보기</th>
@@ -211,12 +257,15 @@
     // GitHub에 파일 커밋 후, 아래 배열에 항목을 추가하세요.
     // { title: '표시 타이틀', src: 'assets/ai/파일명.md', date: 'YYYY-MM-DD' }
     const AI_NOTES = [
-      { title: '데이터 정규화 & 선형대수 해법', src: 'assets/ai/day02-ai-linear-algebra.md', date: '2025-10-01' },
-      { title: 'MLP 구현 · 학습/평가 루프', src: 'assets/ai/day03-ai-mlp.md', date: '2025-10-02' },
-      { title: 'Transfer Learning & Vision Transformer', src: 'assets/ai/day04-ai-transfer-learning.md', date: '2025-10-03' },
-      { title: '토크나이저·임베딩·RNN/LSTM·Attention·HF', src: 'assets/ai/day05-ai-nlp-tokenizer.md', date: '2025-10-04' },
-      { title: '머신러닝 기초 실습(EDA·전처리·로지스틱·ROC·PCA/KMeans)', src: 'assets/ai/day06-ai-ml-basics.md', date: '2025-10-05' },
+      { title: 'Day02 데이터 정규화 & 선형대수 해법', src: 'assets/ai/day02-ai-linear-algebra.md', date: '2025-10-13' },
+      { title: 'Day03 MLP 구현 · 학습/평가 루프', src: 'assets/ai/day03-ai-mlp.md', date: '2025-10-14' },
+      { title: 'Day04 Transfer Learning & Vision Transformer', src: 'assets/ai/day04-ai-transfer-learning.md', date: '2025-10-15' },
+      { title: 'Day05 토크나이저·임베딩·RNN/LSTM·Attention·HF', src: 'assets/ai/day05-ai-nlp-tokenizer.md', date: '2025-10-16' },
+      { title: 'Day06 머신러닝 기초 실습(EDA·전처리·로지스틱·ROC·PCA/KMeans)', src: 'assets/ai/day06-ai-ml-basics.md', date: '2025-10-17' },
       // 더 추가하고 싶으면 아래처럼 이어서 작성
+      /* ✅ day07 추가 */
+      { title: 'Day07 [실습] 이미지 생성 및 평가와 모델 학습', src: 'assets/ai/day07_image_generation_training.md', date: '2025-10-21' },
+    
       // { title: '제목', src: 'assets/ai/your-file.md', date: '2025-10-10' },
     ];
 
@@ -230,15 +279,15 @@
 
     const $modal = new bootstrap.Modal(document.getElementById('noteModal'));
     const $modalLabel = document.getElementById('noteModalLabel');
-    const $modalBody  = document.getElementById('noteModalBody');
-    const $rawLink    = document.getElementById('noteRawLink');
+    const $modalBody = document.getElementById('noteModalBody');
+    const $rawLink = document.getElementById('noteRawLink');
 
-    function escapeHtml(s=''){ return s.replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
-    const pad = n=>String(n).padStart(2,'0');
+    function escapeHtml(s = '') { return s.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m])); }
+    const pad = n => String(n).padStart(2, '0');
 
-    function renderPage(page=1){
+    function renderPage(page = 1) {
       state.total = AI_NOTES.length;
-      if (state.total === 0){
+      if (state.total === 0) {
         $tbody.innerHTML = '';
         $pager.innerHTML = '';
         $empty.style.display = 'block';
@@ -251,10 +300,10 @@
       const start = (state.page - 1) * PAGE_SIZE;
       const rows = AI_NOTES
         .slice() // 복사본
-        .sort((a,b)=> (b.date||'').localeCompare(a.date||'')) // 최신 날짜 우선
+        .sort((a, b) => (b.date || '').localeCompare(a.date || '')) // 최신 날짜 우선
         .slice(start, start + PAGE_SIZE);
 
-      $tbody.innerHTML = rows.map((it, idx)=> `
+      $tbody.innerHTML = rows.map((it, idx) => `
         <tr>
           <td>${start + idx + 1}</td>
           <td>
@@ -274,35 +323,35 @@
       renderPager(pages);
     }
 
-    function renderPager(pages){
+    function renderPager(pages) {
       const page = state.page;
       const btns = [];
-      btns.push(`<li class="page-item ${page===1?'disabled':''}"><a class="page-link" data-page="${page-1}" aria-label="이전">&laquo;</a></li>`);
+      btns.push(`<li class="page-item ${page === 1 ? 'disabled' : ''}"><a class="page-link" data-page="${page - 1}" aria-label="이전">&laquo;</a></li>`);
 
       const maxShow = 7;
-      let start = Math.max(1, page - Math.floor(maxShow/2));
-      let end   = Math.min(pages, start + maxShow - 1);
+      let start = Math.max(1, page - Math.floor(maxShow / 2));
+      let end = Math.min(pages, start + maxShow - 1);
       if (end - start + 1 < maxShow) start = Math.max(1, end - maxShow + 1);
 
-      for (let p=start; p<=end; p++){
-        btns.push(`<li class="page-item ${p===page?'active':''}"><a class="page-link" data-page="${p}">${p}</a></li>`);
+      for (let p = start; p <= end; p++) {
+        btns.push(`<li class="page-item ${p === page ? 'active' : ''}"><a class="page-link" data-page="${p}">${p}</a></li>`);
       }
 
-      btns.push(`<li class="page-item ${page===pages?'disabled':''}"><a class="page-link" data-page="${page+1}" aria-label="다음">&raquo;</a></li>`);
+      btns.push(`<li class="page-item ${page === pages ? 'disabled' : ''}"><a class="page-link" data-page="${page + 1}" aria-label="다음">&raquo;</a></li>`);
       $pager.innerHTML = btns.join('');
 
-      $pager.querySelectorAll('a.page-link').forEach(a=>{
-        a.addEventListener('click', ()=>{
+      $pager.querySelectorAll('a.page-link').forEach(a => {
+        a.addEventListener('click', () => {
           const p = parseInt(a.getAttribute('data-page'), 10);
           if (!isNaN(p)) renderPage(p);
         });
       });
     }
 
-    function bindRowEvents(){
-      $tbody.querySelectorAll('button[data-action="view"]').forEach(btn=>{
-        btn.addEventListener('click', async ()=>{
-          const src   = btn.getAttribute('data-src');
+    function bindRowEvents() {
+      $tbody.querySelectorAll('button[data-action="view"]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const src = btn.getAttribute('data-src');
           const title = btn.getAttribute('data-title');
           $modalLabel.textContent = title || '학습 노트';
           $modalBody.innerHTML = '불러오는 중…';
@@ -314,7 +363,7 @@
             const text = await res.text();
             $modalBody.innerHTML = marked.parse(text);
           } catch (e) {
-            $modalBody.innerHTML = `<div class="text-danger">마크다운을 불러오지 못했습니다: ${escapeHtml(src||'')}</div>`;
+            $modalBody.innerHTML = `<div class="text-danger">마크다운을 불러오지 못했습니다: ${escapeHtml(src || '')}</div>`;
           }
           $modal.show();
         });
@@ -322,7 +371,7 @@
     }
 
     // ====== 3) Scroll Buttons ======
-    (function(){
+    (function () {
       const btnTop = document.getElementById('scrollTopBtn');
       const btnBottom = document.getElementById('scrollBottomBtn');
       if (!btnTop || !btnBottom) return;
@@ -342,11 +391,12 @@
     })();
 
     // ====== 4) init ======
-    (function init(){
+    (function init() {
       const y = document.getElementById('year');
       if (y) y.textContent = new Date().getFullYear();
       renderPage(1);
     })();
   </script>
 </body>
+
 </html>
