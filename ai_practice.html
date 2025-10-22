@@ -124,7 +124,7 @@
     <header class="py-5 hero-grad">
       <div class="container">
         <h1 class="display-6 fw-bold mb-2">🧠 AI 학습 기록</h1>
-        <p class="text-secondary mb-0">마크다운 학습 노트를 수동으로 등록하고, 페이지네이션(10개씩)과 모달 뷰로 정리합니다.</p>
+        <p class="text-secondary mb-0">내일 죽을 것처럼 살아라. 영원히 살 것처럼 배워라. <br><i>- 마하트마 간디 (Mahatma Gandhi) - </i></p>
       </div>
     </header>
 
@@ -176,6 +176,15 @@
               <div class="small text-secondary">Stable Diffusion · CLIP · ResNet18(Linear Probing)</div>
             </div>
           </div>
+          <!-- Step 7: day08 합성 데이터 제작 -->
+          <div class="col-md-6 col-lg-4">
+            <div class="p-3 rounded-4 border bg-white h-100">
+              <div class="small text-secondary">Step 7</div>
+              <div class="fw-semibold">합성 데이터 제작</div>
+              <div class="small text-secondary">프롬프트 설계 · 증강/합성 파이프라인 · 평가 지표</div>
+            </div>
+          </div>
+          <!-- 다음카드 추가란 -->
 
         </div>
       </div>
@@ -186,7 +195,6 @@
       <div class="container">
         <div class="d-flex flex-wrap gap-2 align-items-end justify-content-between mb-3">
           <h2 class="h4 fw-bold mb-0">📚 학습 노트 목록</h2>
-          <div class="small text-secondary">* 파일은 GitHub에 커밋 후 아래 목록에 수동으로 추가합니다.</div>
         </div>
 
         <div class="card border-0 shadow-sm">
@@ -197,8 +205,8 @@
                   <tr>
                     <th style="width:80px;">No.</th>
                     <th>제목</th>
-                    <th style="width:140px;">날짜</th>
-                    <th style="width:120px;" class="text-center">보기</th>
+                    <th style="width:140px;">학습날짜</th>
+                    <th style="width:120px;" class="text-center">상세내용</th>
                   </tr>
                 </thead>
                 <tbody id="noteTableBody"></tbody>
@@ -257,16 +265,15 @@
     // GitHub에 파일 커밋 후, 아래 배열에 항목을 추가하세요.
     // { title: '표시 타이틀', src: 'assets/ai/파일명.md', date: 'YYYY-MM-DD' }
     const AI_NOTES = [
+      // { title: '제목', src: 'assets/ai/your-file.md', date: '2025-10-10' },
       { title: 'Day02 데이터 정규화 & 선형대수 해법', src: 'assets/ai/day02-ai-linear-algebra.md', date: '2025-10-13' },
       { title: 'Day03 MLP 구현 · 학습/평가 루프', src: 'assets/ai/day03-ai-mlp.md', date: '2025-10-14' },
       { title: 'Day04 Transfer Learning & Vision Transformer', src: 'assets/ai/day04-ai-transfer-learning.md', date: '2025-10-15' },
       { title: 'Day05 토크나이저·임베딩·RNN/LSTM·Attention·HF', src: 'assets/ai/day05-ai-nlp-tokenizer.md', date: '2025-10-16' },
       { title: 'Day06 머신러닝 기초 실습(EDA·전처리·로지스틱·ROC·PCA/KMeans)', src: 'assets/ai/day06-ai-ml-basics.md', date: '2025-10-17' },
-      // 더 추가하고 싶으면 아래처럼 이어서 작성
-      /* ✅ day07 추가 */
-      { title: 'Day07 [실습] 이미지 생성 및 평가와 모델 학습', src: 'assets/ai/day07_image_generation_training.md', date: '2025-10-21' },
-    
-      // { title: '제목', src: 'assets/ai/your-file.md', date: '2025-10-10' },
+      { title: 'Day07 이미지 생성 및 평가와 모델 학습', src: 'assets/ai/day07_image_generation_training.md', date: '2025-10-20' },
+      { title: 'Day08 합성 데이터 제작', src: 'assets/ai/day08_synthetic_data_summary.md', date: '2025-10-21' },
+
     ];
 
     // ====== 2) 페이지네이션 / 렌더 ======
@@ -300,7 +307,7 @@
       const start = (state.page - 1) * PAGE_SIZE;
       const rows = AI_NOTES
         .slice() // 복사본
-        .sort((a, b) => (b.date || '').localeCompare(a.date || '')) // 최신 날짜 우선
+        .sort((a, b) => (a.date || '').localeCompare(b.date || '')) // 최신 날짜 우선
         .slice(start, start + PAGE_SIZE);
 
       $tbody.innerHTML = rows.map((it, idx) => `
