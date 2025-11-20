@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>로또 추첨기</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .lotto-ball-container {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      /* 공들 사이의 간격 */
+      min-height: 100px;
+      /* 공이 떨어질 공간 확보 */
+      align-items: flex-start;
+      /* 공이 위에서 시작하도록 */
+      flex-wrap: wrap;
+      /* 작은 화면에서 줄바꿈 */
+    }
+
+    .lotto-ball {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
+      background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+      /* Bootstrap primary color */
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+      position: relative;
+      /* 애니메이션을 위해 필요 */
+      top: -100px;
+      /* 초기 위치를 화면 밖으로 */
+      opacity: 0;
+      /* 초기 투명하게 */
+      animation: drop-and-fade 0.8s forwards ease-out;
+      /* 애니메이션 적용 */
+    }
+
+    /* 로또 번호에 따른 색상 */
+    .lotto-ball.num-1-10 {
+      background: linear-gradient(135deg, #f0b809, #d6a107);
+    }
+
+    /* 노란색 계열 */
+    .lotto-ball.num-11-20 {
+      background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+    }
+
+    /* 파란색 계열 */
+    .lotto-ball.num-21-30 {
+      background: linear-gradient(135deg, #dc3545, #bd2130);
+    }
+
+    /* 빨간색 계열 */
+    .lotto-ball.num-31-40 {
+      background: linear-gradient(135deg, #28a745, #1e7e34);
+    }
+
+    /* 초록색 계열 */
+    .lotto-ball.num-41-45 {
+      background: linear-gradient(135deg, #6c757d, #5a6268);
+    }
+
+    /* 회색 계열 */
+
+
+    /* 공이 떨어지는 애니메이션 */
+    @keyframes drop-and-fade {
+      0% {
+        top: -100px;
+        opacity: 0;
+        transform: scale(0.5);
+      }
+
+      70% {
+        top: 0px;
+        opacity: 1;
+        transform: scale(1.1);
+      }
+
+      100% {
+        top: 0px;
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container text-center py-5">
+    <h1 class="mb-4 text-primary fw-bold">로또 추천 번호</h1>
+    <button id="btn" class="btn btn-lg btn-primary mb-5 shadow-sm">행운 번호 받기</button>
+
+    <div class="lotto-ball-container" id="lottoNumbersDisplay">
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+
+  <script>
+    // 1. 필요한 요소 선택
+    const btn = document.querySelector("#btn");
+    const lottoNumbersDisplay = document.querySelector("#lottoNumbersDisplay");
+
+    // 로또 번호 범위에 따른 색상 클래스를 반환하는 함수
+    const getBallColorClass = (number) => {
+      if (number >= 1 && number <= 10) return 'num-1-10';
+      if (number >= 11 && number <= 20) return 'num-11-20';
+      if (number >= 21 && number <= 30) return 'num-21-30';
+      if (number >= 31 && number <= 40) return 'num-31-40';
+      if (number >= 41 && number <= 45) return 'num-41-45';
+      return '';
+    };
+
+    // 2. 로또 번호를 화면에 출력하는 함수 (이벤트 핸들러)
+    const getLottery = function (event) {
+      // 2.1 기존에 표시된 번호들 삭제
+      lottoNumbersDisplay.innerHTML = ''; // 이전 공들을 모두 지웁니다.
+
+      // 2.2 1부터 45까지의 배열 생성
+      const numbers = _.range(1, 46);
+      // 2.3 45개의 요소가 있는 배열에서 6개 번호 추출 (정렬하여 보기 좋게)
+      const sixNumbers = _.sampleSize(numbers, 6).sort((a, b) => a - b);
+
+      // 2.4 추출한 번호 배열을 반복하면서 공 요소 생성
+      sixNumbers.forEach((number, index) => {
+        // 공을 담을 div 요소 생성 (li 대신 div를 사용해 유연하게 배치)
+        const ball = document.createElement("div");
+        ball.textContent = number;
+
+        // Bootstrap 클래스와 커스텀 애니메이션 클래스 추가
+        ball.classList.add(
+          'lotto-ball',
+          'rounded-circle',
+          'bg-primary',
+          'd-flex',
+          'justify-content-center',
+          'align-items-center',
+          getBallColorClass(number)
+        );
+
+        // 각 공이 순차적으로 떨어지도록 딜레이 적용
+        ball.style.animationDelay = `${index * 0.2}s`; // 0.2초씩 지연
+
+        // 완성한 공을 컨테이너에 추가
+        lottoNumbersDisplay.appendChild(ball);
+      });
+    };
+
+    // 3. 버튼 요소에 이벤트 핸들러를 등록
+    btn.addEventListener("click", getLottery);
+  </script>
+</body>
+
+</html>
