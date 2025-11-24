@@ -2,31 +2,16 @@
 const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-// === 테마 토글(about.html / index.html 공용) ===
-// 저장된 테마 불러오기 or 시스템 선호도
+
+// === 테마 고정: 무조건 light ===
 const root = document.documentElement;
-const savedTheme = localStorage.getItem('theme');
-const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-root.setAttribute('data-theme', savedTheme || (prefersDark ? 'dark' : 'light'));
 
-function updateToggleButton() {
-  const btn = document.getElementById('themeToggle');
-  if (!btn) return;
-  const isDark = root.getAttribute('data-theme') === 'dark';
-  btn.textContent = isDark ? '☀️' : '🌙';
-  btn.setAttribute('aria-pressed', String(isDark));
-}
-updateToggleButton();
+// 혹시 이전에 저장된 테마가 남아있으면 제거
+localStorage.removeItem('theme');
 
-document.addEventListener('click', (e) => {
-  if (e.target && (e.target.id === 'themeToggle' || e.target.closest('#themeToggle'))) {
-    const cur = root.getAttribute('data-theme');
-    const next = cur === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
-    updateToggleButton();
-  }
-});
+// 항상 라이트로 고정
+root.setAttribute('data-theme', 'light');
+
 
 // === 스크롤 리빌 ===
 const revealEls = document.querySelectorAll('.reveal');
@@ -40,8 +25,8 @@ const io = new IntersectionObserver((entries, obs) => {
 }, { threshold: .12 });
 revealEls.forEach(el => io.observe(el));
 
+
 // === AI 학습 타임라인 데이터(예시) ===
-// 필요 시 항목을 자유롭게 추가/수정하세요.
 const AI_TIMELINE = [
   {
     date: '2025-09',
@@ -83,8 +68,8 @@ const AI_TIMELINE = [
   });
 })();
 
+
 // === 진행도 바(예시 값) ===
-// 필요 시 실데이터 기준으로 조정
 function setProgress(idBar, idLabel, val) {
   const bar = document.getElementById(idBar);
   const lab = document.getElementById(idLabel);
@@ -93,9 +78,9 @@ function setProgress(idBar, idLabel, val) {
   bar.style.width = v + '%';
   lab.textContent = v + '%';
 }
-// 예시: 알고리즘 60%, DL 35%
 setProgress('progAlgo', 'progAlgoLabel', 60);
 setProgress('progDL', 'progDLLabel', 35);
+
 
 // === 프로젝트 필터 ===
 const grid = document.getElementById('projectGrid');
@@ -116,7 +101,8 @@ if (grid) {
   });
 }
 
-// === 내부 앵커 부드러운 스크롤(선택) ===
+
+// === 내부 앵커 부드러운 스크롤 ===
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', (e) => {
     const id = a.getAttribute('href');
@@ -127,6 +113,8 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     }
   });
 });
+
+
 // === Hero right: 학습 진행도 원형 게이지 & 날짜 표시 ===
 (function(){
   const nodes = document.querySelectorAll('.radial[data-progress]');
@@ -144,32 +132,29 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     upd.textContent = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
   }
 })();
+
+
 // ==== Scroll Buttons (Top / Bottom) ====
 (function(){
   const btnTop = document.getElementById('scrollTopBtn');
   const btnBottom = document.getElementById('scrollBottomBtn');
-
   if (!btnTop || !btnBottom) return;
 
-  // 맨 위로 이동
   btnTop.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  // 맨 아래로 이동
   btnBottom.addEventListener('click', () => {
     window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   });
 
-  // 스크롤 위치 감지해서 버튼 표시/숨김
   window.addEventListener('scroll', () => {
     const y = window.scrollY || document.documentElement.scrollTop;
-    const show = y > 200; // 200px 이상 스크롤 시 표시
+    const show = y > 200;
     btnTop.classList.toggle('hide', !show);
     btnBottom.classList.toggle('hide', !show);
   });
 
-  // 초기 상태
   btnTop.classList.add('hide');
   btnBottom.classList.add('hide');
 })();
