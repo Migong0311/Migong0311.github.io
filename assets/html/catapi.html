@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cat Viewer</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <style>
+    body {
+      background-color: #f7f7f7;
+      padding-top: 40px;
+      padding-bottom: 60px;
+    }
+
+    #cat-container img {
+      max-width: 300px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      margin-top: 20px;
+    }
+
+    .explain-box {
+      margin-top: 50px;
+      padding: 25px;
+      border-radius: 12px;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: left;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app" class="container text-center">
+    <h1 class="mb-4">🐾 Cat Image Viewer</h1>
+    <p>버튼을 눌러 새로운 고양이 사진을 만나보세요!</p>
+    <button class="btn btn-primary btn-lg" @click="getCatImage">
+      😺 냥냥펀치!
+    </button>
+
+    <div id="cat-container">
+      <img v-if="imgUrl" :src="imgUrl" alt="Cat Image">
+    </div>
+
+    <!-- 설명 박스 영역 -->
+    <div class="explain-box mt-5">
+      <h3>📘 고양이 사진이 나오는 과정</h3>
+      <hr>
+
+      <h5>1️⃣ onMounted()란?</h5>
+      <p>
+        <code>onMounted()</code>는 Vue 컴포넌트가 화면에 완전히 나타난 직후 실행되는
+        라이프사이클 훅입니다.  
+        이 예제에서는 앱이 로드되자마자 고양이 이미지를 자동으로 불러오는 역할을 합니다.
+      </p>
+
+      <h5>2️⃣ ref() — 반응형 상태</h5>
+      <p>
+        <code>ref()</code>는 Vue의 반응형 데이터입니다.  
+        <code>imgUrl.value</code> 값을 바꾸면 화면에 표시되는 이미지가 자동으로 갱신됩니다.
+      </p>
+
+      <h5>3️⃣ Axios로 API 요청</h5>
+      <p>
+        Axios는 HTTP 요청을 쉽게 보낼 수 있는 라이브러리입니다.  
+        여기서는 TheCatAPI로 GET 요청을 보내 고양이 사진 URL을 받아옵니다.
+      </p>
+
+      <h5>4️⃣ 버튼 클릭 시 새 고양이 이미지 요청</h5>
+      <p>
+        <code>@click="getCatImage"</code>는 버튼 클릭 이벤트를 Vue 방식으로 처리하는 문법입니다.
+        클릭할 때마다 새로운 고양이 이미지를 불러옵니다.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Axios -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <!-- Vue -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <script>
+    const { createApp, ref, onMounted } = Vue
+
+    const app = createApp({
+      setup() {
+        const imgUrl = ref(null)
+
+        const getCatImage = function () {
+          const URL = "https://api.thecatapi.com/v1/images/search"
+
+          axios.get(URL)
+            .then((response) => {
+              imgUrl.value = response.data[0].url
+            })
+            .catch(() => {
+              console.log("실패했다옹")
+            })
+        }
+
+        // 페이지 로드시 자동 고양이 1마리 가져오기
+        onMounted(() => {
+          getCatImage()
+        })
+
+        return {
+          getCatImage,
+          imgUrl
+        }
+      }
+    })
+
+    app.mount('#app')
+  </script>
+</body>
+</html>
