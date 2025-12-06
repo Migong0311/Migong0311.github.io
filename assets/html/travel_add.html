@@ -7,27 +7,36 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;700&display=swap" rel="stylesheet">
-            <link rel="stylesheet" href="../css/tushima_travel.css">
-
+    <link rel="stylesheet" href="../css/tushima_travel.css">
 </head>
 <body class="bg-light">
 
-    <div class="container py-5" style="max-width: 800px;">
+    <nav class="navbar navbar-dark bg-dark mb-4">
+        <div class="container">
+            <span class="navbar-brand">Travel Admin</span>
+            <a href="tushima_travel.html" class="btn btn-outline-light btn-sm">메인으로 이동</a>
+        </div>
+    </nav>
+
+    <div class="container pb-5" style="max-width: 800px;">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="fw-bold"><i class="bi bi-gear-fill me-2"></i>일정 관리자</h2>
-            <a href="tushima_travel.html" class="btn btn-outline-dark">메인 페이지로 돌아가기</a>
         </div>
 
         <div class="card shadow-sm border-0 mb-5">
             <div class="card-body p-4">
-                <h5 class="card-title mb-4 fw-bold">새 일정 추가</h5>
+                <h5 class="card-title mb-4 fw-bold" id="formTitle">새 일정 추가</h5>
+                
                 <form id="schedule-form">
+                    <input type="hidden" id="editId">
+
                     <div class="row g-3">
                         <div class="col-md-4">
                             <label class="form-label">Day (일차)</label>
                             <select class="form-select" id="inputDay" required>
                                 <option value="1">1일차</option>
                                 <option value="2">2일차</option>
+                                <option value="3">3일차</option>
                             </select>
                         </div>
                         <div class="col-md-4">
@@ -45,11 +54,13 @@
                         <div class="col-12">
                             <label class="form-label">사진 첨부 (선택)</label>
                             <input type="file" class="form-control" id="inputImage" accept="image/*">
-                            <div class="form-text">이미지는 브라우저 저장소 용량 제한으로 인해 저화질로 자동 리사이징되어 저장됩니다.</div>
+                            <div class="form-text">수정 시 이미지를 변경하지 않으려면 비워두세요.</div>
                         </div>
                     </div>
-                    <div class="d-grid gap-2 mt-4">
-                        <button type="submit" class="btn btn-primary btn-lg">일정 저장하기</button>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                        <button type="button" id="btnCancel" class="btn btn-secondary me-md-2 d-none" onclick="resetFormState()">취소</button>
+                        <button type="submit" id="btnSubmit" class="btn btn-primary btn-lg">일정 저장하기</button>
                     </div>
                 </form>
             </div>
@@ -65,7 +76,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="../js/tushima_travel.js"></script>
+    <script src="../js/tushima_travel.js"></script>
 
     <script>
         // 페이지 로드 시 관리자 모드 실행
