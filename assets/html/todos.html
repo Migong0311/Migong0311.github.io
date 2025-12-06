@@ -9,24 +9,32 @@
   <style>
     /* 사용자 정의 스타일 */
     body {
-      background-color: #f8f9fa; /* 부드러운 회색 배경 */
+      background-color: #f8f9fa;
+      /* 부드러운 회색 배경 */
     }
+
     .todo-container {
       max-width: 600px;
       margin-top: 50px;
     }
+
     .completed-text {
       text-decoration: line-through;
       color: #adb5bd;
     }
+
     .cursor-pointer {
       cursor: pointer;
     }
+
     /* 트랜지션 효과 */
-    .list-enter-active, .list-leave-active {
+    .list-enter-active,
+    .list-leave-active {
       transition: all 0.5s ease;
     }
-    .list-enter-from, .list-leave-to {
+
+    .list-enter-from,
+    .list-leave-to {
       opacity: 0;
       transform: translateX(30px);
     }
@@ -34,154 +42,183 @@
 </head>
 
 <body>
-  <div id="app" class="container todo-container">
-    
-    <div class="card shadow-sm border-0">
-      <div class="card-header bg-primary text-white p-4">
-        <h2 class="fw-bold mb-0">📅 My Daily Todo</h2>
-        <p class="mb-0 mt-2">오늘 할 일을 체계적으로 관리하세요.</p>
-      </div>
-      
-      <div class="card-body p-4">
-        <div class="mb-4">
-          <div class="d-flex justify-content-between mb-1">
-            <span class="fw-bold text-primary">진행률</span>
-            <span class="text-secondary">{{ completedCount }} / {{ totalCount }} 완료</span>
-          </div>
-          <div class="progress" style="height: 10px;">
-            <div class="progress-bar bg-success" role="progressbar" 
-                 :style="{ width: progressPercent + '%' }" 
-                 aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-          </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand font-cinzel" href="../../index.html">My Project</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            유틸리티 & 예제
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li>
+                                <h6 class="dropdown-header">유틸리티</h6>
+                            </li>
+                            <li><a class="dropdown-item active" href="todos.html"><i class="bi bi-check2-square me-2"></i>Todo 리스트</a></li>
+                            <li><a class="dropdown-item" href="luckylotto.html"><i class="bi bi-ticket-perforated me-2"></i>로또 추첨기</a></li>
+                            <li><a class="dropdown-item" href="tushima_travel.html"><i class="bi bi-airplane me-2"></i>대마도1박2일</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <h6 class="dropdown-header">API 예제</h6>
+                            </li>
+                            <li><a class="dropdown-item" href="randomdog.html"><i class="bi bi-hearts me-2"></i>랜덤 강아지</a></li>
+                            <li><a class="dropdown-item" href="catapi.html"><i class="bi bi-emoji-heart-eyes me-2"></i>랜덤 고양이</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
+    </nav>
+    <div id="app" class="container todo-container">
 
-        <form @submit.prevent="addTodo" class="input-group mb-4 shadow-sm">
-          <input type="text" class="form-control form-control-lg" 
-                 v-model="userInput" 
-                 placeholder="새로운 할 일을 입력하세요..." 
-                 autofocus>
-          <button class="btn btn-primary px-4" type="submit">추가</button>
-        </form>
-
-        <ul class="list-group list-group-flush">
-          <li v-if="todos.length === 0" class="list-group-item text-center text-muted py-5">
-            등록된 할 일이 없습니다. 오늘 하루를 계획해 보세요!
-          </li>
-
-          <li v-for="todo in todos" :key="todo.id" 
-              class="list-group-item d-flex justify-content-between align-items-center py-3">
-            
-            <div class="d-flex align-items-center">
-              <input class="form-check-input me-3" type="checkbox" 
-                     v-model="todo.isCompleted" 
-                     style="width: 1.5em; height: 1.5em; cursor: pointer;">
-              
-              <span :class="{ 'completed-text': todo.isCompleted }" class="fs-5">
-                {{ todo.text }}
-              </span>
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-primary text-white p-4">
+                <h2 class="fw-bold mb-0">📅 My Daily Todo</h2>
+                <p class="mb-0 mt-2">오늘 할 일을 체계적으로 관리하세요.</p>
             </div>
 
-            <button @click="deleteTodo(todo.id)" class="btn btn-outline-danger btn-sm rounded-pill px-3">
-              삭제
-            </button>
-          </li>
-        </ul>
-      </div>
-      
-      <div class="card-footer bg-white text-end py-3">
-         <button v-if="todos.length > 0" @click="clearAll" class="btn btn-link text-danger text-decoration-none btn-sm">
-           전체 삭제
-         </button>
-      </div>
+            <div class="card-body p-4">
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between mb-1">
+                        <span class="fw-bold text-primary">진행률</span>
+                        <span class="text-secondary">{{ completedCount }} / {{ totalCount }} 완료</span>
+                    </div>
+                    <div class="progress" style="height: 10px;">
+                        <div class="progress-bar bg-success" role="progressbar" :style="{ width: progressPercent + '%' }"
+                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+
+                <form @submit.prevent="addTodo" class="input-group mb-4 shadow-sm">
+                    <input type="text" class="form-control form-control-lg" v-model="userInput"
+                        placeholder="새로운 할 일을 입력하세요..." autofocus>
+                    <button class="btn btn-primary px-4" type="submit">추가</button>
+                </form>
+
+                <ul class="list-group list-group-flush">
+                    <li v-if="todos.length === 0" class="list-group-item text-center text-muted py-5">
+                        등록된 할 일이 없습니다. 오늘 하루를 계획해 보세요!
+                    </li>
+
+                    <li v-for="todo in todos" :key="todo.id"
+                        class="list-group-item d-flex justify-content-between align-items-center py-3">
+
+                        <div class="d-flex align-items-center">
+                            <input class="form-check-input me-3" type="checkbox" v-model="todo.isCompleted"
+                                style="width: 1.5em; height: 1.5em; cursor: pointer;">
+
+                            <span :class="{ 'completed-text': todo.isCompleted }" class="fs-5">
+                                {{ todo.text }}
+                            </span>
+                        </div>
+
+                        <button @click="deleteTodo(todo.id)" class="btn btn-outline-danger btn-sm rounded-pill px-3">
+                            삭제
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card-footer bg-white text-end py-3">
+                <button v-if="todos.length > 0" @click="clearAll"
+                    class="btn btn-link text-danger text-decoration-none btn-sm">
+                    전체 삭제
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
+    
+    
+</body>
 
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script>
     const { createApp, ref, computed, watch, onMounted } = Vue
 
-    const app = createApp({
-      setup() {
-        const userInput = ref("")
-        const todos = ref([])
+        const app = createApp({
+            setup() {
+                const userInput = ref("")
+                const todos = ref([])
 
-        // [기능 추가 1] LocalStorage에서 데이터 불러오기 (초기화)
-        const loadTodos = () => {
-          const savedTodos = localStorage.getItem('my_todos')
-          if (savedTodos) {
-            todos.value = JSON.parse(savedTodos)
-          }
-        }
+                const loadTodos = () => {
+                    const savedTodos = localStorage.getItem('my_todos')
+                    if (savedTodos) {
+                        todos.value = JSON.parse(savedTodos)
+                    }
+                }
 
-        // 앱이 마운트될 때 데이터 로드
-        onMounted(() => {
-          loadTodos()
+                onMounted(() => {
+                    loadTodos()
+                })
+
+                watch(todos, (newTodos) => {
+                    localStorage.setItem('my_todos', JSON.stringify(newTodos))
+                }, { deep: true })
+
+
+                const totalCount = computed(() => todos.value.length)
+                const completedCount = computed(() => todos.value.filter(t => t.isCompleted).length)
+                const progressPercent = computed(() => {
+                    if (totalCount.value === 0) return 0
+                    return Math.round((completedCount.value / totalCount.value) * 100)
+                })
+
+
+                const addTodo = () => {
+                    if (userInput.value.trim() === "") {
+                        alert("내용을 입력해주세요!");
+                        return
+                    }
+
+                    const newTodo = {
+                        id: Date.now(),
+                        text: userInput.value,
+                        isCompleted: false
+                    }
+
+                    todos.value.push(newTodo)
+                    userInput.value = ""
+                }
+
+                const deleteTodo = (id) => {
+                    if (!confirm("정말 삭제하시겠습니까?")) return
+
+                    const index = todos.value.findIndex((todo) => todo.id === id)
+                    if (index !== -1) {
+                        todos.value.splice(index, 1)
+                    }
+                }
+
+                const clearAll = () => {
+                    if (confirm("모든 기록을 지우시겠습니까?")) {
+                        todos.value = []
+                    }
+                }
+
+                return {
+                    todos,
+                    userInput,
+                    addTodo,
+                    deleteTodo,
+                    clearAll,
+                    totalCount,
+                    completedCount,
+                    progressPercent
+                }
+            }
         })
 
-        // [기능 추가 2] 데이터 변경 감지 및 자동 저장 (Watch)
-        // todos 배열 내부의 변화까지 감지하기 위해 { deep: true } 옵션 사용
-        watch(todos, (newTodos) => {
-          localStorage.setItem('my_todos', JSON.stringify(newTodos))
-        }, { deep: true })
-
-
-        // [기능 추가 3] 진행률 계산 (Computed)
-        const totalCount = computed(() => todos.value.length)
-        const completedCount = computed(() => todos.value.filter(t => t.isCompleted).length)
-        const progressPercent = computed(() => {
-          if (totalCount.value === 0) return 0
-          return Math.round((completedCount.value / totalCount.value) * 100)
-        })
-
-
-        // 할 일 추가
-        const addTodo = () => {
-          if (userInput.value.trim() === "") {
-            alert("내용을 입력해주세요!"); // 간단한 알림 추가
-            return 
-          }
-
-          const newTodo = {
-            id: Date.now(),
-            text: userInput.value,
-            isCompleted: false
-          }
-
-          todos.value.push(newTodo) // watch가 감지하여 자동 저장됨
-          userInput.value = ""
-        }
-
-        // 할 일 삭제
-        const deleteTodo = (id) => {
-          if (!confirm("정말 삭제하시겠습니까?")) return
-          
-          const index = todos.value.findIndex((todo) => todo.id === id)
-          if (index !== -1) {
-            todos.value.splice(index, 1)
-          }
-        }
-
-        // 전체 삭제 기능
-        const clearAll = () => {
-          if(confirm("모든 기록을 지우시겠습니까?")) {
-            todos.value = []
-          }
-        }
-
-        return {
-          todos,
-          userInput,
-          addTodo,
-          deleteTodo,
-          clearAll,
-          totalCount,
-          completedCount,
-          progressPercent
-        }
-      }
-    })
-
-    app.mount('#app')
+        app.mount('#app')
   </script>
 </body>
 
