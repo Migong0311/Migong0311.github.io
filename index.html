@@ -6,11 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Migong0311 | Portfolio-as-a-Service</title>
   <meta name="description" content="협업, 소개, AI 학습 여정을 한 곳에 담은 포트폴리오 기반 서비스" />
-  
+
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-  
-  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+  <link rel="stylesheet" as="style" crossorigin
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
 
   <style>
     :root {
@@ -31,13 +32,13 @@
     }
 
     /* -------------------------------- 
-       1. Glassmorphism Navbar 
-    -------------------------------- */
+        1. Glassmorphism Navbar 
+      -------------------------------- */
     .navbar-glass {
       background: var(--glass-bg);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(0,0,0,0.05);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
       transition: all 0.3s ease;
     }
 
@@ -54,18 +55,19 @@
       margin: 0 4px;
     }
 
-    .nav-link:hover, .nav-link.active {
+    .nav-link:hover,
+    .nav-link.active {
       color: var(--primary-color);
     }
 
     /* Dropdown Customization */
     .dropdown-menu {
       border: none;
-      box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1);
+      box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
       border-radius: 12px;
       padding: 0.5rem;
     }
-    
+
     .dropdown-item {
       border-radius: 8px;
       padding: 0.5rem 1rem;
@@ -87,7 +89,7 @@
       font-weight: 600;
       transition: transform 0.2s;
     }
-    
+
     .btn-contact:hover {
       transform: translateY(-2px);
       color: white;
@@ -95,8 +97,8 @@
     }
 
     /* -------------------------------- 
-       2. Hero Section 
-    -------------------------------- */
+        2. Hero Section 
+      -------------------------------- */
     .hero-section {
       padding: 6rem 0 4rem;
       background: radial-gradient(circle at 10% 20%, rgb(241, 245, 249) 0%, rgb(255, 255, 255) 90%);
@@ -110,8 +112,8 @@
     }
 
     /* -------------------------------- 
-       3. Cards & Components 
-    -------------------------------- */
+        3. Cards & Components 
+      -------------------------------- */
     .section-pad {
       padding: 5rem 0;
     }
@@ -138,7 +140,7 @@
       border: 1px solid #e2e8f0;
       transition: all 0.3s;
     }
-    
+
     .tile:hover {
       border-color: var(--primary-color);
     }
@@ -151,8 +153,8 @@
     }
 
     /* -------------------------------- 
-       4. Utils & Scroll Buttons 
-    -------------------------------- */
+        4. Utils & Scroll Buttons 
+      -------------------------------- */
     .scroll-btn {
       position: fixed;
       right: 20px;
@@ -161,7 +163,7 @@
       border-radius: 50%;
       background: white;
       border: 1px solid #e2e8f0;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       z-index: 999;
       display: flex;
       align-items: center;
@@ -171,16 +173,27 @@
       transition: all 0.2s;
       cursor: pointer;
     }
-    
+
     .scroll-btn:hover {
       background: var(--primary-color);
       color: white;
       border-color: var(--primary-color);
     }
-    
-    #scrollTopBtn { bottom: 80px; opacity: 0; pointer-events: none; }
-    #scrollBottomBtn { bottom: 25px; }
-    #scrollTopBtn.show { opacity: 1; pointer-events: auto; }
+
+    #scrollTopBtn {
+      bottom: 80px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #scrollBottomBtn {
+      bottom: 25px;
+    }
+
+    #scrollTopBtn.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
 
     .skip-link {
       position: absolute;
@@ -191,7 +204,10 @@
       padding: 8px;
       z-index: 2000;
     }
-    .skip-link:focus { top: 0; }
+
+    .skip-link:focus {
+      top: 0;
+    }
 
     footer {
       background: white;
@@ -204,6 +220,7 @@
       transform: translateY(30px);
       transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
     }
+
     .reveal.active {
       opacity: 1;
       transform: translateY(0);
@@ -230,14 +247,15 @@
       <a class="navbar-brand" href="./">
         <i class="bi bi-code-square text-primary me-2"></i>Migong0311
       </a>
-      
-      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-label="Toggle navigation">
+
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
+        aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div id="navMenu" class="collapse navbar-collapse">
         <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-          
+
           <li class="nav-item">
             <a class="nav-link" href="assets/html/about.html">나의 소개</a>
           </li>
@@ -257,14 +275,25 @@
               Web Apps
             </a>
             <ul class="dropdown-menu">
-              <li><h6 class="dropdown-header">유틸리티</h6></li>
-              <li><a class="dropdown-item" href="assets/html/todos.html"><i class="bi bi-check2-square me-2"></i>Todo 리스트</a></li>
-              <li><a class="dropdown-item" href="assets/html/luckylotto.html"><i class="bi bi-ticket-perforated me-2"></i>로또 추첨기</a></li>
-              <li><a class="dropdown-item" href="assets/html/tushima_travel.html"><i class="bi bi-airplane me-2"></i>대마도1박2일</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><h6 class="dropdown-header">API 예제</h6></li>
-              <li><a class="dropdown-item" href="assets/html/randomdog.html"><i class="bi bi-hearts me-2"></i>랜덤 강아지</a></li>
-              <li><a class="dropdown-item" href="assets/html/catapi.html"><i class="bi bi-emoji-heart-eyes me-2"></i>랜덤 고양이</a></li>
+              <li>
+                <h6 class="dropdown-header">유틸리티</h6>
+              </li>
+              <li><a class="dropdown-item" href="assets/html/todos.html"><i class="bi bi-check2-square me-2"></i>Todo
+                  리스트</a></li>
+              <li><a class="dropdown-item" href="assets/html/luckylotto.html"><i
+                    class="bi bi-ticket-perforated me-2"></i>로또 추첨기</a></li>
+              <li><a class="dropdown-item" href="assets/html/tushima_travel.html"><i
+                    class="bi bi-airplane me-2"></i>대마도1박2일</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li>
+                <h6 class="dropdown-header">API 예제</h6>
+              </li>
+              <li><a class="dropdown-item" href="assets/html/randomdog.html"><i class="bi bi-hearts me-2"></i>랜덤 강아지</a>
+              </li>
+              <li><a class="dropdown-item" href="assets/html/catapi.html"><i class="bi bi-emoji-heart-eyes me-2"></i>랜덤
+                  고양이</a></li>
             </ul>
           </li>
         </ul>
@@ -284,7 +313,7 @@
         <div class="row align-items-center g-5">
           <div class="col-lg-6">
             <div class="reveal">
-              <span class="badge bg-primary-subtle text-primary rounded-pill px-3 py-2 mb-3">Portfolio 2024</span>
+              <span class="badge bg-primary-subtle text-primary rounded-pill px-3 py-2 mb-3">Portfolio 2026</span>
               <h1 class="display-4 fw-bold mb-3 lh-base">
                 Build once,<br>
                 Share everywhere.<br>
@@ -330,15 +359,17 @@
           </div>
 
           <div class="col-lg-6">
-            <div class="card border-0 shadow-lg p-4 reveal" style="background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); --delay: 0.3s">
+            <div class="card border-0 shadow-lg p-4 reveal"
+              style="background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); --delay: 0.3s">
               <div class="d-flex align-items-center gap-3 mb-4">
-                <img src="assets/img/profile.jpg" alt="Profile" class="rounded-circle shadow-sm" width="64" height="64" onerror="this.src='https://via.placeholder.com/64'">
+                <img src="assets/img/profile.jpg" alt="Profile" class="rounded-circle shadow-sm" width="64" height="64"
+                  onerror="this.src='https://via.placeholder.com/64'">
                 <div>
                   <div class="badge bg-dark mb-1">Now Focusing</div>
                   <h5 class="mb-0 fw-bold">Django & AI Architecture</h5>
                 </div>
               </div>
-              
+
               <div class="vstack gap-3">
                 <div class="d-flex align-items-start gap-3">
                   <div class="bg-primary-subtle p-2 rounded-circle text-primary">
@@ -368,9 +399,9 @@
                   </div>
                 </div>
               </div>
-              
+
               <hr class="my-4 opacity-10">
-              
+
               <div class="d-flex justify-content-between align-items-center">
                 <span class="small text-muted">Latest Update: 2024.05</span>
                 <a href="ai_practice.html" class="btn btn-sm btn-light rounded-pill px-3">
@@ -411,7 +442,7 @@
               </div>
             </article>
           </div>
-          
+
           <div class="col-md-6 col-lg-4 reveal" style="--delay: 0.1s">
             <article class="card h-100 lift border-0">
               <div class="card-body p-4">
@@ -471,7 +502,8 @@
                     </a>
                   </div>
                 </div>
-                <i class="bi bi-brain position-absolute text-secondary opacity-10" style="font-size: 10rem; right: -20px; bottom: -40px;"></i>
+                <i class="bi bi-brain position-absolute text-secondary opacity-10"
+                  style="font-size: 10rem; right: -20px; bottom: -40px;"></i>
               </div>
             </div>
           </div>
@@ -491,20 +523,20 @@
           <div class="col-md-6 col-lg-5 project-item reveal" data-tags="ai,backend,web,iot">
             <article class="card h-100 lift border-0">
               <div class="position-relative overflow-hidden" style="height: 200px; background: #e2e8f0;">
-                 <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-dark text-white" 
-                      style="background: linear-gradient(45deg, #1e293b, #334155);">
-                    <i class="bi bi-cup-hot-fill fs-1 opacity-50"></i>
-                 </div>
-                 <div class="position-absolute top-0 start-0 m-3">
-                   <span class="badge bg-white text-dark shadow-sm">AIoT</span>
-                   <span class="badge bg-primary shadow-sm">Case Study</span>
-                 </div>
+                <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-dark text-white"
+                  style="background: linear-gradient(45deg, #1e293b, #334155);">
+                  <i class="bi bi-cup-hot-fill fs-1 opacity-50"></i>
+                </div>
+                <div class="position-absolute top-0 start-0 m-3">
+                  <span class="badge bg-white text-dark shadow-sm">AIoT</span>
+                  <span class="badge bg-primary shadow-sm">Case Study</span>
+                </div>
               </div>
-              
+
               <div class="card-body p-4 d-flex flex-column">
                 <h3 class="h4 fw-bold mb-2">Pangyo Coffee Legends</h3>
                 <p class="text-secondary small mb-3">스마트 오피스 환경을 위한 AI + IoT 통합 관제 시스템입니다.</p>
-                
+
                 <div class="mb-4">
                   <div class="d-flex gap-2 mb-2 text-secondary small">
                     <i class="bi bi-cpu"></i> 쾌적도 AI 및 환경 센싱
@@ -523,11 +555,50 @@
                 </div>
                 <a href="assets/projects/pangyo-coffee-legends.html" class="stretched-link" aria-label="프로젝트 상세"></a>
               </div>
+
             </article>
           </div>
-          
+          <div class="col-md-6 col-lg-5 project-item reveal" data-tags="web,ai,fintech,fullstack" style="--delay: 0.1s">
+            <article class="card h-100 lift border-0">
+              <div class="position-relative overflow-hidden" style="height: 200px; background: #e2e8f0;">
+                <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-white text-primary"
+                  style="background: linear-gradient(135deg, #eff6ff, #dbeafe);">
+                  <i class="bi bi-piggy-bank-fill fs-1 text-primary opacity-75"></i>
+                </div>
+                <div class="position-absolute top-0 start-0 m-3">
+                  <span class="badge bg-primary shadow-sm">FinTech</span>
+                  <span class="badge bg-dark shadow-sm">Web App</span>
+                </div>
+              </div>
+
+              <div class="card-body p-4 d-flex flex-column">
+                <h3 class="h4 fw-bold mb-2">Fin:D (핀디)</h3>
+                <p class="text-secondary small mb-3">사회초년생을 위한 AI 맞춤형 예적금 추천 및 금융 비서 플랫폼입니다.</p>
+
+                <div class="mb-4">
+                  <div class="d-flex gap-2 mb-2 text-secondary small">
+                    <i class="bi bi-robot"></i> GPT 기반 금융 어드바이저 (Chatbot)
+                  </div>
+                  <div class="d-flex gap-2 mb-2 text-secondary small">
+                    <i class="bi bi-bar-chart-line"></i> 개인화 상품 추천 알고리즘
+                  </div>
+                  <div class="d-flex gap-2 text-secondary small">
+                    <i class="bi bi-layers"></i> Vue.js 3 + Django DRF
+                  </div>
+                </div>
+
+                <div class="mt-auto pt-3 border-top">
+                  <div class="small text-muted mb-2">My Role</div>
+                  <div class="fw-medium small text-primary">Full Stack (Vue, Django) · AI 연동</div>
+                </div>
+                <a href="assets/projects/fin-d.html" class="stretched-link" aria-label="Fin:D 프로젝트 상세"></a>
+              </div>
+            </article>
+          </div>
           <div class="col-md-6 col-lg-5 reveal" style="--delay: 0.1s">
-            <div class="card h-100 border-2 border-dashed d-flex align-items-center justify-content-center text-center p-5 bg-transparent" style="border-color: #cbd5e1;">
+            <div
+              class="card h-100 border-2 border-dashed d-flex align-items-center justify-content-center text-center p-5 bg-transparent"
+              style="border-color: #cbd5e1;">
               <div class="text-secondary">
                 <i class="bi bi-plus-circle fs-1 mb-3 d-block opacity-25"></i>
                 <h5 class="fw-bold">Coming Soon</h5>
@@ -553,7 +624,8 @@
 
         <div class="row g-4 justify-content-center">
           <div class="col-md-5 col-lg-4 reveal">
-            <a href="mailto:kimms000311@gmail.com?subject=%5BCollab%5D%20협업%20제안" class="card h-100 lift text-decoration-none border-0 bg-light text-center p-4">
+            <a href="mailto:kimms000311@gmail.com?subject=%5BCollab%5D%20협업%20제안"
+              class="card h-100 lift text-decoration-none border-0 bg-light text-center p-4">
               <div class="card-body">
                 <div class="bg-white rounded-circle shadow-sm d-inline-flex p-3 mb-3 text-primary">
                   <i class="bi bi-envelope-fill fs-4"></i>
@@ -563,9 +635,10 @@
               </div>
             </a>
           </div>
-          
+
           <div class="col-md-5 col-lg-4 reveal" style="--delay: 0.1s">
-            <a href="https://github.com/Migong0311" target="_blank" rel="noreferrer" class="card h-100 lift text-decoration-none border-0 bg-light text-center p-4">
+            <a href="https://github.com/Migong0311" target="_blank" rel="noreferrer"
+              class="card h-100 lift text-decoration-none border-0 bg-light text-center p-4">
               <div class="card-body">
                 <div class="bg-white rounded-circle shadow-sm d-inline-flex p-3 mb-3 text-dark">
                   <i class="bi bi-github fs-4"></i>
@@ -593,11 +666,11 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  
+
   <script type="module" src="assets/js/scripts.js"></script>
-  
+
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
       // Year Update
       document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -619,23 +692,24 @@
       // Scroll Top/Bottom Buttons Logic
       const topBtn = document.getElementById("scrollTopBtn");
       const botBtn = document.getElementById("scrollBottomBtn");
-      
-      window.onscroll = function() {
+
+      window.onscroll = function () {
         if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
           topBtn.classList.add("show");
         } else {
           topBtn.classList.remove("show");
         }
       };
-      
-      topBtn.onclick = function() {
-        window.scrollTo({top: 0, behavior: 'smooth'});
+
+      topBtn.onclick = function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       };
-      
-      botBtn.onclick = function() {
-        window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});
+
+      botBtn.onclick = function () {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
       };
     });
   </script>
 </body>
+
 </html>
