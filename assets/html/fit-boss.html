@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>김미성 | Backend Developer Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<link rel="stylesheet" as="style" crossorigin
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+<link rel="stylesheet" href="../css/project-style.css" />
+<link rel="icon" type="image/svg+xml" href="../icons/favicon.svg">
+<link rel="alternate icon" href="../icons/favicon.svg">
+<style>
+/* ===== Reset & Base ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: #ffffff;
+  color: #334155;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+a { color: #6366f1; text-decoration: none; }
+code, .mono { font-family: 'JetBrains Mono', monospace; }
+
+/* ===== Layout ===== */
+.container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+section { padding: 100px 0; position: relative; }
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #6366f1;
+  margin-bottom: 12px;
+}
+.section-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 48px;
+  line-height: 1.3;
+}
+.section-title span {
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.bg-subtle { background: #f8fafc; }
+
+/* ===== Hero ===== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(160deg, #f0f0ff 0%, #ffffff 40%, #faf5ff 70%, #f0fdf4 100%);
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  right: -20%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -20%;
+  left: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(168,85,247,0.06) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.hero-content { position: relative; z-index: 1; }
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(99,102,241,0.08);
+  border: 1px solid rgba(99,102,241,0.2);
+  border-radius: 100px;
+  padding: 6px 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #6366f1;
+  margin-bottom: 24px;
+}
+.hero-badge::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+.hero h1 {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  color: #0f172a;
+}
+.hero h1 .gradient {
+  background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero .subtitle {
+  font-size: 1.25rem;
+  color: #64748b;
+  max-width: 600px;
+  margin-bottom: 12px;
+}
+.hero .role-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 6px 16px;
+  border-radius: 6px;
+  margin-bottom: 32px;
+}
+.hero-stats {
+  display: flex;
+  gap: 40px;
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid #e2e8f0;
+}
+.hero-stat .num {
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero-stat .label {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* ===== Overview Cards ===== */
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 48px;
+}
+.ov-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 28px;
+  transition: all 0.3s;
+}
+.ov-card:hover { border-color: #a5b4fc; box-shadow: 0 4px 20px rgba(99,102,241,0.08); }
+.ov-card .ov-label {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+.ov-card .ov-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* ===== Tech Badges ===== */
+.tech-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  transition: all 0.3s;
+}
+.badge:hover { transform: translateY(-2px); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.badge.primary { border-color: #c7d2fe; color: #4f46e5; background: #eef2ff; }
+.badge.green { border-color: #a7f3d0; color: #059669; background: #ecfdf5; }
+.badge.amber { border-color: #fde68a; color: #d97706; background: #fffbeb; }
+.badge.rose { border-color: #fecdd3; color: #e11d48; background: #fff1f2; }
+.badge.sky { border-color: #bae6fd; color: #0284c7; background: #f0f9ff; }
+
+/* ===== Architecture ===== */
+.arch-box {
+  background: #1e1b4b;
+  border-radius: 16px;
+  padding: 40px;
+  margin-bottom: 40px;
+  overflow-x: auto;
+}
+.arch-box pre {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: #c4b5fd;
+  white-space: pre;
+}
+.arch-box pre .hl { color: #a5b4fc; font-weight: 700; }
+.arch-box pre .green { color: #6ee7b7; }
+.arch-box pre .amber { color: #fcd34d; }
+.arch-box pre .rose { color: #fda4af; }
+
+.flow-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-top: 32px;
+}
+.flow-step {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+}
+.flow-step .step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+.flow-step p { font-size: 0.85rem; color: #64748b; }
+.flow-step strong { color: #0f172a; }
+
+/* ===== Metrics ===== */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+}
+.metric-card {
+  text-align: center;
+  padding: 32px 20px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  transition: all 0.3s;
+}
+.metric-card:hover { border-color: #a5b4fc; transform: translateY(-4px); box-shadow: 0 8px 30px rgba(99,102,241,0.1); }
+.metric-num {
+  font-size: 2.8rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  line-height: 1.2;
+}
+.metric-label {
+  font-size: 0.85rem;
+  color: #64748b;
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+/* ===== Challenges ===== */
+.challenge-cards { display: flex; flex-direction: column; gap: 24px; }
+.ch-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 36px;
+  transition: all 0.3s;
+}
+.ch-card:hover { border-color: #a5b4fc; box-shadow: 0 4px 20px rgba(99,102,241,0.08); }
+.ch-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.ch-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+.ch-icon.red { background: #fef2f2; }
+.ch-icon.amber { background: #fffbeb; }
+.ch-icon.blue { background: #eff6ff; }
+.ch-icon.green { background: #f0fdf4; }
+.ch-title { font-size: 1.15rem; font-weight: 700; color: #0f172a; }
+.ch-problem, .ch-solution { margin-bottom: 12px; }
+.ch-problem .tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #ef4444;
+  margin-bottom: 4px;
+}
+.ch-solution .tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #059669;
+  margin-bottom: 4px;
+}
+.ch-result {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #059669;
+  margin-top: 8px;
+}
+.code-block {
+  background: #1e1b4b;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 12px 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  color: #c4b5fd;
+  overflow-x: auto;
+}
+.code-block .keyword { color: #c084fc; }
+.code-block .string { color: #6ee7b7; }
+.code-block .comment { color: #7c7c9a; }
+
+/* ===== Features ===== */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.feat-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 24px;
+  transition: all 0.3s;
+}
+.feat-card:hover { border-color: #a5b4fc; transform: translateY(-2px); box-shadow: 0 4px 20px rgba(99,102,241,0.08); }
+.feat-card .feat-icon { font-size: 1.6rem; margin-bottom: 12px; }
+.feat-card h4 { font-size: 0.95rem; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
+.feat-card p { font-size: 0.82rem; color: #64748b; line-height: 1.6; }
+.feat-card .feat-tech {
+  margin-top: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: #6366f1;
+}
+
+/* ===== Infra ===== */
+.infra-pipeline {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 40px;
+  overflow-x: auto;
+  padding: 20px 0;
+}
+.infra-stage {
+  text-align: center;
+  flex-shrink: 0;
+  min-width: 140px;
+}
+.infra-stage .stage-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  margin: 0 auto 10px;
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  transition: all 0.3s;
+}
+.infra-stage:hover .stage-icon { border-color: #6366f1; box-shadow: 0 4px 16px rgba(99,102,241,0.15); }
+.infra-stage .stage-name { font-size: 0.82rem; font-weight: 700; color: #0f172a; }
+.infra-stage .stage-desc { font-size: 0.72rem; color: #94a3b8; margin-top: 2px; }
+.infra-arrow {
+  font-size: 1.4rem;
+  color: #a5b4fc;
+  flex-shrink: 0;
+  padding: 0 8px;
+}
+.infra-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+.infra-detail-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 28px;
+  transition: all 0.3s;
+}
+.infra-detail-card:hover { border-color: #a5b4fc; box-shadow: 0 4px 20px rgba(99,102,241,0.08); }
+.infra-detail-card h4 { font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.infra-detail-card ul { list-style: none; }
+.infra-detail-card li {
+  font-size: 0.85rem;
+  color: #475569;
+  padding: 4px 0;
+  padding-left: 18px;
+  position: relative;
+}
+.infra-detail-card li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 12px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #a5b4fc;
+}
+
+/* ===== Learned ===== */
+.learned-list { display: flex; flex-direction: column; gap: 20px; }
+.learned-item {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+}
+.learned-num {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.learned-item h4 { font-size: 1rem; font-weight: 700; color: #0f172a; margin-bottom: 6px; }
+.learned-item p { font-size: 0.88rem; color: #64748b; }
+
+/* ===== Footer ===== */
+footer {
+  padding: 40px 0;
+  border-top: 1px solid #e2e8f0;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+/* ===== Divider ===== */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #c7d2fe, transparent);
+  margin: 0;
+}
+
+/* ===== Scroll Animation ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  section { padding: 60px 0; }
+  .hero-stats { flex-direction: column; gap: 20px; }
+  .overview-grid { grid-template-columns: 1fr; }
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .features-grid { grid-template-columns: 1fr; }
+  .section-title { font-size: 1.6rem; }
+  .arch-box { padding: 20px; }
+  .arch-box pre { font-size: 0.65rem; }
+  .infra-pipeline { flex-wrap: wrap; justify-content: center; }
+  .infra-details { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<button id="scrollTopBtn" class="scroll-btn" title="맨 위로">
+  <i class="bi bi-arrow-up"></i>
+</button>
+<button id="scrollBottomBtn" class="scroll-btn" title="맨 아래로">
+  <i class="bi bi-arrow-down"></i>
+</button>
+
+<nav class="navbar navbar-expand-lg navbar-glass sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="../../index.html">
+      <i class="bi bi-arrow-left me-2"></i>Back to Portfolio
+    </a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
+      aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navMenu" class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="about.html">나의 소개</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../../ai_practice.html">AI 학습</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../../index.html#collab">협업</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../../index.html#projects">프로젝트</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">Web Apps</a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><h6 class="dropdown-header">유틸리티</h6></li>
+            <li><a class="dropdown-item" href="todos.html"><i class="bi bi-check2-square me-2"></i>Todo 리스트</a></li>
+            <li><a class="dropdown-item" href="luckylotto.html"><i class="bi bi-ticket-perforated me-2"></i>로또 추첨기</a></li>
+            <li><a class="dropdown-item" href="tushima_travel.html"><i class="bi bi-airplane me-2"></i>대마도1박2일</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><h6 class="dropdown-header">API 예제</h6></li>
+            <li><a class="dropdown-item" href="randomdog.html"><i class="bi bi-hearts me-2"></i>랜덤 강아지</a></li>
+            <li><a class="dropdown-item" href="catapi.html"><i class="bi bi-emoji-heart-eyes me-2"></i>랜덤 고양이</a></li>
+          </ul>
+        </li>
+      </ul>
+      <div class="d-flex ms-lg-3">
+        <a href="../../index.html#contact" class="btn btn-contact">Contact Me</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="container hero-content">
+    <div class="hero-badge">Backend Developer Portfolio</div>
+    <h1>김미성<br><span class="gradient">FIT-BOSS</span></h1>
+    <p class="subtitle">실시간 AI 자세 분석 + 유니티 보스레이드 게이미피케이션 피트니스 서비스</p>
+    <div class="role-tag">Backend & Infra 전체 단독 설계 & 구현</div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="num">53</div>
+        <div class="label">API Endpoints</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">8</div>
+        <div class="label">External Integrations</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">30fps</div>
+        <div class="label">Realtime Streaming</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num">6</div>
+        <div class="label">DB Models</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== PROJECT OVERVIEW ===== -->
+<section class="bg-subtle">
+  <div class="container">
+    <div class="section-label reveal">Project Overview</div>
+    <h2 class="section-title reveal">프로젝트 <span>한눈에 보기</span></h2>
+
+    <div class="overview-grid reveal">
+      <div class="ov-card">
+        <div class="ov-label">프로젝트 기간</div>
+        <div class="ov-value">2025.01 ~ 2025.02 (7주)</div>
+      </div>
+      <div class="ov-card">
+        <div class="ov-label">팀 구성</div>
+        <div class="ov-value">5인 (BE,FE,Infra 1 / AI 1 / Unity 1 / IoT 1/HW 1)</div>
+      </div>
+      <div class="ov-card">
+        <div class="ov-label">담당 파트</div>
+        <div class="ov-value">Backend & Infra 전체 (API, DB, WebSocket, Redis, CI/CD, 배포)</div>
+      </div>
+    </div>
+
+    <div class="tech-badges reveal">
+      <span class="badge primary">FastAPI</span>
+      <span class="badge primary">Python 3.12</span>
+      <span class="badge green">Redis</span>
+      <span class="badge green">MySQL 8</span>
+      <span class="badge green">SQLAlchemy</span>
+      <span class="badge amber">WebSocket</span>
+      <span class="badge amber">Redis Pub/Sub</span>
+      <span class="badge rose">Google OAuth2</span>
+      <span class="badge rose">JWT</span>
+      <span class="badge sky">Google Gemini LLM</span>
+      <span class="badge sky">Docker</span>
+      <span class="badge sky">Jenkins CI/CD</span>
+      <span class="badge sky">Nginx</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== ARCHITECTURE ===== -->
+<section>
+  <div class="container">
+    <div class="section-label reveal">System Architecture</div>
+    <h2 class="section-title reveal">내가 설계한 <span>백엔드 아키텍처</span></h2>
+
+    <div class="arch-box reveal">
+<pre>
+<span class="hl">[Browser]</span>                              <span class="amber">[Ubuntu Server]</span>
+ Vue.js 3        <span class="green">HTTPS / WSS</span>         Nginx (443)
+ Webcam + Canvas ◄─────────────────► ├── Frontend (Static)
+                                      └── <span class="hl">FastAPI Backend</span>
+                                              │
+<span class="rose">[Unity Game]</span>    <span class="green">Redis Pub/Sub</span>         <span class="green">[Redis (Docker)]</span>
+ Boss Raid   ◄─────────────────────► ├── Frame   (SET)   ← 최신 1개만
+                                      ├── Metrics (LIST)  ← 세션 누적
+<span class="rose">[ESP32 Sensor]</span>  <span class="green">WebSocket</span>              └── PubSub  (Channel)
+ EMG Data    ─────────────────────►        │
+                                      <span class="hl">[AI Runner]</span>
+                                      MediaPipe + PyTorch
+                                      (Subprocess 관리)
+</pre>
+    </div>
+
+    <div class="flow-steps reveal">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <p><strong>프레임 수신</strong><br>프론트엔드 웹캠 → WebSocket → Backend → Redis SET</p>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <p><strong>AI 추론</strong><br>AI Runner가 Redis에서 프레임 읽기 → MediaPipe → 모델 추론 → Redis RPUSH</p>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <p><strong>결과 전송</strong><br>Backend가 Redis 폴링 → WebSocket → 프론트엔드 (스켈레톤 + EMG + 정확도)</p>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <p><strong>게임 연동</strong><br>AI Runner → Redis PUBLISH → Unity가 직접 구독 → 보스 공격</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== KEY METRICS ===== -->
+<section class="bg-subtle">
+  <div class="container">
+    <div class="section-label reveal">Key Metrics</div>
+    <h2 class="section-title reveal">정량적 <span>성과</span></h2>
+
+    <div class="metrics-grid reveal">
+      <div class="metric-card">
+        <div class="metric-num">53</div>
+        <div class="metric-label">REST + WebSocket<br>API Endpoints</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num">8</div>
+        <div class="metric-label">라우터 모듈<br>관심사 분리</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num">8</div>
+        <div class="metric-label">외부 시스템<br>통합</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num">30</div>
+        <div class="metric-label">FPS 실시간<br>프레임 처리</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num">&lt;100</div>
+        <div class="metric-label">ms 영상<br>전송 지연</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num">6</div>
+        <div class="metric-label">Database<br>Models</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== TECHNICAL CHALLENGES ===== -->
+<section>
+  <div class="container">
+    <div class="section-label reveal">Technical Challenges</div>
+    <h2 class="section-title reveal">기술적 <span>난제 해결</span></h2>
+
+    <div class="challenge-cards">
+
+      <div class="ch-card reveal">
+        <div class="ch-header">
+          <div class="ch-icon red">&#x26A1;</div>
+          <div class="ch-title">Redis 듀얼 트랙 아키텍처 설계</div>
+        </div>
+        <div class="ch-problem">
+          <div class="tag">Problem</div>
+          <p>30fps 영상 프레임을 Redis LIST에 RPUSH하자 100+ 프레임이 쌓여 <strong>3초 이상 지연</strong> 발생. 동시에 운동 메트릭은 세션 종료 시 평균 계산을 위해 누적 저장이 필요한 상충된 요구사항.</p>
+        </div>
+        <div class="ch-solution">
+          <div class="tag">Solution</div>
+          <p>영상과 데이터를 분리하는 <strong>듀얼 트랙 아키텍처</strong>를 설계:</p>
+        </div>
+        <div class="code-block">
+<span class="comment"># Track 1: 영상 (SET - 최신 1개만 유지)</span>
+<span class="keyword">await</span> redis.set(<span class="string">f"exercise:frame:{user_id}"</span>, frame, ex=<span class="string">5</span>)
+
+<span class="comment"># Track 2: 데이터 (LIST - 전체 누적)</span>
+<span class="keyword">await</span> redis.rpush(<span class="string">f"exercise:data:{user_id}:{session_id}"</span>, metrics)
+        </div>
+        <div class="ch-result">&#x2705; 영상 지연 3초 → 100ms 미만 (30배 개선)</div>
+      </div>
+
+      <div class="ch-card reveal">
+        <div class="ch-header">
+          <div class="ch-icon amber">&#x1F527;</div>
+          <div class="ch-title">AI 서브프로세스 생명주기 관리</div>
+        </div>
+        <div class="ch-problem">
+          <div class="tag">Problem</div>
+          <p>백엔드 재시작 시 이전 AI 프로세스가 종료되지 않고 좀비화. 카메라를 계속 점유하여 새 프로세스가 <strong>"Camera already in use"</strong> 에러 발생.</p>
+        </div>
+        <div class="ch-solution">
+          <div class="tag">Solution</div>
+          <p>시작 전 <strong>고아 프로세스 탐지 및 강제 종료</strong> 로직을 크로스 플랫폼(Windows/Linux)으로 구현:</p>
+        </div>
+        <div class="code-block">
+<span class="keyword">def</span> _kill_orphan_processes(self, user_id):
+    <span class="keyword">if</span> os.name == <span class="string">'nt'</span>:
+        <span class="comment"># Windows: PowerShell CIM 쿼리</span>
+        ps_cmd = <span class="string">f"Get-CimInstance Win32_Process ... Stop-Process"</span>
+    <span class="keyword">else</span>:
+        <span class="comment"># Linux: pkill -f (regex pattern)</span>
+        subprocess.run([<span class="string">'pkill'</span>, <span class="string">'-f'</span>, <span class="string">f'realtime_exercise_runner.*--user_id {user_id}'</span>])
+        </div>
+        <div class="ch-result">&#x2705; 카메라 충돌 0건, 프로세스 누수 완전 해결</div>
+      </div>
+
+      <div class="ch-card reveal">
+        <div class="ch-header">
+          <div class="ch-icon blue">&#x1F504;</div>
+          <div class="ch-title">WebSocket 4-way 비동기 오케스트레이션</div>
+        </div>
+        <div class="ch-problem">
+          <div class="tag">Problem</div>
+          <p>하나의 WebSocket 연결에서 프레임 폴링(30fps), 데이터 폴링(10Hz), Pub/Sub 리스닝, 클라이언트 메시지 수신을 <strong>동시에 처리</strong>해야 하는 복잡한 요구사항. 세션 ID 불일치 시 데이터가 10초간 끊기는 현상.</p>
+        </div>
+        <div class="ch-solution">
+          <div class="tag">Solution</div>
+          <p>asyncio.create_task로 <strong>4개 독립 태스크를 동시 실행</strong>하고, 세션 ID 불일치 시 Redis 키를 직접 탐색하여 자동 복구:</p>
+        </div>
+        <div class="code-block">
+frame_task  = asyncio.create_task(frame_poller())   <span class="comment"># 30fps</span>
+data_task   = asyncio.create_task(data_poller())    <span class="comment"># 10Hz</span>
+pubsub_task = asyncio.create_task(pubsub_listener())<span class="comment"># Event</span>
+recv_task   = asyncio.create_task(receiver())       <span class="comment"># Client</span>
+
+<span class="comment"># 세션 ID 불일치 자동 복구</span>
+<span class="keyword">if</span> no_data_streak >= <span class="string">30</span>:
+    data_keys = <span class="keyword">await</span> redis.keys(<span class="string">f"exercise:data:{user_id}:*"</span>)
+    session_id = actual_key.split(<span class="string">":"</span>)[-<span class="string">1</span>]  <span class="comment"># 실제 세션 추출</span>
+        </div>
+        <div class="ch-result">&#x2705; 데이터 끊김 자동 복구, 지수 백오프 재시도 적용</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== INFRASTRUCTURE ===== -->
+<section class="bg-subtle">
+  <div class="container">
+    <div class="section-label reveal">Infrastructure</div>
+    <h2 class="section-title reveal">내가 구축한 <span>인프라 & CI/CD</span></h2>
+
+    <div class="infra-pipeline reveal">
+      <div class="infra-stage">
+        <div class="stage-icon">&#x1F4BB;</div>
+        <div class="stage-name">GitLab Push</div>
+        <div class="stage-desc">develop branch</div>
+      </div>
+      <div class="infra-arrow">&#x27A1;</div>
+      <div class="infra-stage">
+        <div class="stage-icon">&#x2699;&#xFE0F;</div>
+        <div class="stage-name">Jenkins</div>
+        <div class="stage-desc">Webhook Trigger</div>
+      </div>
+      <div class="infra-arrow">&#x27A1;</div>
+      <div class="infra-stage">
+        <div class="stage-icon">&#x1F40B;</div>
+        <div class="stage-name">Docker Build</div>
+        <div class="stage-desc">Python 3.11 Image</div>
+      </div>
+      <div class="infra-arrow">&#x27A1;</div>
+      <div class="infra-stage">
+        <div class="stage-icon">&#x1F680;</div>
+        <div class="stage-name">Deploy</div>
+        <div class="stage-desc">Container Run</div>
+      </div>
+      <div class="infra-arrow">&#x27A1;</div>
+      <div class="infra-stage">
+        <div class="stage-icon">&#x1F310;</div>
+        <div class="stage-name">Nginx</div>
+        <div class="stage-desc">HTTPS + WSS</div>
+      </div>
+    </div>
+
+    <div class="infra-details reveal">
+      <div class="infra-detail-card">
+        <h4>&#x1F40B; Docker</h4>
+        <ul>
+          <li>Python 3.11 + OpenCV + MediaPipe 기반 커스텀 이미지 작성</li>
+          <li>Redis Alpine 컨테이너 (<code class="mono">0.0.0.0:6379</code> 외부 접근)</li>
+          <li>환경변수 <code class="mono">.env</code> 분리로 비밀 정보 보호</li>
+          <li>헬스체크 및 자동 재시작 설정</li>
+        </ul>
+      </div>
+
+      <div class="infra-detail-card">
+        <h4>&#x2699;&#xFE0F; Jenkins CI/CD</h4>
+        <ul>
+          <li>GitLab Webhook → Jenkins 자동 빌드 트리거</li>
+          <li>develop 브랜치 push 시 자동 배포 파이프라인</li>
+          <li>빌드 실패 시 Mattermost 알림 연동</li>
+          <li>워크스페이스 기반 배포 경로 관리</li>
+        </ul>
+      </div>
+
+      <div class="infra-detail-card">
+        <h4>&#x1F310; Nginx</h4>
+        <ul>
+          <li>HTTPS (SSL/TLS) 인증서 적용 및 자동 갱신</li>
+          <li>WebSocket 프록시 (<code class="mono">wss://</code>) 업그레이드 설정</li>
+          <li>프론트엔드 정적 파일 서빙 + 백엔드 API 리버스 프록시</li>
+          <li>CORS 및 보안 헤더 설정</li>
+        </ul>
+      </div>
+
+      <div class="infra-detail-card">
+        <h4>&#x1F4CA; 모니터링 & 운영</h4>
+        <ul>
+          <li>Mattermost Webhook 실시간 에러 알림</li>
+          <li>Uvicorn 로그 파일 관리 (<code class="mono">uvicorn.log</code>)</li>
+          <li>AI 서브프로세스 독립 로그 (<code class="mono">/tmp/fitboss_ai_logs/</code>)</li>
+          <li>Redis 포트(6379) 방화벽 관리 (<code class="mono">ufw allow</code>)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== FEATURES I BUILT ===== -->
+<section>
+  <div class="container">
+    <div class="section-label reveal">Features I Built</div>
+    <h2 class="section-title reveal">내가 구현한 <span>핵심 기능</span></h2>
+
+    <div class="features-grid reveal">
+      <div class="feat-card">
+        <div class="feat-icon">&#x26A1;</div>
+        <h4>실시간 운동 데이터 스트리밍</h4>
+        <p>WebSocket + Redis 듀얼 트랙으로 프레임(30fps)과 메트릭(10Hz)을 동시 처리. 프론트엔드 웹캠 프레임 수신 → AI 추론 결과 폴링 → 클라이언트 전송까지 전 파이프라인 구현.</p>
+        <div class="feat-tech">WebSocket / Redis SET+LIST / AsyncIO</div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon">&#x1F512;</div>
+        <h4>Google OAuth + JWT 인증</h4>
+        <p>Google OAuth 2.0 소셜 로그인과 Access/Refresh Token 기반 인가 시스템. FastAPI Dependency Injection으로 라우터별 인증 적용.</p>
+        <div class="feat-tech">OAuth2 / JWT / Dependency Injection</div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon">&#x1F9EC;</div>
+        <h4>개인화 AI 어댑터 파이프라인</h4>
+        <p>캘리브레이션 데이터 수집 → 백그라운드 학습 → 모델 자동 배포 → Redis Pub/Sub 핫 리로드까지 End-to-End MLOps 파이프라인 구축.</p>
+        <div class="feat-tech">Subprocess / Background Tasks / Redis Pub/Sub</div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon">&#x1F916;</div>
+        <h4>Gemini LLM 운동 추천</h4>
+        <p>사용자 운동 이력 + 신체 정보를 분석하여 Google Gemini API로 맞춤형 루틴 추천. 규칙 기반 빠른 추천과 LLM 정밀 추천 듀얼 모드 제공.</p>
+        <div class="feat-tech">Google Gemini API / HTTPX Async</div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon">&#x1F3AE;</div>
+        <h4>게임 세션 관리 (Unity 연동)</h4>
+        <p>게임 시작/종료 API, 보스 HP·데미지 계산, 스코어 산정, 클리어 판정. Redis Pub/Sub로 Unity에 실시간 공격 데미지 전달.</p>
+        <div class="feat-tech">REST API / Redis Pub/Sub / GameLog</div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon">&#x1F3C6;</div>
+        <h4>주간 랭킹 시스템</h4>
+        <p>Top 100 + 본인 순위 조회. APScheduler로 매주 월요일 9시 자동 리셋. 스코어 + 클리어 횟수 복합 정렬.</p>
+        <div class="feat-tech">APScheduler / CronTrigger / SQLAlchemy</div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon">&#x1F4E1;</div>
+        <h4>ESP32 센서 WebSocket</h4>
+        <p>ESP32 EMG 센서로부터 근전도·가속도 데이터를 WebSocket으로 수신하고, 연결된 모든 클라이언트에 실시간 브로드캐스트.</p>
+        <div class="feat-tech">WebSocket / Connection Manager / Broadcast</div>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon">&#x1F6A8;</div>
+        <h4>전역 에러 모니터링</h4>
+        <p>HTTP 미들웨어로 모든 예외를 캐치하여 Mattermost Webhook으로 팀 채널에 즉시 알림. 트레이스백 포함 상세 에러 리포트.</p>
+        <div class="feat-tech">Middleware / Mattermost Webhook / Logging</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== WHAT I LEARNED ===== -->
+<section class="bg-subtle">
+  <div class="container">
+    <div class="section-label reveal">What I Learned</div>
+    <h2 class="section-title reveal">이 프로젝트에서 <span>배운 점</span></h2>
+
+    <div class="learned-list">
+      <div class="learned-item reveal">
+        <div class="learned-num">1</div>
+        <div>
+          <h4>실시간 시스템에서의 데이터 트랙 분리 전략</h4>
+          <p>영상 프레임과 분석 메트릭을 동일한 Redis 자료구조로 처리하면 성능 병목이 생긴다는 것을 체감했습니다. SET(최신 1개)과 LIST(누적)로 분리하는 듀얼 트랙 설계를 통해, 실시간성과 데이터 완전성이라는 상충된 요구를 동시에 만족시킬 수 있었습니다.</p>
+        </div>
+      </div>
+
+      <div class="learned-item reveal">
+        <div class="learned-num">2</div>
+        <div>
+          <h4>AI 서브프로세스와 웹 서버의 안전한 통합</h4>
+          <p>MediaPipe, PyTorch 같은 무거운 AI 프레임워크는 웹 서버와 같은 프로세스에서 돌리면 이벤트 루프를 블로킹합니다. 서브프로세스로 분리하고 Redis를 IPC 채널로 사용하는 구조를 배웠으며, 고아 프로세스 관리의 중요성도 실전에서 깨달았습니다.</p>
+        </div>
+      </div>
+
+      <div class="learned-item reveal">
+        <div class="learned-num">3</div>
+        <div>
+          <h4>운영 안정성을 위한 방어적 프로그래밍</h4>
+          <p>지수 백오프 재시도, 세션 ID 자동 복구, Connection Pool 튜닝 등 "정상 동작"이 아닌 "비정상 상황에서의 복구"를 설계하는 것이 프로덕션 서비스의 핵심이라는 것을 배웠습니다. Mattermost 알림을 통해 에러를 즉시 인지하고 대응하는 모니터링 체계도 갖추게 되었습니다.</p>
+        </div>
+      </div>
+
+      <div class="learned-item reveal">
+        <div class="learned-num">4</div>
+        <div>
+          <h4>Docker/Jenkins/Nginx 기반 CI/CD 파이프라인 구축</h4>
+          <p>GitLab push부터 Docker 빌드, Jenkins 자동 배포, Nginx HTTPS/WSS 프록시까지 전체 인프라를 직접 구성하면서, "코드를 작성하는 것"만큼 "코드를 안정적으로 배포하고 운영하는 것"이 중요하다는 것을 배웠습니다. 특히 WebSocket 프록시 설정과 SSL 인증서 관리는 실전에서만 배울 수 있는 경험이었습니다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    <p><strong>김미성</strong> &middot; Backend Developer &middot; SSAFY 14기</p>
+  </div>
+</footer>
+
+<!-- ===== Scroll Animation Script ===== -->
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+(function() {
+  const topBtn = document.getElementById('scrollTopBtn');
+  const botBtn = document.getElementById('scrollBottomBtn');
+  if (!topBtn || !botBtn) return;
+  topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  botBtn.addEventListener('click', () => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }));
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      topBtn.classList.add('show');
+    } else {
+      topBtn.classList.remove('show');
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

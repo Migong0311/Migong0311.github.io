@@ -3,6 +3,8 @@
   --primary-color: #3b82f6;
   --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   --glass-bg: rgba(255, 255, 255, 0.85);
+  --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+  --card-hover-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.12);
 }
 
 body {
@@ -15,13 +17,89 @@ body {
 .navbar-glass {
   background: var(--glass-bg);
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
 }
 .navbar-brand {
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: -0.5px;
   color: #0f172a;
-  font-size: 0.95rem;
 }
+.nav-link {
+  font-weight: 500;
+  color: #64748b;
+  transition: color 0.2s;
+  margin: 0 4px;
+}
+.nav-link:hover, .nav-link.active {
+  color: var(--primary-color);
+}
+
+/* Dropdown */
+.dropdown-menu {
+  border: none;
+  box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  padding: 0.5rem;
+}
+.dropdown-item {
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  color: #475569;
+}
+.dropdown-item:hover {
+  background-color: #f1f5f9;
+  color: var(--primary-color);
+}
+
+/* Contact Button */
+.btn-contact {
+  background: var(--primary-gradient);
+  color: white;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: transform 0.2s;
+}
+.btn-contact:hover {
+  transform: translateY(-2px);
+  color: white;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+/* Scroll Buttons */
+.scroll-btn {
+  position: fixed;
+  right: 20px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: white;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #334155;
+  font-size: 1.2rem;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.scroll-btn:hover {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+#scrollTopBtn { bottom: 80px; opacity: 0; pointer-events: none; }
+#scrollBottomBtn { bottom: 25px; }
+#scrollTopBtn.show { opacity: 1; pointer-events: auto; }
+
+/* Section Padding */
+.section-pad { padding: 5rem 0; }
 
 /* Lists */
 .list-checked li {

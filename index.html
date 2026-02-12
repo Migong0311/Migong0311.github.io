@@ -403,7 +403,7 @@
               <hr class="my-4 opacity-10">
 
               <div class="d-flex justify-content-between align-items-center">
-                <span class="small text-muted">Latest Update: 2024.05</span>
+                <span class="small text-muted">Latest Update: 2025</span>
                 <a href="ai_practice.html" class="btn btn-sm btn-light rounded-pill px-3">
                   학습 로그 보기 <i class="bi bi-arrow-right ms-1"></i>
                 </a>
@@ -413,6 +413,142 @@
         </div>
       </div>
     </header>
+
+    <section id="projects" class="section-pad">
+      <div class="container">
+        <div class="text-center mb-5 reveal">
+          <span class="text-primary fw-bold text-uppercase small ls-1">Featured Works</span>
+          <h2 class="fw-bold">대표 프로젝트</h2>
+          <p class="text-secondary">문제를 정의하고 기술로 해결한 결과물입니다.</p>
+        </div>
+
+        <div class="row g-4 justify-content-center" id="projectGrid">
+          <div class="col-md-6 col-lg-5 project-item reveal" data-tags="ai,backend,web,iot">
+            <article class="card h-100 lift border-0">
+              <div class="position-relative overflow-hidden" style="height: 200px; background: #e2e8f0;">
+                <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-dark text-white"
+                  style="background: linear-gradient(45deg, #1e293b, #334155);">
+                  <i class="bi bi-cup-hot-fill fs-1 opacity-50"></i>
+                </div>
+                <div class="position-absolute top-0 start-0 m-3">
+                  <span class="badge bg-white text-dark shadow-sm">AIoT</span>
+                  <span class="badge bg-primary shadow-sm">Case Study</span>
+                </div>
+              </div>
+
+              <div class="card-body p-4 d-flex flex-column">
+                <h3 class="h4 fw-bold mb-2">Pangyo Coffee Legends</h3>
+                <p class="text-secondary small mb-3">NHN Academy 8인 팀에서 근태 분석 파이프라인, GenAI 리포트 자동화 등 5개 핵심 영역을 주도했습니다.</p>
+
+                <div class="mb-4">
+                  <div class="d-flex gap-2 mb-2 text-secondary small">
+                    <i class="bi bi-database"></i> 근태 데이터 파이프라인 설계 및 구축
+                  </div>
+                  <div class="d-flex gap-2 mb-2 text-secondary small">
+                    <i class="bi bi-robot"></i> GenAI 기반 자동 리포트 생성 시스템
+                  </div>
+                  <div class="d-flex gap-2 text-secondary small">
+                    <i class="bi bi-speedometer2"></i> 데이터 처리 시간 70% 단축 달성
+                  </div>
+                </div>
+
+                <div class="mt-auto pt-3 border-top">
+                  <div class="small text-muted mb-2">My Role</div>
+                  <div class="fw-medium small text-primary">파이프라인 설계 · GenAI 리포트 · 품질 지표</div>
+                </div>
+                <a href="assets/projects/pangyo-coffee-legends.html" class="stretched-link" aria-label="프로젝트 상세"></a>
+              </div>
+
+            </article>
+          </div>
+          <div class="col-md-6 col-lg-5 project-item reveal" data-tags="backend,infra,ai,realtime" style="--delay: 0.1s">
+            <article class="card h-100 lift border-0">
+              <div class="position-relative overflow-hidden" style="height: 200px; background: #e2e8f0;">
+                <div class="w-100 h-100 d-flex align-items-center justify-content-center"
+                  style="background: linear-gradient(135deg, #eef2ff, #e0e7ff);">
+                  <i class="bi bi-lightning-charge-fill fs-1 opacity-50" style="color: #6366f1;"></i>
+                </div>
+                <div class="position-absolute top-0 start-0 m-3">
+                  <span class="badge bg-dark shadow-sm">Backend</span>
+                  <span class="badge bg-primary shadow-sm">Realtime</span>
+                </div>
+              </div>
+
+              <div class="card-body p-4 d-flex flex-column">
+                <h3 class="h4 fw-bold mb-2">FIT-BOSS</h3>
+                <p class="text-secondary small mb-3">5인 팀에서 Backend & Infra를 단독 설계·구현. 53개 API와 실시간 30fps 스트리밍 파이프라인을 구축했습니다.</p>
+
+                <div class="mb-4">
+                  <div class="d-flex gap-2 mb-2 text-secondary small">
+                    <i class="bi bi-lightning-charge"></i> Redis 듀얼 트랙 실시간 데이터 아키텍처
+                  </div>
+                  <div class="d-flex gap-2 mb-2 text-secondary small">
+                    <i class="bi bi-broadcast"></i> WebSocket 4-way 비동기 오케스트레이션
+                  </div>
+                  <div class="d-flex gap-2 text-secondary small">
+                    <i class="bi bi-gear"></i> Docker / Jenkins / Nginx CI/CD 구축
+                  </div>
+                </div>
+
+                <div class="mt-auto pt-3 border-top">
+                  <div class="small text-muted mb-2">My Role</div>
+                  <div class="fw-medium small text-primary">Backend & Infra 단독 설계·구현</div>
+                </div>
+                <a href="assets/html/fit-boss.html" class="stretched-link" aria-label="FIT-BOSS 프로젝트 상세"></a>
+              </div>
+            </article>
+          </div>
+          <div class="col-md-6 col-lg-5 project-item reveal" data-tags="web,ai,fintech,fullstack" style="--delay: 0.2s">
+            <article class="card h-100 lift border-0">
+              <div class="position-relative overflow-hidden" style="height: 200px; background: #e2e8f0;">
+                <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-white text-primary"
+                  style="background: linear-gradient(135deg, #eff6ff, #dbeafe);">
+                  <i class="bi bi-piggy-bank-fill fs-1 text-primary opacity-75"></i>
+                </div>
+                <div class="position-absolute top-0 start-0 m-3">
+                  <span class="badge bg-primary shadow-sm">FinTech</span>
+                  <span class="badge bg-dark shadow-sm">Web App</span>
+                </div>
+              </div>
+
+              <div class="card-body p-4 d-flex flex-column">
+                <h3 class="h4 fw-bold mb-2">Fin:D (핀디)</h3>
+                <p class="text-secondary small mb-3">2인 Full Stack 프로젝트로 아키텍처 설계부터 AI 금융 어드바이저 연동까지 전 과정을 주도했습니다.</p>
+
+                <div class="mb-4">
+                  <div class="d-flex gap-2 mb-2 text-secondary small">
+                    <i class="bi bi-palette"></i> UI/UX 설계 및 반응형 프론트엔드 구현
+                  </div>
+                  <div class="d-flex gap-2 mb-2 text-secondary small">
+                    <i class="bi bi-key"></i> 카카오 OAuth + 금융 API 통합
+                  </div>
+                  <div class="d-flex gap-2 text-secondary small">
+                    <i class="bi bi-robot"></i> GPT 기반 AI 금융 어드바이저 구현
+                  </div>
+                </div>
+
+                <div class="mt-auto pt-3 border-top">
+                  <div class="small text-muted mb-2">My Role</div>
+                  <div class="fw-medium small text-primary">Full Stack 설계 · OAuth · AI Advisor</div>
+                </div>
+                <a href="assets/projects/fin-d.html" class="stretched-link" aria-label="Fin:D 프로젝트 상세"></a>
+              </div>
+            </article>
+          </div>
+          <div class="col-md-6 col-lg-5 reveal" style="--delay: 0.3s">
+            <div
+              class="card h-100 border-2 border-dashed d-flex align-items-center justify-content-center text-center p-5 bg-transparent"
+              style="border-color: #cbd5e1;">
+              <div class="text-secondary">
+                <i class="bi bi-plus-circle fs-1 mb-3 d-block opacity-25"></i>
+                <h5 class="fw-bold">Coming Soon</h5>
+                <p class="small text-muted mb-0">새로운 프로젝트가 곧 업데이트됩니다.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <section id="collab" class="section-pad">
       <div class="container">
@@ -504,105 +640,6 @@
                 </div>
                 <i class="bi bi-brain position-absolute text-secondary opacity-10"
                   style="font-size: 10rem; right: -20px; bottom: -40px;"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="projects" class="section-pad">
-      <div class="container">
-        <div class="text-center mb-5 reveal">
-          <span class="text-primary fw-bold text-uppercase small ls-1">Featured Works</span>
-          <h2 class="fw-bold">대표 프로젝트</h2>
-          <p class="text-secondary">문제를 정의하고 기술로 해결한 결과물입니다.</p>
-        </div>
-
-        <div class="row g-4 justify-content-center" id="projectGrid">
-          <div class="col-md-6 col-lg-5 project-item reveal" data-tags="ai,backend,web,iot">
-            <article class="card h-100 lift border-0">
-              <div class="position-relative overflow-hidden" style="height: 200px; background: #e2e8f0;">
-                <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-dark text-white"
-                  style="background: linear-gradient(45deg, #1e293b, #334155);">
-                  <i class="bi bi-cup-hot-fill fs-1 opacity-50"></i>
-                </div>
-                <div class="position-absolute top-0 start-0 m-3">
-                  <span class="badge bg-white text-dark shadow-sm">AIoT</span>
-                  <span class="badge bg-primary shadow-sm">Case Study</span>
-                </div>
-              </div>
-
-              <div class="card-body p-4 d-flex flex-column">
-                <h3 class="h4 fw-bold mb-2">Pangyo Coffee Legends</h3>
-                <p class="text-secondary small mb-3">스마트 오피스 환경을 위한 AI + IoT 통합 관제 시스템입니다.</p>
-
-                <div class="mb-4">
-                  <div class="d-flex gap-2 mb-2 text-secondary small">
-                    <i class="bi bi-cpu"></i> 쾌적도 AI 및 환경 센싱
-                  </div>
-                  <div class="d-flex gap-2 mb-2 text-secondary small">
-                    <i class="bi bi-door-open"></i> 출입/근태 분석 및 이상 탐지
-                  </div>
-                  <div class="d-flex gap-2 text-secondary small">
-                    <i class="bi bi-graph-up"></i> Kibana 대시보드 시각화
-                  </div>
-                </div>
-
-                <div class="mt-auto pt-3 border-top">
-                  <div class="small text-muted mb-2">My Role</div>
-                  <div class="fw-medium small text-primary">근태 데이터 분석 · GenAI 리포트 생성</div>
-                </div>
-                <a href="assets/projects/pangyo-coffee-legends.html" class="stretched-link" aria-label="프로젝트 상세"></a>
-              </div>
-
-            </article>
-          </div>
-          <div class="col-md-6 col-lg-5 project-item reveal" data-tags="web,ai,fintech,fullstack" style="--delay: 0.1s">
-            <article class="card h-100 lift border-0">
-              <div class="position-relative overflow-hidden" style="height: 200px; background: #e2e8f0;">
-                <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-white text-primary"
-                  style="background: linear-gradient(135deg, #eff6ff, #dbeafe);">
-                  <i class="bi bi-piggy-bank-fill fs-1 text-primary opacity-75"></i>
-                </div>
-                <div class="position-absolute top-0 start-0 m-3">
-                  <span class="badge bg-primary shadow-sm">FinTech</span>
-                  <span class="badge bg-dark shadow-sm">Web App</span>
-                </div>
-              </div>
-
-              <div class="card-body p-4 d-flex flex-column">
-                <h3 class="h4 fw-bold mb-2">Fin:D (핀디)</h3>
-                <p class="text-secondary small mb-3">사회초년생을 위한 AI 맞춤형 예적금 추천 및 금융 비서 플랫폼입니다.</p>
-
-                <div class="mb-4">
-                  <div class="d-flex gap-2 mb-2 text-secondary small">
-                    <i class="bi bi-robot"></i> GPT 기반 금융 어드바이저 (Chatbot)
-                  </div>
-                  <div class="d-flex gap-2 mb-2 text-secondary small">
-                    <i class="bi bi-bar-chart-line"></i> 개인화 상품 추천 알고리즘
-                  </div>
-                  <div class="d-flex gap-2 text-secondary small">
-                    <i class="bi bi-layers"></i> Vue.js 3 + Django DRF
-                  </div>
-                </div>
-
-                <div class="mt-auto pt-3 border-top">
-                  <div class="small text-muted mb-2">My Role</div>
-                  <div class="fw-medium small text-primary">Full Stack (Vue, Django) · AI 연동</div>
-                </div>
-                <a href="assets/projects/fin-d.html" class="stretched-link" aria-label="Fin:D 프로젝트 상세"></a>
-              </div>
-            </article>
-          </div>
-          <div class="col-md-6 col-lg-5 reveal" style="--delay: 0.1s">
-            <div
-              class="card h-100 border-2 border-dashed d-flex align-items-center justify-content-center text-center p-5 bg-transparent"
-              style="border-color: #cbd5e1;">
-              <div class="text-secondary">
-                <i class="bi bi-plus-circle fs-1 mb-3 d-block opacity-25"></i>
-                <h5 class="fw-bold">Coming Soon</h5>
-                <p class="small text-muted mb-0">새로운 프로젝트가 곧 업데이트됩니다.</p>
               </div>
             </div>
           </div>

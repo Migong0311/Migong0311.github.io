@@ -4,91 +4,87 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Migong0311 | Portfolio</title> <!-- Bootstrap 5 -->
+    <title>Migong0311 | Portfolio</title>
+    <meta name="description" content="백엔드 개발 · 시스템 아키텍처 · 서비스 자동화 포트폴리오" />
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <!-- Main CSS -->
-    <!-- Bootstrap Icons (필수) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="stylesheet" href="../css/style.css" />
 
     <style>
-        .scroll-btn {
-            position: fixed;
-            right: 1.5rem;
-            bottom: 4rem;
-            z-index: 2000;
-            /* ← 다른 요소보다 위로 */
-            background: var(--surface-1, #fff);
-            border: 1px solid var(--border, #ccc);
-            color: var(--text, #111);
-            border-radius: 50%;
-            width: 46px;
-            height: 46px;
-            font-size: 1.6rem;
-            display: grid;
-            place-items: center;
-            cursor: pointer;
-            transition: all .3s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, .15);
+        .section-anchor-bar {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
-
-        .scroll-btn:hover {
-            transform: translateY(-2px);
-            color: var(--accent-1, #663bf7);
-            box-shadow: 0 6px 14px rgba(0, 0, 0, .2);
-        }
-
-        .scroll-btn.scroll-btn-bottom {
-            bottom: 1.2rem;
-        }
-
-        .scroll-btn.hide {
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(10px);
+        .section-anchor-bar .btn-group {
+            flex-wrap: nowrap;
+            white-space: nowrap;
         }
     </style>
-    <!-- Favicon (선택) -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
-    <link rel="alternate icon" href="/assets/icons/favicon.svg">
-    <meta name="description" content="백엔드 개발 · 시스템 아키텍처 · 서비스 자동화 포트폴리오" />
+
+    <link rel="icon" type="image/svg+xml" href="../icons/favicon.svg">
+    <link rel="alternate icon" href="../icons/favicon.svg">
 
 </head>
 
 <body> <!-- NAVBAR -->
     <!-- 🔼 Scroll Top / Bottom Buttons -->
     <button id="scrollTopBtn" class="scroll-btn" title="맨 위로">
-        <i class="bi bi-arrow-up-circle"></i>
+        <i class="bi bi-arrow-up"></i>
+    </button>
+    <button id="scrollBottomBtn" class="scroll-btn" title="맨 아래로">
+        <i class="bi bi-arrow-down"></i>
     </button>
 
-    <button id="scrollBottomBtn" class="scroll-btn scroll-btn-bottom" title="맨 아래로">
-        <i class="bi bi-arrow-down-circle"></i>
-    </button>
-
-    <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-glass sticky-top">
         <div class="container">
-            <a class="navbar-brand fw-semibold" href="../../index.html">Migong0311</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+            <a class="navbar-brand" href="../../index.html">
+                <i class="bi bi-code-square text-primary me-2"></i>Migong0311
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
+                aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div id="navMenu" class="collapse navbar-collapse">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="../../index.html#collab">협업</a></li>
-                    <li class="nav-item"><a class="nav-link active" aria-current="page"
-                            href="/assets/html/about.html">나의 소개</a>
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="about.html">나의 소개</a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="../../ai_practice.html">AI 학습</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../../index.html#projects">프로젝트</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../../index.html#contact">연락</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../ai_practice.html">AI 학습</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html#collab">협업</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../index.html#projects">프로젝트</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">Web Apps</a>
+                        <ul class="dropdown-menu">
+                            <li><h6 class="dropdown-header">유틸리티</h6></li>
+                            <li><a class="dropdown-item" href="todos.html"><i class="bi bi-check2-square me-2"></i>Todo 리스트</a></li>
+                            <li><a class="dropdown-item" href="luckylotto.html"><i class="bi bi-ticket-perforated me-2"></i>로또 추첨기</a></li>
+                            <li><a class="dropdown-item" href="tushima_travel.html"><i class="bi bi-airplane me-2"></i>대마도1박2일</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><h6 class="dropdown-header">API 예제</h6></li>
+                            <li><a class="dropdown-item" href="randomdog.html"><i class="bi bi-hearts me-2"></i>랜덤 강아지</a></li>
+                            <li><a class="dropdown-item" href="catapi.html"><i class="bi bi-emoji-heart-eyes me-2"></i>랜덤 고양이</a></li>
+                        </ul>
+                    </li>
                 </ul>
-                <button id="themeToggle" class="btn btn-outline-secondary ms-lg-3" title="Toggle dark mode">🌙</button>
+                <div class="d-flex">
+                    <a href="../../index.html#contact" class="btn btn-contact">Contact Me</a>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- ✅ 내부 섹션 바로가기 버튼 -->
-    <section class="py-3 bg-light border-bottom">
+    <!-- 내부 섹션 바로가기 버튼 -->
+    <section class="py-3 bg-light border-bottom section-anchor-bar">
         <div class="container text-center">
             <div class="btn-group" role="group" aria-label="내부 섹션 바로가기">
                 <a href="#about" class="btn btn-outline-primary btn-sm"><i class="bi bi-person"></i> About</a>
@@ -107,14 +103,14 @@
                 <div class="col-lg-7">
                     <div class="typing-wrap mb-2"> <a href="https://git.io/typing-svg"><img
                                 src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=30&pause=1000&color=663BF7&width=435&lines=Welcome+to+my+Portfolio%F0%9F%98%83+"
-                                alt="Typing SVG" /></a> </div>
+                                alt="Typing SVG" style="max-width: 100%; height: auto;" /></a> </div>
                     <h1 class="display-5 fw-bold mb-3">Backend Developer · System Architecture · Automation</h1>
                     <p class="lead text-secondary"> 일본어 전공에서 백엔드 개발자로 전향하여, 알고리즘과 아키텍처 설계로 문제를 해결합니다. </p>
                     <div class="d-flex gap-2 mt-3"> <a href="#projects" class="btn btn-primary btn-lg">Pinned
                             Projects</a> <a href="#contact" class="btn btn-outline-primary btn-lg">Contact</a> </div>
                 </div>
                 <div class="col-lg-5">
-                    <img src="/assets/img/profile.jpg" alt="프로필 사진"
+                    <img src="../img/profile.jpg" alt="프로필 사진"
                         class="profile-photo rounded-circle mb-3 shadow-sm border" width="160" height="160"
                         loading="lazy">
                     <div class="p-4 bg-white rounded-4 shadow-sm border hero-card">
@@ -290,9 +286,9 @@
             <h3 class="h5 mt-4">🏆 Baekjoon Online Judge</h3>
             <div class="d-flex flex-wrap gap-3"> <a href="https://solved.ac/kms000311/" target="_blank"
                     rel="noreferrer"> <img alt="Solved.ac Profile"
-                        src="http://mazassumnida.wtf/api/v2/generate_badge?boj=kms000311" /> </a> <a
+                        src="https://mazassumnida.wtf/api/v2/generate_badge?boj=kms000311" /> </a> <a
                     href="https://solved.ac/kms000311/" target="_blank" rel="noreferrer"> <img alt="mazandi"
-                        src="http://mazandi.herokuapp.com/api?handle=kms000311&theme=warm" /> </a> </div>
+                        src="https://mazandi.herokuapp.com/api?handle=kms000311&theme=warm" /> </a> </div>
             <div class="mt-4 p-3 rounded-4 bg-light border small"> <b>🌱 Commit Graph & Activity Tips</b><br /> 매일 알고리즘
                 풀이 업로드 · 오픈소스 기여(PR/Issue) · README/기술문서 작성 · 작은 프로젝트라도 레포 생성하여 기록 유지 </div>
         </div>
@@ -317,7 +313,7 @@
     </footer> <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Main JS -->
-    <script type="module" src="/assets/js/scripts.js"></script>
+    <script type="module" src="../js/scripts.js"></script>
 </body>
 
 </html>
