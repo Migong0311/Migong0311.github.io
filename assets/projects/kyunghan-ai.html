@@ -1,0 +1,2722 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>경한코리아 AI실증 · CNC 공구 이상탐지 | Migong0311</title>
+  <meta name="description"
+    content="BONE AI4M 공구별 IF+AE 이상탐지, TOOL_BREAK v6 약지도 MLP, Raspberry Pi 추론·배포와 검증 현황을 담은 제조 AI 포트폴리오.">
+  <meta name="author" content="김미성">
+  <meta name="theme-color" content="#0b272e">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:title" content="경한코리아 AI실증 · CNC 공구 이상탐지">
+  <meta property="og:description"
+    content="BONE AI4M 공구별 IF+AE 이상탐지, TOOL_BREAK v6 약지도 MLP, Raspberry Pi 추론·배포와 검증 현황을 담은 제조 AI 포트폴리오.">
+  <meta property="og:url" content="https://migong0311.github.io/kyunghan-ai.html">
+  <link rel="canonical" href="https://migong0311.github.io/kyunghan-ai.html">
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23152c48'/%3E%3Ctext x='16' y='22' text-anchor='middle' fill='white' font-size='19' font-family='sans-serif'%3EM%3C/text%3E%3C/svg%3E">
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --paper: #fff;
+      --ink: #132238;
+      --muted: #526176;
+      --line: #dfe6f0;
+      --accent: #245fdb;
+      --soft: #edf3ff;
+      --navy: #0d203a;
+      --green: #16704d;
+      --warn: #995818;
+      --radius: 20px;
+      --shadow: 0 12px 35px -22px #1633584d
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 98px
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Pretendard, 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.8;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+      -webkit-font-smoothing: antialiased
+    }
+
+    body.ai {
+      --accent: #08776f;
+      --soft: #e9f7f4
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    a:hover {
+      text-decoration: underline
+    }
+
+    button,
+    input,
+    select {
+      font: inherit
+    }
+
+    button {
+      cursor: pointer
+    }
+
+    button,
+    a,
+    input,
+    summary {
+      -webkit-tap-highlight-color: transparent
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid #e5a540;
+      outline-offset: 4px
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    p {
+      margin: 0
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      line-height: 1.35;
+      letter-spacing: -.045em
+    }
+
+    p+p {
+      margin-top: 15px
+    }
+
+    b,
+    strong {
+      font-weight: 750
+    }
+
+    svg {
+      display: block;
+      max-width: 100%
+    }
+
+    .wrap {
+      width: min(1220px, calc(100% - 64px));
+      margin: auto
+    }
+
+    .skip {
+      position: fixed;
+      top: -100px;
+      left: 20px;
+      background: var(--ink);
+      color: white;
+      padding: 10px 18px;
+      z-index: 100
+    }
+
+    .skip:focus {
+      top: 12px
+    }
+
+    .progress {
+      height: 3px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: var(--accent);
+      width: 0;
+      z-index: 99
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: #fffffff2;
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line)
+    }
+
+    .topbar .wrap {
+      display: flex;
+      min-height: 72px;
+      align-items: center;
+      gap: 28px;
+      justify-content: space-between
+    }
+
+    .brand {
+      color: var(--ink);
+      font-weight: 800;
+      font-size: 19px;
+      letter-spacing: -.6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 31px;
+      height: 31px;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #fff;
+      font: 700 14px monospace
+    }
+
+    .toplinks {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 650
+    }
+
+    .toplinks a {
+      color: var(--muted)
+    }
+
+    .toplinks a[aria-current=page] {
+      color: var(--accent)
+    }
+
+    .menu-toggle {
+      display: none;
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 10px;
+      padding: 6px 13px;
+      color: var(--ink)
+    }
+
+    .plain-btn {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 6px 13px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 13px
+    }
+
+    .hero {
+      background: var(--navy);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      padding: 62px 0 0
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 85% 10%, #2465c12b, transparent 55%), linear-gradient(#ffffff04 1px, transparent 1px), linear-gradient(90deg, #ffffff04 1px, transparent 1px);
+      background-size: auto, 44px 44px, 44px 44px;
+      pointer-events: none
+    }
+
+    .ai .hero {
+      --navy: #0b272e
+    }
+
+    .hero-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 65px;
+      align-items: center;
+      padding-bottom: 52px
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      letter-spacing: .17em;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 15px
+    }
+
+    .hero .eyebrow {
+      color: #a8c8ff
+    }
+
+    .ai .hero .eyebrow {
+      color: #8ae1cf
+    }
+
+    .status-row {
+      display: flex;
+      gap: 9px;
+      flex-wrap: wrap;
+      margin-bottom: 25px
+    }
+
+    .chip {
+      font-size: 12px;
+      font-weight: 650;
+      padding: 5px 12px;
+      border-radius: 30px;
+      background: var(--soft);
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      line-height: 1.5
+    }
+
+    .hero .chip {
+      background: #ffffff0b;
+      border: 1px solid #ffffff26;
+      color: #d4e2f5
+    }
+
+    .chip.live::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: #70dab3;
+      border-radius: 50%
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 3.6vw, 50px);
+      font-weight: 800;
+      line-height: 1.28
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: #91baff
+    }
+
+    .ai .hero h1 em {
+      color: #80dcc8
+    }
+
+    .hero-lead {
+      font-size: 17px;
+      color: #c8d5e5;
+      margin: 24px 0 27px;
+      max-width: 590px;
+      line-height: 1.85
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 11px 20px;
+      border-radius: 11px;
+      font-size: 14px;
+      font-weight: 750;
+      border: 1px solid transparent;
+      line-height: 1.5;
+      transition: transform .18s
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      text-decoration: none
+    }
+
+    .btn-primary {
+      color: white;
+      background: var(--accent)
+    }
+
+    .hero .btn-primary {
+      background: #fff;
+      color: #153252
+    }
+
+    .btn-ghost {
+      color: #e2edfc;
+      border-color: #ffffff42;
+      background: #ffffff04
+    }
+
+    .btn-soft {
+      color: var(--accent);
+      background: var(--soft);
+      border-color: var(--line)
+    }
+
+    .hero-board {
+      background: #07172ca8;
+      border: 1px solid #ffffff24;
+      border-radius: 24px;
+      padding: 26px;
+      box-shadow: 0 24px 65px #0002
+    }
+
+    .ai .hero-board {
+      background: #061e26b8
+    }
+
+    .board-top {
+      font-size: 10px;
+      letter-spacing: .17em;
+      display: flex;
+      justify-content: space-between;
+      color: #a9c1d8;
+      border-bottom: 1px solid #ffffff20;
+      padding-bottom: 16px;
+      margin-bottom: 25px
+    }
+
+    .dots {
+      color: #7795b8;
+      letter-spacing: 4px
+    }
+
+    .board-row {
+      display: flex;
+      gap: 9px;
+      align-items: stretch;
+      justify-content: center
+    }
+
+    .board-node {
+      flex: 1;
+      border: 1px solid #ffffff24;
+      background: #ffffff08;
+      border-radius: 12px;
+      padding: 15px 8px;
+      text-align: center;
+      min-width: 0
+    }
+
+    .board-node strong {
+      display: block;
+      color: #f4f8ff;
+      font-size: 23px;
+      letter-spacing: -.5px
+    }
+
+    .board-node small {
+      display: block;
+      font-size: 10px;
+      color: #a9c2dc;
+      margin-top: 4px
+    }
+
+    .board-label {
+      text-align: center;
+      font-size: 11px;
+      color: #a8bed6;
+      letter-spacing: .09em;
+      padding: 13px 0
+    }
+
+    .board-core {
+      border: 1px solid #649cfa80;
+      background: #2c63b52b;
+      border-radius: 14px;
+      text-align: center;
+      padding: 19px 12px;
+      color: #c6ddff;
+      font-size: 14px;
+      font-weight: 700
+    }
+
+    .ai .board-core {
+      border-color: #51c4ac70;
+      background: #2b887025;
+      color: #b1ecde
+    }
+
+    .board-tags {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 18px
+    }
+
+    .board-tags span {
+      font-size: 10px;
+      color: #adbed1;
+      border: 1px solid #ffffff20;
+      padding: 3px 10px;
+      border-radius: 20px
+    }
+
+    .hero-foot {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid #ffffff24
+    }
+
+    .hero-foot>div {
+      padding: 23px 28px;
+      border-right: 1px solid #ffffff20
+    }
+
+    .hero-foot>div:first-child {
+      padding-left: 0
+    }
+
+    .hero-foot>div:last-child {
+      border: 0
+    }
+
+    .hero-foot strong {
+      font-size: 24px;
+      font-weight: 800;
+      display: inline-block;
+      letter-spacing: -.03em;
+      margin-right: 11px
+    }
+
+    .hero-foot span {
+      font-size: 12px;
+      color: #b6c8df
+    }
+
+    .hero-foot small {
+      font-size: 11px;
+      color: #b6c8df;
+      display: block;
+      margin-top: 1px
+    }
+
+    .page-layout {
+      display: grid;
+      grid-template-columns: 210px minmax(0, 1fr);
+      gap: 50px;
+      padding: 52px 0 72px
+    }
+
+    .toc {
+      position: sticky;
+      top: 104px;
+      align-self: start;
+      border-left: 1px solid var(--line);
+      padding-left: 18px
+    }
+
+    .toc-title {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: .16em;
+      font-weight: 800;
+      margin-bottom: 16px
+    }
+
+    .toc a {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      padding: 8px 0;
+      transition: color .15s;
+      line-height: 1.5
+    }
+
+    .toc a.active {
+      color: var(--accent);
+      font-weight: 800
+    }
+
+    .toc .toc-meta {
+      font-size: 11px;
+      line-height: 1.9;
+      color: #6c7b8c;
+      margin-top: 22px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line)
+    }
+
+    .mobile-toc {
+      display: none
+    }
+
+    .content {
+      min-width: 0
+    }
+
+    .section {
+      padding-bottom: 53px;
+      margin-bottom: 44px;
+      border-bottom: 1px solid var(--line);
+      scroll-margin-top: 100px
+    }
+
+    .section:last-child {
+      border-bottom: 0;
+      margin-bottom: 0;
+      padding-bottom: 0
+    }
+
+    .section-head {
+      margin-bottom: 26px
+    }
+
+    .section-head .eyebrow {
+      margin-bottom: 7px
+    }
+
+    .section h2 {
+      font-size: 29px;
+      font-weight: 800
+    }
+
+    .section-head>p {
+      color: var(--muted);
+      font-size: 15px;
+      margin-top: 13px;
+      line-height: 1.85
+    }
+
+    .section h3 {
+      font-size: 20px;
+      margin-bottom: 12px
+    }
+
+    .section h4 {
+      font-size: 16px
+    }
+
+    .section p {
+      font-size: 15px;
+      line-height: 1.95
+    }
+
+    .lead-copy {
+      font-size: 17px !important;
+      line-height: 1.95 !important
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 26px;
+      margin: 25px 0 0
+    }
+
+    .meta-grid>div {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .meta-grid dt {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 5px
+    }
+
+    .meta-grid dd {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.8;
+      font-weight: 650
+    }
+
+    .note {
+      padding: 19px 22px;
+      border-radius: 13px;
+      background: var(--soft);
+      border-left: 3px solid var(--accent);
+      margin: 22px 0;
+      font-size: 14px;
+      line-height: 1.9
+    }
+
+    .note p {
+      font-size: 14px
+    }
+
+    .note.warn {
+      background: #fff7e9;
+      border-color: #bd7b20;
+      color: #754410
+    }
+
+    .note.subtle {
+      background: #edf1f6;
+      border-color: #9bafc4;
+      color: #4d5d70
+    }
+
+    .source {
+      font-size: 11px !important;
+      color: #67768a !important;
+      line-height: 1.7 !important;
+      margin-top: 14px !important
+    }
+
+    .source a {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-color: #becada;
+      text-underline-offset: 3px
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 15px
+    }
+
+    .card-grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr))
+    }
+
+    .panel {
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: var(--shadow)
+    }
+
+    .panel .small-label {
+      font-size: 10px;
+      letter-spacing: .13em;
+      font-weight: 800;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 10px
+    }
+
+    .panel h3 {
+      font-size: 18px
+    }
+
+    .panel p {
+      font-size: 14px;
+      line-height: 1.85;
+      color: var(--muted)
+    }
+
+    .number {
+      font-size: 34px;
+      line-height: 1.2;
+      font-weight: 800;
+      letter-spacing: -.055em;
+      color: var(--accent);
+      display: block;
+      margin: 4px 0 8px
+    }
+
+    .number small {
+      font-size: 17px;
+      letter-spacing: 0
+    }
+
+    .metric-label {
+      font-size: 13px;
+      color: var(--muted)
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 22px 0
+    }
+
+    .metrics .panel {
+      padding: 20px
+    }
+
+    .metrics .number {
+      font-size: 30px
+    }
+
+    .table-wrap {
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      margin: 22px 0;
+      overscroll-behavior-x: contain
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 13px;
+      line-height: 1.75
+    }
+
+    caption {
+      text-align: left;
+      padding: 15px 18px;
+      font-size: 12px;
+      color: var(--muted);
+      background: #fff;
+      font-weight: 650
+    }
+
+    th,
+    td {
+      padding: 14px 18px;
+      text-align: left;
+      vertical-align: middle;
+      border-bottom: 1px solid var(--line)
+    }
+
+    th {
+      background: #eef2f8;
+      color: #41546e;
+      font-size: 12px;
+      font-weight: 750
+    }
+
+    tbody tr:last-child td,
+    tbody tr:last-child th {
+      border-bottom: 0
+    }
+
+    td strong {
+      color: var(--ink)
+    }
+
+    tr.total td {
+      background: var(--soft);
+      font-weight: 800
+    }
+
+    td.num {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap
+    }
+
+    .compact th,
+    .compact td {
+      padding: 12px 15px
+    }
+
+    .numeric-table th:not(:first-child),
+    .numeric-table td:not(:first-child) {
+      text-align: right;
+      white-space: nowrap
+    }
+
+    .numeric-table td:first-child {
+      white-space: nowrap
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 11px;
+      margin: 24px 0
+    }
+
+    .flow>div {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: white;
+      padding: 18px 13px
+    }
+
+    .flow>div::after {
+      content: '›';
+      position: absolute;
+      right: -10px;
+      top: 41%;
+      font-size: 21px;
+      color: var(--accent);
+      z-index: 1
+    }
+
+    .flow>div:last-child::after {
+      display: none
+    }
+
+    .flow b {
+      font-size: 10px;
+      display: block;
+      color: var(--accent);
+      letter-spacing: .1em;
+      margin-bottom: 8px
+    }
+
+    .flow strong {
+      font-size: 13px;
+      display: block
+    }
+
+    .flow small {
+      font-size: 11px;
+      color: var(--muted);
+      display: block;
+      margin-top: 7px;
+      line-height: 1.65
+    }
+
+    .flow.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr))
+    }
+
+    .filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 20px 0
+    }
+
+    .filter {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 8px 14px;
+      border-radius: 30px
+    }
+
+    .filter[aria-pressed=true] {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white
+    }
+
+    .filter-count {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0 0 16px
+    }
+
+    .case {
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 16px;
+      margin-bottom: 14px;
+      overflow: hidden
+    }
+
+    .case[hidden] {
+      display: none
+    }
+
+    .case summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 17px;
+      padding: 24px
+    }
+
+    .case summary::-webkit-details-marker {
+      display: none
+    }
+
+    .case summary::after {
+      content: '+';
+      margin-left: auto;
+      color: var(--accent);
+      font-size: 23px;
+      line-height: 1.3;
+      flex-shrink: 0
+    }
+
+    .case[open] summary::after {
+      content: '−'
+    }
+
+    .case-no {
+      font-size: 12px;
+      background: var(--soft);
+      color: var(--accent);
+      border-radius: 9px;
+      min-width: 33px;
+      height: 33px;
+      display: grid;
+      place-items: center;
+      font-weight: 800
+    }
+
+    .case-title {
+      display: block;
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -.03em;
+      line-height: 1.55
+    }
+
+    .case-meta {
+      font-size: 11px;
+      color: var(--muted);
+      display: block;
+      margin-top: 7px
+    }
+
+    .case-body {
+      border-top: 1px solid var(--line);
+      padding: 22px 25px
+    }
+
+    .case-line {
+      display: grid;
+      grid-template-columns: 70px 1fr;
+      gap: 17px;
+      margin: 0 0 17px
+    }
+
+    .case-line:last-child {
+      margin: 0
+    }
+
+    .case-line>span {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--accent);
+      padding-top: 5px
+    }
+
+    .case-line p {
+      font-size: 14px;
+      line-height: 1.9
+    }
+
+    .case-body .outcome {
+      border-radius: 10px;
+      background: var(--soft);
+      padding: 14px 17px;
+      font-size: 13px;
+      margin-top: 10px
+    }
+
+    .detail {
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: #fff;
+      margin-top: 18px
+    }
+
+    .detail summary {
+      padding: 17px 20px;
+      font-size: 14px;
+      font-weight: 750;
+      cursor: pointer
+    }
+
+    .detail>div {
+      padding: 2px 20px 20px
+    }
+
+    .detail p {
+      font-size: 14px
+    }
+
+    .detail .table-wrap {
+      margin-bottom: 0
+    }
+
+    .code {
+      background: #102438;
+      color: #d2e3f4;
+      border-radius: 14px;
+      padding: 23px;
+      overflow: auto;
+      font: 12px/1.9 ui-monospace, SFMono-Regular, Consolas, monospace;
+      white-space: pre;
+      margin: 20px 0;
+      word-break: normal;
+      overflow-wrap: normal
+    }
+
+    .source-list {
+      display: grid;
+      gap: 11px
+    }
+
+    .source-item {
+      padding: 16px 19px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      font-size: 12px;
+      line-height: 1.9;
+      overflow-wrap: anywhere;
+      word-break: break-word
+    }
+
+    .source-item strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 4px
+    }
+
+    .source-item small {
+      display: block;
+      color: var(--muted);
+      font-size: 11px
+    }
+
+    .video-shell {
+      width: 100%;
+      min-width: 0;
+      position: relative;
+      aspect-ratio: 16/9;
+      min-height: 210px;
+      background: #081820;
+      border-radius: 19px;
+      overflow: hidden;
+      border: 1px solid #1d4551;
+      margin: 23px 0 16px
+    }
+
+    .video-shell iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0
+    }
+
+    .video-caption {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px
+    }
+
+    .video-caption p {
+      font-size: 12px;
+      color: var(--muted)
+    }
+
+    .timeline {
+      border-left: 2px solid var(--line);
+      margin: 23px 0 10px 7px;
+      padding-left: 26px
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 27px
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -32px;
+      top: 8px;
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 0 5px var(--bg)
+    }
+
+    .timeline-item time {
+      font-size: 11px;
+      letter-spacing: .08em;
+      color: var(--accent);
+      font-weight: 800
+    }
+
+    .timeline-item h3 {
+      margin: 5px 0 8px;
+      font-size: 17px
+    }
+
+    .timeline-item p {
+      font-size: 14px;
+      color: var(--muted)
+    }
+
+    .matrix td,
+    .matrix th {
+      text-align: center
+    }
+
+    .matrix td:first-child,
+    .matrix th:first-child {
+      text-align: left
+    }
+
+    .matrix .hit {
+      background: #e7f4ee;
+      color: #226149;
+      font-weight: 800
+    }
+
+    .matrix .miss {
+      background: #fff0e7;
+      color: #973e13;
+      font-weight: 800
+    }
+
+    .matrix tbody tr:nth-child(1) td:nth-child(2),
+    .matrix tbody tr:nth-child(2) td:nth-child(3),
+    .matrix tbody tr:nth-child(3) td:nth-child(4) {
+      background: #e7f4ee;
+      color: #226149;
+      font-weight: 800
+    }
+
+    .matrix tbody tr:nth-child(3) td:nth-child(2) {
+      background: #fff0e7;
+      color: #973e13;
+      font-weight: 800
+    }
+
+    .legend {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 11px
+    }
+
+    .legend span::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      background: var(--accent);
+      margin-right: 7px
+    }
+
+    .legend .other::before {
+      background: #acbdd9
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr) 30px;
+      align-items: center;
+      gap: 13px;
+      margin: 16px 0;
+      font-size: 12px
+    }
+
+    .bar-track {
+      height: 13px;
+      border-radius: 10px;
+      background: #edf2f8;
+      overflow: hidden
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 10px;
+      min-width: 2px
+    }
+
+    .bar-row strong {
+      text-align: right;
+      font-size: 12px
+    }
+
+    .score-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 22px 0
+    }
+
+    .score-box {
+      padding: 14px;
+      border-radius: 12px;
+      background: #fff;
+      border: 1px solid var(--line)
+    }
+
+    .score-box b {
+      font-size: 12px;
+      display: block
+    }
+
+    .score-box span {
+      font-size: 17px;
+      font-weight: 800;
+      display: block;
+      margin-top: 4px
+    }
+
+    .score-box small {
+      display: block;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 5px
+    }
+
+    .check-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 17px 0;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .check-row:last-child {
+      border: 0
+    }
+
+    .check-mark {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      margin-top: 3px;
+      border: 1px solid #8fa8b2;
+      border-radius: 6px;
+      color: var(--accent);
+      font-size: 13px;
+      display: grid;
+      place-items: center
+    }
+
+    .check-row strong {
+      font-size: 14px
+    }
+
+    .check-row p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px
+    }
+
+    .related {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: #fff;
+      padding: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-top: 42px
+    }
+
+    .related small {
+      display: block;
+      font-size: 10px;
+      letter-spacing: .13em;
+      color: var(--muted);
+      margin-bottom: 7px
+    }
+
+    .related strong {
+      font-size: 19px;
+      letter-spacing: -.04em
+    }
+
+    .related>span {
+      font-size: 27px;
+      color: var(--accent)
+    }
+
+    .related:hover {
+      text-decoration: none;
+      background: var(--soft)
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0;
+      background: #fff
+    }
+
+    .footer-flex {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      color: var(--muted);
+      font-size: 11px
+    }
+
+    .top-button {
+      position: fixed;
+      bottom: 22px;
+      right: 22px;
+      width: 43px;
+      height: 43px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: var(--shadow);
+      color: var(--ink);
+      z-index: 30
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0
+    }
+
+    @media(min-width:1200px) {
+      .content {
+        max-width: 920px
+      }
+    }
+
+    @media(max-width:1050px) {
+      .hero-grid {
+        gap: 30px
+      }
+
+      .page-layout {
+        gap: 30px;
+        grid-template-columns: 170px minmax(0, 1fr)
+      }
+
+      .page-layout {
+        grid-template-columns: 170px minmax(0, 1fr)
+      }
+
+      .toc {
+        padding-left: 12px
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr
+      }
+
+      .card-grid.two {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .metrics {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .flow {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .flow>div::after {
+        display: none
+      }
+
+      .flow.three {
+        grid-template-columns: repeat(3, 1fr)
+      }
+
+      .score-row {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    @media(max-width:800px) {
+      .wrap {
+        width: calc(100% - 40px)
+      }
+
+      .hero {
+        padding-top: 37px
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding-bottom: 33px
+      }
+
+      .hero h1 {
+        font-size: 39px
+      }
+
+      .hero-board {
+        padding: 22px
+      }
+
+      .hero-lead {
+        font-size: 16px
+      }
+
+      .hero-foot>div {
+        padding: 17px 12px
+      }
+
+      .hero-foot strong {
+        display: block;
+        font-size: 23px
+      }
+
+      .hero-foot span {
+        font-size: 11px
+      }
+
+      .page-layout {
+        display: block;
+        padding: 22px 0 48px
+      }
+
+      .toc {
+        display: none
+      }
+
+      .mobile-toc {
+        display: block;
+        margin-bottom: 32px;
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: 12px
+      }
+
+      .mobile-toc summary {
+        padding: 14px 17px;
+        font-size: 13px;
+        font-weight: 750;
+        cursor: pointer
+      }
+
+      .mobile-toc nav {
+        padding: 0 17px 14px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px
+      }
+
+      .mobile-toc a {
+        font-size: 12px
+      }
+
+      .section h2 {
+        font-size: 25px
+      }
+
+      .section {
+        padding-bottom: 34px;
+        margin-bottom: 32px
+      }
+
+      .section p {
+        font-size: 14px
+      }
+
+      .meta-grid {
+        gap: 0 18px
+      }
+
+      .meta-grid dd {
+        font-size: 13px
+      }
+
+      .topbar .wrap {
+        min-height: 66px;
+        gap: 12px
+      }
+
+      .toplinks {
+        gap: 15px;
+        font-size: 12px
+      }
+
+      .plain-btn {
+        display: none
+      }
+
+      .card-grid.two {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .case summary {
+        padding: 19px 17px;
+        gap: 11px
+      }
+
+      .case-title {
+        font-size: 16px
+      }
+
+      .case-body {
+        padding: 18px
+      }
+
+      .case-line {
+        grid-template-columns: 1fr;
+        gap: 5px
+      }
+
+      .case-line>span {
+        padding: 0
+      }
+
+      .footer-flex {
+        flex-direction: column;
+        gap: 6px
+      }
+
+      .source {
+        font-size: 10px !important
+      }
+
+      .video-caption {
+        align-items: flex-start;
+        flex-direction: column
+      }
+
+      .numeric-table {
+        min-width: 480px
+      }
+    }
+
+    @media(max-width:560px) {
+      .wrap {
+        width: calc(100% - 32px)
+      }
+
+      .brand {
+        font-size: 17px
+      }
+
+      .menu-toggle {
+        display: block
+      }
+
+      .toplinks {
+        display: none;
+        position: absolute;
+        top: 65px;
+        left: 0;
+        right: 0;
+        background: #fff;
+        padding: 20px 24px;
+        box-shadow: 0 15px 25px #142f5515;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 19px;
+        border-bottom: 1px solid var(--line);
+        font-size: 14px
+      }
+
+      .toplinks.open {
+        display: flex
+      }
+
+      .hero h1 {
+        font-size: 32px
+      }
+
+      .hero-foot strong {
+        font-size: 20px
+      }
+
+      .hero-foot span {
+        font-size: 10px
+      }
+
+      .hero-foot small {
+        font-size: 10px
+      }
+
+      .board-node strong {
+        font-size: 21px
+      }
+
+      .meta-grid {
+        grid-template-columns: 1fr
+      }
+
+      .card-grid.two {
+        grid-template-columns: 1fr
+      }
+
+      .panel {
+        padding: 20px
+      }
+
+      .metrics .panel {
+        padding: 17px
+      }
+
+      .metrics .number {
+        font-size: 27px
+      }
+
+      .flow,
+      .flow.three {
+        grid-template-columns: 1fr
+      }
+
+      .flow>div {
+        padding: 16px
+      }
+
+      .flow>div strong {
+        font-size: 14px
+      }
+
+      .flow>div b {
+        margin-bottom: 4px
+      }
+
+      .flow>div small {
+        font-size: 12px;
+        margin-top: 4px
+      }
+
+      .hero-foot>div {
+        padding-right: 8px;
+        padding-left: 10px
+      }
+
+      .video-shell {
+        border-radius: 12px;
+        min-height: 205px
+      }
+
+      .note {
+        padding: 15px 17px;
+        font-size: 13px
+      }
+
+      .section h3 {
+        font-size: 18px
+      }
+
+      .btn {
+        padding: 10px 15px;
+        font-size: 13px
+      }
+
+      .related {
+        padding: 23px
+      }
+
+      .related strong {
+        font-size: 17px
+      }
+
+      .code {
+        font-size: 11px;
+        padding: 17px
+      }
+
+      .compare-table {
+        min-width: 580px
+      }
+
+      .source-item {
+        font-size: 11px
+      }
+
+      .top-button {
+        right: 14px;
+        bottom: 14px;
+        width: 38px;
+        height: 38px
+      }
+
+      th,
+      td {
+        padding: 12px 14px
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      html {
+        scroll-behavior: auto
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition: none !important;
+        animation: none !important
+      }
+    }
+
+    @media print {
+
+      .topbar,
+      .toc,
+      .mobile-toc,
+      .top-button,
+      .progress,
+      .actions,
+      .filters,
+      .related,
+      .video-shell,
+      .video-caption,
+      .print-hide {
+        display: none !important
+      }
+
+      body {
+        background: white;
+        font-size: 11pt
+      }
+
+      .wrap {
+        width: 100%
+      }
+
+      .hero {
+        background: white !important;
+        color: #111;
+        padding: 15px 0
+      }
+
+      .hero::before,
+      .hero-board {
+        display: none
+      }
+
+      .hero-grid {
+        display: block;
+        padding-bottom: 12px
+      }
+
+      .hero h1 {
+        font-size: 27pt;
+        color: #111
+      }
+
+      .hero h1 em,
+      .hero .eyebrow,
+      .hero-lead {
+        color: #333
+      }
+
+      .hero-foot {
+        color: #111;
+        border-color: #ccc
+      }
+
+      .hero-foot span,
+      .hero-foot small {
+        color: #333
+      }
+
+      .hero .chip {
+        color: #222;
+        border-color: #aaa
+      }
+
+      .page-layout {
+        display: block;
+        padding: 20px 0
+      }
+
+      .section {
+        break-inside: auto;
+        margin-bottom: 22px;
+        padding-bottom: 22px
+      }
+
+      .panel,
+      .case,
+      .table-wrap {
+        box-shadow: none;
+        break-inside: avoid
+      }
+
+      .section h2 {
+        font-size: 20pt
+      }
+
+      .section h3 {
+        font-size: 15pt
+      }
+
+      .section p {
+        font-size: 10pt
+      }
+
+      .content {
+        max-width: none
+      }
+
+      .table-wrap {
+        overflow: visible
+      }
+
+      table {
+        font-size: 9pt
+      }
+
+      .case-body {
+        display: block !important
+      }
+
+      .source {
+        color: #444 !important
+      }
+
+      .code {
+        white-space: pre-wrap;
+        overflow: visible;
+        background: #eee;
+        color: #111
+      }
+
+      .hero-foot>div {
+        padding: 10px
+      }
+
+      .card-grid {
+        grid-template-columns: repeat(3, 1fr)
+      }
+
+      .card-grid.two {
+        grid-template-columns: 1fr 1fr
+      }
+
+      a {
+        color: #222
+      }
+
+      .note {
+        background: #f0f0f0 !important
+      }
+
+      footer {
+        padding: 12px 0
+      }
+    }
+  </style>
+</head>
+
+<body class="ai">
+  <a class="skip" href="#main">본문으로 건너뛰기</a>
+  <div class="progress" id="readingProgress" aria-hidden="true"></div>
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="/index.html#work"><span class="brand-mark" aria-hidden="true">M.</span>Migong0311</a>
+      <button class="menu-toggle" id="menuToggle" aria-controls="toplinks" aria-expanded="false">메뉴</button>
+      <nav class="toplinks" id="toplinks" aria-label="주요 메뉴"><a href="/index.html#work">전체 포트폴리오</a><a
+          href="ynv-plm-mes.html">와이엔브이</a><a href="kyunghan-ai.html" aria-current="page">경한코리아</a><button
+          class="plain-btn" data-print>인쇄</button></nav>
+    </div>
+  </header>
+  <div class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">FIELD WORK / 02 · MANUFACTURING AI</span>
+          <div class="status-row"><span class="chip">경한코리아 AI실증</span><span class="chip">On-device AI</span></div>
+          <h1>CNC 공구의 이상을<br><em>데이터로 읽다.</em></h1>
+          <p class="hero-lead">원시데이터에서 공구별 이상점수까지.<br>학습·변환·버전관리·배포와 Raspberry Pi 추론을 연결한 제조 AI 개발 기록입니다.</p>
+          <div class="actions"><a class="btn btn-primary" href="#demo">실증 영상 보기 <span aria-hidden="true">▷</span></a><a
+              class="btn btn-ghost" href="#approaches">두 모델 구조 비교</a></div>
+        </div>
+        <div class="hero-board"
+          aria-label="CNC 데이터가 Windows 학습과 Raspberry Pi 추론을 거쳐 MAIN, SUB, OVERALL 결과가 되는 IF와 AE 처리 흐름">
+          <div class="board-top"><span>FROM SIGNAL TO INSIGHT</span><span class="dots" aria-hidden="true">● ● ●</span>
+          </div>
+          <div class="board-row">
+            <div class="board-node"><strong>CNC</strong><small>Spindle · RPM · Feed</small></div>
+            <div class="board-node"><strong>DATA</strong><small>Offset · Cycle · Tool</small></div>
+          </div>
+          <div class="board-label">↓ &nbsp; Windows · 학습 / 변환 / 배포 &nbsp; ↓</div>
+          <div class="board-core">Isolation Forest + AutoEncoder</div>
+          <div class="board-label">↓ &nbsp; Raspberry Pi · 신규행 추론 &nbsp; ↓</div>
+          <div class="board-row">
+            <div class="board-node"><strong>MAIN</strong><small>공구별 이상</small></div>
+            <div class="board-node"><strong>SUB</strong><small>공구별 이상</small></div>
+            <div class="board-node"><strong>ALL</strong><small>설비 전체 공정</small></div>
+          </div>
+          <div class="board-tags"><span>IF+AE 문서 기준 · 2026.09.10</span><span>TFLite</span></div>
+        </div>
+      </div>
+      <div class="hero-foot">
+        <div><strong>IF + AE</strong><span>공구별 이상탐지</span><small>비지도 · MAIN / SUB / OVERALL</small></div>
+        <div><strong>MLP</strong><span>TOOL_BREAK v6</span><small>약지도 · Risk-Only</small></div>
+        <div><strong>48,917</strong><span>Cycle Sample</span><small>v6 학습·검증·시험 전체</small></div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap page-layout">
+    <aside class="toc">
+      <div class="toc-title">ON THIS PAGE</div>
+      <nav aria-label="페이지 목차"><a href="#overview">01 프로젝트 개요</a><a href="#demo">02 실증 영상</a><a href="#approaches">03 두
+          모델 비교</a><a href="#anomaly">04 IF+AE 공구별 이상탐지</a><a href="#toolbreak">05 TOOL_BREAK v6</a><a
+          href="#metrics">06 학습결과와 한계</a><a href="#operations">07 배포·DB·개발 이력</a><a href="#roadmap">08 검증과 후속 개발</a><a
+          href="#sources">09 자료와 작성 기준</a></nav>
+      <div class="toc-meta">김미성 · 개발 포트폴리오<br>자료 기준: 2026.08–09 문서<br>기록: 2026.10.15</div>
+    </aside>
+    <main class="content" id="main">
+      <details class="mobile-toc">
+        <summary>이 페이지의 목차</summary>
+        <nav aria-label="모바일 목차"><a href="#overview">01 프로젝트 개요</a><a href="#demo">02 실증 영상</a><a href="#approaches">03
+            두 모델 비교</a><a href="#anomaly">04 IF+AE 공구별 이상탐지</a><a href="#toolbreak">05 TOOL_BREAK v6</a><a
+            href="#metrics">06 학습결과와 한계</a><a href="#operations">07 배포·DB·개발 이력</a><a href="#roadmap">08 검증과 후속 개발</a><a
+            href="#sources">09 자료와 작성 기준</a></nav>
+      </details>
+      <section class="section" id="overview">
+        <div class="section-head"><span class="eyebrow">01 / PROJECT OVERVIEW</span>
+          <h2>현장 신호를 해석 가능한 AI 결과로</h2>
+          <p>경한코리아 AI실증에서 다룬 두 가지 모델 접근과 개발 과정을 기록합니다.</p>
+        </div>
+        <p class="lead-copy">CNC에서 수집된 Spindle, RPM, Feed, Offset, Cycle 등의 공정신호를 사용해 <strong>공구와 설비의 이상 상태를 분석하고
+            Raspberry Pi에서 추론</strong>하는 프로젝트입니다. 데이터 확보부터 모델 학습, TFLite 변환, 모델 이력 관리와 현장 배포까지 연결된 개발 항목을 다룹니다.</p>
+        <p>이 페이지는 <strong>BONE AI4M의 IF+AE 공구별 이상탐지</strong>와 <strong>TOOL_BREAK v6의 약지도 파손 위험점수 모델</strong>을 별도 기술 기록으로
+          구성했습니다. 이름이 비슷한 이상점수라도 학습 방식과 평가 기준이 다르므로 서로의 설정이나 성능을 혼용하지 않습니다.</p>
+        <dl class="meta-grid">
+          <div>
+            <dt>실증 프로젝트</dt>
+            <dd>경한코리아 AI실증</dd>
+          </div>
+          <div>
+            <dt>주요 개발 범위</dt>
+            <dd>데이터 전처리 · AI 모델링 · 변환·배포 · 온디바이스 추론</dd>
+          </div>
+          <div>
+            <dt>실행 환경</dt>
+            <dd>Windows 학습 / Raspberry Pi 추론</dd>
+          </div>
+          <div>
+            <dt>데이터·운영 연계</dt>
+            <dd>PostgreSQL/TimescaleDB · MariaDB · SSH/SFTP</dd>
+          </div>
+          <div>
+            <dt>모델·전처리 기술</dt>
+            <dd>Python · NumPy · Keras/TensorFlow Lite · IF · AE · MLP</dd>
+          </div>
+          <div>
+            <dt>원문 기준일</dt>
+            <dd>2026.08.14–08.19 TOOL_BREAK / 2026.09.10 IF+AE</dd>
+          </div>
+        </dl>
+        <div class="note subtle"><strong>프로젝트 구현 기록과 개인 기여 범위를 구분합니다.</strong> IF+AE 처리 프로세스 문서의 작성자는 김미성으로 기재되어 있습니다.
+          다만 세부 업무 분담·개인 기여율·계약기간은 첨부자료에 없어 임의로 수치화하지 않았습니다.</div>
+        <p class="source"><a href="#sources">A1 · §1–3 / A3 · §1·12 / A5 · §22–23 / A6 · §3</a></p>
+      </section>
+      <section class="section" id="demo">
+        <div class="section-head"><span class="eyebrow">02 / PROJECT FILM</span>
+          <h2>경한코리아 AI실증 영상</h2>
+        </div>
+        <div class="video-shell"><iframe id="demoPlayer" width="960" height="540"
+            src="https://www.youtube-nocookie.com/embed/hBNcX0Z1zaU?rel=0&amp;playsinline=1&amp;hl=ko"
+            title="경한코리아 AI실증 유튜브 영상" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe></div>
+        <div class="video-caption">
+          <p id="videoStatus" role="status">플레이어의 재생 버튼을 누르거나 아래 버튼으로 재생을 시작하세요.</p>
+          <div class="actions"><button class="btn btn-primary" data-video-play>영상 재생 ▷</button><a class="btn btn-soft"
+              href="https://youtu.be/hBNcX0Z1zaU" target="_blank" rel="noopener noreferrer">YouTube에서 보기 ↗</a></div>
+        </div>
+        <div class="note subtle" id="localVideoHint" hidden>파일을 직접 열어 보는 환경에서는 YouTube 플레이어가 제한될 수 있습니다. GitHub Pages에
+          올린 뒤 재생을 확인하거나, YouTube에서 보기를 이용하세요.</div>
+        <p class="source">V1 · 본인이 제공한 프로젝트 영상 링크. 아래 구현·성능 설명의 근거는 첨부 기술자료이며, 영상에서 별도로 검증한 수치로 간주하지 않습니다. 임베드가 제한되거나
+          시작되지 않으면 YouTube에서 보기를 이용하세요.</p>
+      </section>
+      <section class="section" id="approaches">
+        <div class="section-head"><span class="eyebrow">03 / TWO APPROACHES</span>
+          <h2>같은 현장, 서로 다른 모델의 역할</h2>
+          <p>IF+AE의 이상도와 MLP의 약지도 위험점수를 구분하는 것이 출발점입니다.</p>
+        </div>
+        <div class="table-wrap">
+          <table class="compare-table">
+            <caption>모델별 문서에 기재된 구조 비교</caption>
+            <thead>
+              <tr>
+                <th scope="col">비교 항목</th>
+                <th scope="col">BONE AI4M · IF+AE</th>
+                <th scope="col">TOOL_BREAK v6 · MLP</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>문서 기준</td>
+                <td>2026.09.10</td>
+                <td>2026.08.19 Risk-Only·학습결과</td>
+              </tr>
+              <tr>
+                <td>학습 방식</td>
+                <td>정상 분포 기반 비지도 이상탐지</td>
+                <td>물리규칙으로 만든 Weak Label 학습</td>
+              </tr>
+              <tr>
+                <td>분석 단위</td>
+                <td>MAIN Tool별 / SUB Tool별 / OVERALL별 독립 모델</td>
+                <td>공구별 Cycle Feature를 공통 입력 구조로 처리</td>
+              </tr>
+              <tr>
+                <td>데이터 구성</td>
+                <td>최신 30일 Hash 표본 → 원시행 Feature</td>
+                <td>최근 3일 Raw → Cycle Summary</td>
+              </tr>
+              <tr>
+                <td>입력 기준</td>
+                <td>MAIN·SUB 각 8개 수치형 + O-Number 범주</td>
+                <td>25개 기본 Feature + One-Hot; 해당 실행 총 35개</td>
+              </tr>
+              <tr>
+                <td>Servo 신호</td>
+                <td>설비별 패턴 편차로 제외</td>
+                <td>v6 Feature와 Weak Label에 유지</td>
+              </tr>
+              <tr>
+                <td>운영 추론</td>
+                <td>Watermark 이후 신규행 처리</td>
+                <td>MODEL 또는 MAIN_SEQ 변경 시 최근 최대 80 Cycle 재조회</td>
+              </tr>
+              <tr>
+                <td>출력</td>
+                <td>이상도 0–100 / 90·95·98 상태 기준</td>
+                <td>위험점수 0–100 / 30·70 상태 기준</td>
+              </tr>
+              <tr>
+                <td>문서의 출력·저장 범위</td>
+                <td>JSON 한 줄 출력; DB 저장 후속 연계</td>
+                <td>AI_VALUE1 위험도 갱신; AI_VALUE2/3 시간예측 제거</td>
+              </tr>
+              <tr>
+                <td>성능 해석</td>
+                <td>실제 Label 기반 민감도·오탐 검증 필요</td>
+                <td>MAE·F1은 Weak Label 재현 성능</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note warn"><strong>성능 수치의 소속을 유지합니다.</strong> Test MAE 3.633%p와 상태 일치율 96.35%는 TOOL_BREAK v6 결과입니다.
+          IF+AE의 성능으로 옮겨 쓰지 않으며, 어느 쪽의 0–100 점수도 검증된 실제 파손확률로 표현하지 않습니다.</div>
+        <p class="source"><a href="#sources">A1 · §1·4·6–17·23–28 / A2 · §1–7 / A3 · §1·5·9–11</a></p>
+      </section>
+      <section class="section" id="anomaly">
+        <div class="section-head"><span class="eyebrow">04 / BONE AI4M · IF + AE</span>
+          <h2>공구별 이상 위치를 분리하는 파이프라인</h2>
+          <p>문서 기준: 2026.09.10 · iforest_autoencoder_tool_split_v2</p>
+        </div>
+        <h3>원시데이터부터 공구별 모델까지</h3>
+        <div class="flow ">
+          <div><b>01</b><strong>데이터 확보</strong><small>DB 최신 시각 기준 30일 · O-Number별 Hash 표본</small></div>
+          <div><b>02</b><strong>독립 모델 학습</strong><small>MAIN Tool / SUB Tool / OVERALL · IF+AE</small></div>
+          <div><b>03</b><strong>TFLite 변환</strong><small>AE 변환 · Keras 출력과 오차 확인</small></div>
+          <div><b>04</b><strong>Registry 등록</strong><small>모델 버전 · 지표 · 파일·해시 저장</small></div>
+          <div><b>05</b><strong>Pi 배포·추론</strong><small>모델 파일 배포 후 index 교체 · 신규행 처리</small></div>
+        </div>
+        <div class="card-grid two">
+          <article class="panel"><span class="small-label">DATA ENGINEERING</span>
+            <h3>DB 조회와 Python 전처리 분리</h3>
+            <p>DB에서는 기간·설비·O-Number 조건과 Hash 표본을 처리하고, Python에서 타입 변환·유효성 검사·MAIN/SUB ACTIVE 판정을 수행합니다.</p>
+            <p>각 Side의 RPM 또는 Feed가 0보다 크면 ACTIVE로 판정합니다. Snapshot에서 공구별 데이터를 분리하므로 공구마다 DB를 다시 조회하지 않습니다.</p>
+          </article>
+          <article class="panel"><span class="small-label">MODEL GRANULARITY</span>
+            <h3>공구별 위치와 설비 전체를 함께</h3>
+            <p>MAIN·SUB는 Tool No별로 모델을 나누고, 별도의 OVERALL 모델이 전체 공정의 이상도를 생성합니다. O-Number는 모델 분리 키가 아니라 범주형 입력입니다.</p>
+            <p>공구 데이터가 2,000건 미만이면 학습을 건너뜁니다. 모델이 없는 공구에는 다른 공구 모델을 대신 적용하지 않습니다.</p>
+          </article>
+        </div>
+        <p class="source"><a href="#sources">A1 · §6–11·24</a></p>
+        <div style="height:26px" aria-hidden="true"></div>
+        <h3>IF와 AE를 결합하는 이유</h3>
+        <div class="card-grid two">
+          <article class="panel"><span class="small-label">ISOLATION FOREST</span>
+            <h3>드문 신호 조합을 찾기</h3>
+            <p>공구별 정규화 Feature가 정상 분포에서 얼마나 고립되어 있는지 점수화합니다. FIT 구간 IF 점수의 95백분위 이하를 AE 학습용 Normal Core로 사용합니다.</p>
+          </article>
+          <article class="panel"><span class="small-label">AUTOENCODER</span>
+            <h3>정상 패턴을 복원하기</h3>
+            <p>Normal Core를 압축·복원하도록 학습합니다. 평소와 다른 입력을 잘 복원하지 못할수록 MSE 복원오차가 커지는 구조입니다.</p>
+          </article>
+        </div>
+        <pre class="code" aria-label="IF와 AE 결합점수 계산식">IF_pct = IF raw score의 Calibration 백분위
+AE_pct = AE 복원오차의 Calibration 백분위
+
+Fusion = 0.60 × max(IF_pct, AE_pct)
+       + 0.40 × mean(IF_pct, AE_pct)
+
+anomaly_score = Fusion의 Calibration 백분위 (0–100)</pre>
+        <div class="score-row">
+          <div class="score-box"><b>정상</b><span>0–89.99</span><small>일반적인 분포</small></div>
+          <div class="score-box"><b>관찰</b><span>90–94.99</span><small>추세 관찰</small></div>
+          <div class="score-box"><b>주의</b><span>95–97.99</span><small>점검 권고</small></div>
+          <div class="score-box"><b>이상</b><span>98–100</span><small>파손 의심 / 공정 이상</small></div>
+        </div>
+        <div class="note warn"><strong>98점은 파손확률 98%가 아닙니다.</strong> Calibration 분포의 상위 약 2% 경계라는 뜻입니다. 기준알림률 약 2% 역시 실제
+          오탐률 2%를 뜻하지 않습니다.</div>
+        <p class="source"><a href="#sources">A1 · §12–18</a></p>
+        <details class="detail">
+          <summary>학습·전처리 설정과 Feature 변경 시 주의사항</summary>
+          <div>
+            <p>수치형 결측치는 median으로 보완하고, median·IQR 기반 정규화와 −12~+12 Clip을 적용합니다. IQR이 작으면 Std를 사용합니다. 시간순 앞쪽 약 80%를 FIT,
+              뒤쪽 약 20%를 Calibration으로 나눕니다.</p>
+            <p>IF는 128 Trees, max_samples 최대 4,096입니다. AE는 Adam(1e−3)·MSE, 최대 60 Epoch, Batch 256, EarlyStopping
+              patience 5 설정이며 최대 학습행은 100,000입니다.</p>
+            <p><strong>Servo 제거는 입력 벡터와 산출물의 버전 변경입니다.</strong> Pi 코드만 바꾸지 않고 재학습·TFLite 재변환·runtime/meta/index 재배포를 함께
+              수행해야 합니다.</p>
+            <p class="source"><a href="#sources">A1 · §5·12–15</a></p>
+          </div>
+        </details>
+        <div style="height:26px" aria-hidden="true"></div>
+        <h3>Pi에서는 신규행만 처리</h3>
+        <p>마지막 처리 위치 <code>(ins_dt, seq)</code>를 Watermark로 관리하고 그 이후 신규행만 읽습니다. 각 행의 MAIN·SUB 활성 여부와 현재 Tool을 확인해 해당
+          모델과 OVERALL 모델을 실행합니다. 모델 runtime은 캐시하여 매 행마다 파일을 다시 읽지 않습니다.</p>
+        <div class="note subtle">Polling <strong>0.25초</strong>, 한 번에 최대 <strong>200행</strong>은 조회 설정입니다. 추론 지연시간 보장값이
+          아닙니다. 원문의 JSON 예시에는 inference_ms가 있지만 평균·최대 현장 추론시간을 입증하는 시험 결과로 일반화하지 않았습니다.</div>
+        <p class="source"><a href="#sources">A1 · §23–25</a></p>
+      </section>
+      <section class="section" id="toolbreak">
+        <div class="section-head"><span class="eyebrow">05 / TOOL_BREAK v6 · RISK-ONLY</span>
+          <h2>공정신호를 학습한 경량 파손 위험점수 모델</h2>
+          <p>문서 기준: 2026.08.19 · Cycle Summary와 Weak Supervision</p>
+        </div>
+        <h3>Raw 한 행이 아닌, 공구별 Cycle을 학습 단위로</h3>
+        <p>약 1초 수준으로 수집된 Raw를 MAIN/SUB Long 형식으로 펼친 뒤 <code>iot_seq + main_seq + side + O-NUM + Tool No</code>로 묶습니다.
+          Cycle의 평균·최대·변화량·안정성을 고정 길이 Feature로 요약하여 경량 MLP에 입력합니다.</p>
+        <div class="flow three">
+          <div><b>01</b><strong>Cycle Summary</strong><small>부하 · RPM · Feed · Offset · Cycle</small></div>
+          <div><b>02</b><strong>Feature + Weak Label</strong><small>25개 기본 Feature + One-Hot · 규칙 기반 위험점수</small></div>
+          <div><b>03</b><strong>MLP → TFLite</strong><small>해당 실행 35 → 24 → 12 → 1 · Pi 위험도 추론</small></div>
+        </div>
+        <div class="card-grid two">
+          <article class="panel"><span class="small-label">FEATURE ENGINEERING</span>
+            <h3>현재값 + 평소값 + 변화량</h3>
+            <p>같은 설비·Side·O-NUM·Tool의 이전 10 Cycle을 기준선으로 사용합니다. 가이드에는 shift(1)을 먼저 적용하여 현재 Cycle을 자신의 기준선에서 제외하는 방식이
+              설명되어 있습니다.</p>
+          </article>
+          <article class="panel"><span class="small-label">WEAK SUPERVISION</span>
+            <h3>실제 파손 정답을 대신한 Teacher</h3>
+            <p>Spindle·Servo·RPM·Feed·Offset·Cycle 변화에 물리규칙을 적용하여 0–100 Weak Label을 만듭니다. MLP는 이 점수를 학습하며, 실제 파손 이벤트를
+              정답으로 학습한 모델과 구분합니다.</p>
+          </article>
+        </div>
+        <p class="source"><a href="#sources">A3 · §1·4–5 / A4 · pp.4–8: 공통 Cycle·학습 개념; v6 변경은 A3 기준</a></p>
+        <div style="height:26px" aria-hidden="true"></div>
+        <h3>v6의 핵심 결정: 신뢰 근거가 없는 입력과 예측 제거</h3>
+        <div class="table-wrap">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th scope="col">항목</th>
+                <th scope="col">v5_4 가이드 단계</th>
+                <th scope="col">v6 Risk-Only</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Macro 조회</td>
+                <td>S501–S530 포함, 약 61개 컬럼</td>
+                <td>Macro 제외, 원시 조회 31개 컬럼</td>
+              </tr>
+              <tr>
+                <td>Tool Usage</td>
+                <td>Feature 포함 / Weak Label 5%</td>
+                <td>Feature 제거 / 나머지 가중치 재정규화</td>
+              </tr>
+              <tr>
+                <td>최종 입력 수</td>
+                <td>해당 실행 36개</td>
+                <td>이번 재학습 실행 35개</td>
+              </tr>
+              <tr>
+                <td>추론 Trigger</td>
+                <td>MODEL / MAIN_SEQ / TOOL_COUNT</td>
+                <td>MODEL / MAIN_SEQ</td>
+              </tr>
+              <tr>
+                <td>시간예측</td>
+                <td>remaining_seconds / predicted_max_reach_time</td>
+                <td>Forecast 제거, 현재 위험도만 출력</td>
+              </tr>
+              <tr>
+                <td>평가</td>
+                <td>대표 MAE 중심</td>
+                <td>회귀 + 상태분류 + 위험탐지 + Confusion Matrix</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>실제 Tool No와 Macro No의 매핑이 확정되지 않아 임의 Tool Usage가 모델에 들어가지 않도록 했습니다. 잔여시간·100% 도달시간은 MLP의 직접 출력이 아니므로 제거해,
+          TOOL_BREAK의 책임을 <strong>현재 파손 이상위험도</strong>로 제한했습니다.</p>
+        <p class="source"><a href="#sources">A3 · §2–10·14</a></p>
+        <details class="detail">
+          <summary>v6 Weak Label 계산과 모델 입력의 상세</summary>
+          <div>
+            <pre class="code">base = 0.30 × spindle_z + 0.25 × servo_z
+     + 0.10 × rpm + 0.10 × feed
+     + 0.07 × wear + 0.05 × geometry
+     + 0.08 × cycle_instability
+
+anomaly_score = base / 0.95 + 2.50 × spindle_collapse
+logit = 1.20 × (anomaly_score − 2.40)
+Weak Label = 100 / (1 + exp(−logit))</pre>
+            <p>Tool Usage의 5% 기여를 제거한 뒤 나머지 7개 신호의 상대 비율을 유지하도록 재정규화했습니다. 기본 Feature는 25개이며 iot_seq·O-NUM·Tool No 범주의
+              One-Hot 수에 따라 총 입력 차원은 달라집니다. <strong>35개는 이번 학습 실행의 값</strong>이지 모든 향후 데이터의 고정 차원이 아닙니다.</p>
+            <p class="source"><a href="#sources">A3 · §4–5 / A2 · §1</a></p>
+          </div>
+        </details>
+        <div style="height:26px" aria-hidden="true"></div>
+        <h3>재추론에서도 학습과 같은 문맥 유지</h3>
+        <p>MODEL 또는 MAIN_SEQ가 바뀌면 최근 최대 80 main_seq의 Raw를 다시 읽어 Cycle과 Rolling Feature를 재구성합니다. 최신 한 행만 계산해서는 이전 10
+          Cycle의 기준선을 재현할 수 없기 때문입니다.</p>
+        <p>최신 Cycle의 sample_count가 이전 10 Cycle 중앙값의 60% 미만이면 진행 중일 가능성이 있다고 보고 직전 완료 Cycle을 사용합니다. 이는 문서의 보호 조건이며 실제 완료
+          상태를 직접 확인하는 확정 신호와는 구분합니다.</p>
+        <div class="note subtle"><strong>학습과 Pi 전처리의 일치</strong>가 운영의 핵심입니다. 가이드에는 metadata·scaler의 Feature 순서와 TFLite
+          입력차원 확인이 명시되어 있습니다. v6 재학습 뒤에는 기존 36차원이 아니라 새 모델 차원과 맞는지 확인해야 합니다.</div>
+        <p class="source"><a href="#sources">A3 · §11·13 / A4 · pp.9–10</a></p>
+      </section>
+      <section class="section" id="metrics">
+        <div class="section-head"><span class="eyebrow">06 / TRAINING RESULTS</span>
+          <h2>수치와 한계를 함께 보는 모델 평가</h2>
+          <p>이 절의 모든 성능 수치는 TOOL_BREAK v6의 약지도 재현 평가 결과입니다.</p>
+        </div>
+        <div class="metrics">
+          <div class="panel"><span class="number">48,917</span>
+            <div class="metric-label">전체 Cycle Sample</div>
+          </div>
+          <div class="panel"><span class="number">35</span>
+            <div class="metric-label">입력 Feature</div>
+          </div>
+          <div class="panel"><span class="number">3.633<small>%p</small></span>
+            <div class="metric-label">Test MAE</div>
+          </div>
+          <div class="panel"><span class="number">20.23<small>초</small></span>
+            <div class="metric-label">MLP 학습시간</div>
+          </div>
+        </div>
+        <p>Train 34,241건, Validation 7,338건, Test 7,338건으로 나누어 평가했습니다. 실행은 28 Epoch에서 종료됐고, 전처리·Feature 생성·학습·평가를 포함한
+          Step2 전체 시간은 40.27초입니다. 이 시간은 <strong>Pi 추론시간이 아닙니다.</strong></p>
+        <div class="table-wrap">
+          <table class="numeric-table">
+            <caption>2026.08.19 v6 실행 · Weak Label 기준 회귀 지표</caption>
+            <thead>
+              <tr>
+                <th scope="col">지표</th>
+                <th scope="col">Train</th>
+                <th scope="col">Validation</th>
+                <th scope="col">Test</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>MAE (%p)</td>
+                <td>3.504</td>
+                <td>3.935</td>
+                <td><strong>3.633</strong></td>
+              </tr>
+              <tr>
+                <td>RMSE (%p)</td>
+                <td>6.347</td>
+                <td>7.202</td>
+                <td>6.324</td>
+              </tr>
+              <tr>
+                <td>MedianAE (%p)</td>
+                <td>2.235</td>
+                <td>2.355</td>
+                <td>2.311</td>
+              </tr>
+              <tr>
+                <td>P90AE (%p)</td>
+                <td>7.076</td>
+                <td>7.785</td>
+                <td>7.442</td>
+              </tr>
+              <tr>
+                <td>MaxAE (%p)</td>
+                <td>76.047</td>
+                <td>68.988</td>
+                <td>69.198</td>
+              </tr>
+              <tr>
+                <td>Bias (%p)</td>
+                <td>−0.016</td>
+                <td>+0.008</td>
+                <td>+0.013</td>
+              </tr>
+              <tr>
+                <td>R²</td>
+                <td>0.6533</td>
+                <td>0.6307</td>
+                <td>0.6546</td>
+              </tr>
+              <tr>
+                <td>Pearson r</td>
+                <td>0.8115</td>
+                <td>0.7958</td>
+                <td>0.8116</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note warn"><strong>MAE는 정확도와 다릅니다.</strong> 3.633%p는 모델 예측과 Weak Label의 평균 절대 차이입니다. 이를 100에서 빼서 실제
+          파손 정확도로 표현하지 않습니다. MaxAE 69.198%p는 큰 오차가 발생한 Sample의 추가 분석이 필요함을 보여줍니다.</div>
+        <p class="source"><a href="#sources">A2 · §1–3·7</a></p>
+        <h3>96.35%의 상태 일치율만으로는 충분하지 않다</h3>
+        <p>Test의 Monitoring은 6,999건으로 95.38%입니다. 전체 상태 일치율과 함께 Macro F1, Danger Recall, 실제 위험 구간이 어디로 분류됐는지를 확인합니다. 아래의
+          “정답”은 모두 실제 파손 이벤트가 아니라 <strong>Weak Label의 상태 구간</strong>입니다.</p>
+        <div class="table-wrap">
+          <table class="matrix">
+            <caption>Monitoring: 0≤점수<30 / Warning: 30≤점수<70 / Danger: 70≤점수≤100</caption>
+            <thead>
+              <tr>
+                <th scope="col">정답 Weak Label ↓ / 예측 →</th>
+                <th scope="col">Monitoring</th>
+                <th scope="col">Warning</th>
+                <th scope="col">Danger</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Monitoring · 6,999건</td>
+                <td><strong>6,890</strong></td>
+                <td>103</td>
+                <td>6</td>
+              </tr>
+              <tr>
+                <td>Warning · 246건</td>
+                <td>115</td>
+                <td><strong>128</strong></td>
+                <td>3</td>
+              </tr>
+              <tr>
+                <td>Danger · 93건</td>
+                <td><strong>15</strong></td>
+                <td>26</td>
+                <td><strong>52</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-grid two">
+          <article class="panel"><span class="small-label">STATUS CLASSIFICATION</span>
+            <h3>96.35% · 상태 일치율</h3>
+            <p>Macro F1 72.24%. Warning 이상 전체에 대한 Precision 65.72%, Recall 61.65%, F1 63.62%가 함께 기록되어 있습니다.</p>
+          </article>
+          <article class="panel"><span class="small-label">DANGER DETECTION</span>
+            <h3>55.91% · Danger Recall</h3>
+            <p>Danger Precision 85.25%, F1 67.53%. 정답 Danger 93건 중 52건을 Danger, 26건을 Warning, 15건을 Monitoring으로 분류했습니다.
+            </p>
+          </article>
+        </div>
+        <div class="note warn">정답 Danger의 <strong>78/93건(83.87%)</strong>은 Warning 이상으로 감지했습니다. 그러나
+          <strong>15/93건(16.13%)</strong>은 Monitoring으로 분류됐습니다. 위험 구간 누락과 극단 오차는 평균 오차와 별도로 개선해야 할 항목입니다.</div>
+        <p class="source"><a href="#sources">A2 · §4–7: 상태분류·Confusion Matrix·Danger 상세; 실제 파손 Ground Truth 성능이 아님</a>
+        </p>
+      </section>
+      <section class="section" id="operations">
+        <div class="section-head"><span class="eyebrow">07 / MODEL OPERATIONS</span>
+          <h2>실행 가능한 모델과 운영 가능한 모델 사이</h2>
+          <p>학습·추론 일관성, 버전 추적, 배포 순서와 저장 범위를 함께 관리합니다.</p>
+        </div>
+        <h3>모델 파일뿐 아니라 전처리·메타데이터까지 관리</h3>
+        <div class="card-grid two">
+          <article class="panel"><span class="small-label">IF + AE ARTIFACTS</span>
+            <h3>공구별 모델 세트</h3>
+            <p>Keras·TFLite, robust scaler·IF tree·quantile을 담은 runtime.npz, Feature·Threshold의 meta.json, 모델 목록을 담은
+              index를 함께 관리합니다.</p>
+          </article>
+          <article class="panel"><span class="small-label">TOOL_BREAK ARTIFACTS</span>
+            <h3>MLP 모델과 전처리 세트</h3>
+            <p>TFLite·scaler.npz·meta.json을 Pi 추론에 사용합니다. 가이드에는 원본 Keras, Cycle별 samples.csv와 summary도 학습 산출물로 설명되어
+              있습니다.</p>
+          </article>
+        </div>
+        <p>IF+AE는 검증 Sample 최대 16건으로 Keras와 TFLite의 출력을 비교하고, 최대 절대 오차가 0.001을 넘으면 변환 단계를 실패 처리합니다. Registry에는 버전·지표·파일
+          크기와 SHA-256 manifest를 저장합니다.</p>
+        <p>배포 시 모델 파일을 먼저 전송하고 <strong>index를 마지막에 원자적으로 교체</strong>합니다. Pi는 10초 주기로 index 변경을 확인해 runtime cache를
+          초기화합니다. 이 구조는 운영 중지 없는 모델 전환을 목표로 하지만, 무중단 운영 실증 완료를 증명하는 결과까지 자료에 있지는 않습니다.</p>
+        <p class="source"><a href="#sources">A1 · §19–22·26 / A5 · §22; 가이드 산출물은 v6 실행 파일의 개별 검증 완료와 구분</a></p>
+        <div style="height:26px" aria-hidden="true"></div>
+        <h3>결과 저장의 세 가지 범위</h3>
+        <div class="table-wrap">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th scope="col">구분</th>
+                <th scope="col">자료에 설명된 범위</th>
+                <th scope="col">확인 상태</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>IF+AE 처리 프로세스</td>
+                <td>JSON 한 줄 출력 · 이상점수·상태·inference_ms</td>
+                <td>DB 저장 대상 확정 후 후속 연계</td>
+              </tr>
+              <tr>
+                <td>TOOL_BREAK v6 수정</td>
+                <td>MAIN A12 / SUB A25의 AI_VALUE1 갱신; 시작 시 AI_VALUE2/3 이전 값 NULL 정리</td>
+                <td>수정 문서의 구현 설명. v6 현장 UPDATE 성공 로그는 별도 확인</td>
+              </tr>
+              <tr>
+                <td>tool_break_DB.xlsx</td>
+                <td>현재값 테이블 UPDATE / 이력 테이블 INSERT</td>
+                <td>스키마·예시 설계자료. 실제 구축 완료 근거 아님</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <details class="detail">
+          <summary>DB 설계자료 · 현재값과 이력을 분리한 구조</summary>
+          <div>
+            <div class="table-wrap">
+              <table class="compact">
+                <thead>
+                  <tr>
+                    <th scope="col">현재값: ai_tool_break_tb</th>
+                    <th scope="col">이력: ai_tool_break_history_tb</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>eqp_seq / tool_path / tool_no</td>
+                    <td>eqp_seq / tool_path / tool_no</td>
+                  </tr>
+                  <tr>
+                    <td>ai_value1 / ai_value2 / ai_value3</td>
+                    <td>ai_value1 / ai_value2 / ai_value3</td>
+                  </tr>
+                  <tr>
+                    <td>upt_dt</td>
+                    <td>model_type / model_version / input_data / ins_dt</td>
+                  </tr>
+                  <tr>
+                    <td>UPDATE</td>
+                    <td>INSERT</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>엑셀은 ai_value1/2/3을 varchar로, input_data도 varchar의 JSON 형식 예시로 제시합니다. 이 페이지에서 다른 자료형이나 제약조건으로 임의 변경하지
+              않았습니다. 예시 model_version=8도 현재 운영 버전으로 해석하지 않습니다.</p>
+            <p class="source"><a href="#sources">A7 · Sheet1!B1:H4, K1:T4</a></p>
+          </div>
+        </details>
+        <p class="source"><a href="#sources">A1 · §25·27 / A3 · §9·12–13 / A7 · DB 설계자료</a></p>
+        <div style="height:26px" aria-hidden="true"></div>
+        <h3>문서로 남은 개발 이력</h3>
+        <div class="timeline">
+          <div class="timeline-item"><time>2026.08.14</time>
+            <h3>초기 경량화 인계</h3>
+            <p>Sequence·Conv·Embedding 기반 구성을 단일 Feature 입력 MLP로 경량화한 이력입니다. 당시 28 Feature·Test MAE 0.500%p·TFLite 8,092
+              B가 기록되어 있으며, Pi2 SSH Timeout은 잔여 이슈로 남아 있습니다.</p>
+          </div>
+          <div class="timeline-item"><time>2026.08.19</time>
+            <h3>Cycle Summary 가이드와 v6 Risk-Only</h3>
+            <p>v5_4 가이드는 36 Feature·29,854 Cycle·MAE 3.943%p를 설명합니다. 별도의 v6 자료는 Macro·Forecast 제거 후 35 Feature·48,917
+              Cycle·MAE 3.633%p를 기록합니다.</p>
+          </div>
+          <div class="timeline-item"><time>2026.09.10</time>
+            <h3>공구별 IF+AE 처리 프로세스</h3>
+            <p>MAIN·SUB 공구별 모델과 OVERALL 모델, Servo 제외, 30일 표본, Calibration 점수와 Watermark 추론 흐름을 설명하는 자료입니다.</p>
+          </div>
+        </div>
+        <div class="note subtle">이력의 MAE·Sample·모델 크기는 <strong>같은 시험조건의 비교 수치가 아닙니다.</strong> 입력과 Label 정의가 달라 버전 간 성능
+          개선율로 계산하지 않았습니다. 초기 TFLite 크기·배포 버전·성공 기록을 v6나 IF+AE에 이어 쓰지 않습니다.</div>
+        <p class="source"><a href="#sources">A6 · §1–3·6–7 / A4 · p.8 / A2 · §1–2 / A1 · §1–3</a></p>
+      </section>
+      <section class="section" id="roadmap">
+        <div class="section-head"><span class="eyebrow">08 / VALIDATION & NEXT STEPS</span>
+          <h2>모델 구현과 현장 검증은 다른 단계</h2>
+          <p>현재 확보한 근거와 앞으로 확보할 근거를 분리합니다.</p>
+        </div>
+        <div class="card-grid two">
+          <article class="panel"><span class="small-label">IMPLEMENTED IN DOCUMENTS</span>
+            <h3>자료에서 확인되는 개발 항목</h3>
+            <p>Cycle·공구별 전처리, MLP 및 IF+AE 모델 구성, TFLite 변환, Registry·배포 구조와 Pi 추론 로직. v6는 실제 학습·평가 결과가 별도로 제시되어 있습니다.
+            </p>
+          </article>
+          <article class="panel"><span class="small-label">REQUIRES VALIDATION</span>
+            <h3>실증으로 확인해야 할 항목</h3>
+            <p>실제 정상·파손 Label 기반 KPI, 독립 Test Set, 현장 추론시간, 신규 모델의 실제 배포·DB 반영과 Safe Mode·자동 중단 연계는 구분해 검증해야 합니다.</p>
+          </article>
+        </div>
+        <div class="table-wrap">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th scope="col">대상</th>
+                <th scope="col">자료에 제시된 목표·과제</th>
+                <th scope="col">이 페이지의 기록 상태</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>IF+AE 민감도</td>
+                <td>95% 이상</td>
+                <td>실제 파손 Label 기반 검증 필요</td>
+              </tr>
+              <tr>
+                <td>IF+AE 오탐</td>
+                <td>3% 이하</td>
+                <td>정상·이상 Label 기반 검증 필요</td>
+              </tr>
+              <tr>
+                <td>온디바이스 추론</td>
+                <td>1초 이하</td>
+                <td>시간 측정 가능 구조. 목표 달성 실증 결과는 미제시</td>
+              </tr>
+              <tr>
+                <td>TOOL_BREAK 실제 파손 정확도</td>
+                <td>TTA 가이드의 95% KPI</td>
+                <td>Weak Label 상태 일치율로 대신 입증하지 않음</td>
+              </tr>
+              <tr>
+                <td>Safe Mode / 자동 중단</td>
+                <td>결과와 제어 기능 연계</td>
+                <td>IF+AE 문서에서 후속 연계로 구분</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>다음 개발·검증 항목</h3>
+        <div class="check-row"><span class="check-mark" aria-hidden="true">＋</span>
+          <div><strong>실제 파손·정상 이벤트 Test Set</strong>
+            <p>파손시각, Tool, MAIN/SUB, 교체사유·알람·정상 구간을 확보하고 학습 데이터와 분리해 평가합니다.</p>
+          </div>
+        </div>
+        <div class="check-row"><span class="check-mark" aria-hidden="true">＋</span>
+          <div><strong>Danger 누락·극단 오차 원인 분석</strong>
+            <p>v6의 Danger→Monitoring 15건과 MaxAE Sample을 확인하고, 위험도 평균 오차와 위험구간 탐지를 별도로 검토합니다.</p>
+          </div>
+        </div>
+        <div class="check-row"><span class="check-mark" aria-hidden="true">＋</span>
+          <div><strong>전처리·모델 버전 재현 확인</strong>
+            <p>Windows와 Pi의 동일 입력 결과, Feature 순서·차원, 파일 해시·버전·배포시각을 함께 확인합니다.</p>
+          </div>
+        </div>
+        <div class="check-row"><span class="check-mark" aria-hidden="true">＋</span>
+          <div><strong>조회·추론 병목과 결과 저장 연계</strong>
+            <p>IF+AE Step1의 Query별 elapsed, Macro 별도 조회·표본 수 검토와 현장 inference_ms 측정을 진행하고 결과 DB 연계를 확정합니다.</p>
+          </div>
+        </div>
+        <p class="source"><a href="#sources">A1 · §9·18·25–28 / A2 · §5–7 / A5 · §24·27–28; 문서의 후속 과제를 재구성</a></p>
+      </section>
+      <section class="section" id="sources">
+        <div class="section-head"><span class="eyebrow">09 / SOURCE NOTES</span>
+          <h2>자료와 작성 기준</h2>
+          <p>서로 다른 문서 버전의 수치와 상태를 해당 자료에 연결했습니다.</p>
+        </div>
+        <div class="source-list">
+          <div class="source-item" id="source-a1"><strong>A1 ·
+              BONE_AI4M_CNC_공구별_이상탐지_AI_프로세스_v1.0.pptx</strong><small>2026.09.10 · IF+AE 데이터·학습·변환·등록·배포·Pi 추론
+              기준</small></div>
+          <div class="source-item" id="source-a2"><strong>A2 ·
+              경한코리아_TOOL_BREAK_v6_학습결과_최종정리_v1.0.pptx</strong><small>2026.08.19 · v6 학습결과·지표·Confusion Matrix</small>
+          </div>
+          <div class="source-item" id="source-a3"><strong>A3 ·
+              경한코리아_TOOL_BREAK_v6_RiskOnly_수정사항_상세_v1.0.pptx</strong><small>2026.08.19 · Macro·Forecast 제거와 v6 변경
+              범위</small></div>
+          <div class="source-item" id="source-a4"><strong>A4 ·
+              경한코리아_TOOL_BREAK_AI_핵심이해가이드_v1.0.pdf</strong><small>2026.08.19 · v5_4/Cycle Summary 공통 개념. v6에서 변경된 부분은
+              A3로 구분</small></div>
+          <div class="source-item" id="source-a5"><strong>A5 ·
+              경한코리아_TOOL_BREAK_AI_TTA_완전이해가이드_v1.0.pptx</strong><small>2026.08.19 · 당시 36 Feature 모델의 교육·감사 가이드 및 검증
+              과제</small></div>
+          <div class="source-item" id="source-a6"><strong>A6 ·
+              경한코리아_ToolBreak_AI_개발진행현황_인계_v1.0.pptx</strong><small>2026.08.14 · 초기 28 Feature 경량화와 배포 이력</small></div>
+          <div class="source-item" id="source-a7"><strong>A7 · tool_break_DB.xlsx</strong><small>Sheet1 · 현재값 UPDATE /
+              이력 INSERT 설계와 예시</small></div>
+        </div>
+        <p class="source">작성일: 2026.10.15. PPT의 §는 슬라이드에 적힌 절 번호, PDF의 p.는 실제 페이지입니다. 본문은 첨부 문서의 구조·수치·구현 상태를 바탕으로 작성했으며
+          실제 소스코드 실행이나 이후 운영 상태를 별도로 검증하지 않았습니다. 원본 파일과 내부 로그·계정·접속정보는 공개 페이지에 포함하지 않았습니다.</p>
+        <p class="source">영상: <a href="https://youtu.be/hBNcX0Z1zaU" target="_blank" rel="noopener noreferrer">본인이 제공한
+            경한코리아 AI실증 YouTube 링크</a> · 플레이어 구현 참고: <a href="https://developers.google.com/youtube/player_parameters"
+            target="_blank" rel="noopener noreferrer">YouTube 공식 임베드 문서</a>. 외부 문서는 영상 임베드 구현에만 사용했습니다.</p>
+      </section>
+      <a class="related" href="ynv-plm-mes.html">
+        <div><small>EXPLORE ANOTHER PROJECT</small><strong>와이엔브이(주) · PLM·MES 유지보수</strong></div><span
+          aria-hidden="true">↗</span>
+      </a>
+    </main>
+  </div>
+  <footer>
+    <div class="wrap footer-flex"><span>© 2026 김미성 · Migong0311 / Engineering Portfolio</span><span>자료에 기록된 구현·성과·검증 범위를
+        구분합니다.</span></div>
+  </footer>
+  <button class="top-button" id="backToTop" aria-label="맨 위로 이동">↑</button>
+  <script>
+    (() => {
+      'use strict';
+      const menu = document.getElementById('menuToggle');
+      const nav = document.getElementById('toplinks');
+      if (menu && nav) {
+        menu.addEventListener('click', () => {
+          const open = nav.classList.toggle('open');
+          menu.setAttribute('aria-expanded', String(open));
+        });
+        nav.addEventListener('click', e => { if (e.target.closest('a')) { nav.classList.remove('open'); menu.setAttribute('aria-expanded', 'false'); } });
+      }
+      const progress = document.getElementById('readingProgress');
+      let pending = false;
+      function updateProgress() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        progress.style.width = (max > 0 ? Math.min(100, scrollY / max * 100) : 0) + '%';
+        pending = false;
+      }
+      addEventListener('scroll', () => { if (!pending) { pending = true; requestAnimationFrame(updateProgress); } }, { passive: true });
+      addEventListener('resize', updateProgress); updateProgress();
+      const links = [...document.querySelectorAll('.toc a[href^="#"]')];
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              links.forEach(a => { const active = a.hash === '#' + entry.target.id; a.classList.toggle('active', active); if (active) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
+            }
+          });
+        }, { rootMargin: '-10% 0px -65% 0px', threshold: 0 });
+        document.querySelectorAll('main .section[id]').forEach(el => observer.observe(el));
+      }
+      document.querySelectorAll('[data-filter]').forEach(button => {
+        button.addEventListener('click', () => {
+          const filter = button.dataset.filter;
+          document.querySelectorAll('[data-filter]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
+          let shown = 0;
+          document.querySelectorAll('[data-case]').forEach(card => { card.hidden = filter !== 'all' && card.dataset.category !== filter; if (!card.hidden) shown++; });
+          const label = document.getElementById('caseCount'); if (label) label.textContent = shown + '개의 대표 사례';
+        });
+      });
+      document.querySelectorAll('[data-video-play]').forEach(button => {
+        button.addEventListener('click', () => {
+          const iframe = document.getElementById('demoPlayer');
+          if (!iframe) return;
+          const url = new URL(iframe.src); url.searchParams.set('autoplay', '1'); iframe.src = url.toString();
+          document.getElementById('demo').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+          document.getElementById('videoStatus').textContent = '재생을 요청했습니다. 시작되지 않으면 플레이어의 재생 버튼 또는 YouTube에서 보기를 선택하세요.';
+        });
+      });
+      const localHint = document.getElementById('localVideoHint');
+      if (localHint && location.protocol === 'file:') localHint.hidden = false;
+      document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }));
+      document.querySelectorAll('[data-print]').forEach(b => b.addEventListener('click', () => window.print()));
+      let beforePrint = [];
+      addEventListener('beforeprint', () => { beforePrint = [...document.querySelectorAll('details')].map(d => [d, d.open]); beforePrint.forEach(([d]) => d.open = true); });
+      addEventListener('afterprint', () => beforePrint.forEach(([d, open]) => d.open = open));
+    })();
+  </script>
+</body>
+
+</html>

@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Migong0311 | Portfolio-as-a-Service</title>
-  <meta name="description" content="협업, 소개, AI 학습 여정을 한 곳에 담은 포트폴리오 기반 서비스" />
+  <meta name="description" content="와이엔브이 PLM·MES 유지보수, 경한코리아 CNC AI실증과 프로젝트·AI 학습 기록을 담은 김미성의 개발 포트폴리오" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
@@ -225,6 +225,259 @@
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* 2026-10: professional portfolio entry points; existing sections preserved. */
+    #work {
+      scroll-margin-top: 90px;
+      background: #f1f5fb;
+      border-top: 1px solid #e2e8f0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .work-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 24px;
+      margin-bottom: 30px;
+    }
+
+    .work-heading h2 {
+      letter-spacing: -.04em;
+      margin: 7px 0 12px;
+    }
+
+    .work-heading p {
+      max-width: 680px;
+      line-height: 1.9;
+    }
+
+    .work-heading-note {
+      font-size: 12px;
+      color: #64748b;
+      white-space: nowrap;
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 26px;
+    }
+
+    .work-card {
+      background: #fff;
+      border: 1px solid #dce4ef;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 12px 35px -23px #16335860;
+      display: flex;
+      flex-direction: column;
+      transition: transform .2s, box-shadow .2s;
+      position: relative;
+    }
+
+    .work-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 42px -24px #18325370;
+    }
+
+    .work-visual {
+      background: #10243e;
+      padding: 27px 29px;
+      color: white;
+      min-height: 205px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .work-visual.ai {
+      background: #0c2b32;
+    }
+
+    .work-kicker {
+      font-size: 10px;
+      letter-spacing: .15em;
+      color: #b6cdec;
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .work-visual.ai .work-kicker {
+      color: #a5ddd2;
+    }
+
+    .work-symbol {
+      font-size: 42px;
+      line-height: 1.2;
+      letter-spacing: -.06em;
+      font-weight: 800;
+      margin: 23px 0 15px;
+    }
+
+    .work-symbol span {
+      color: #92baff;
+    }
+
+    .work-visual.ai .work-symbol {
+      font-size: 35px;
+    }
+
+    .work-visual.ai .work-symbol span {
+      color: #80d7c5;
+    }
+
+    .work-mini-flow {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      font-size: 11px;
+      color: #c3d1e4;
+    }
+
+    .work-mini-flow b {
+      background: #ffffff0c;
+      border: 1px solid #ffffff26;
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-weight: 500;
+    }
+
+    .work-body {
+      padding: 27px 29px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .work-body h3 {
+      font-size: 23px;
+      font-weight: 800;
+      letter-spacing: -.04em;
+      margin-bottom: 7px;
+      color: #17283f;
+    }
+
+    .work-subtitle {
+      font-size: 14px;
+      font-weight: 650;
+      color: #245fdb;
+      margin-bottom: 16px;
+    }
+
+    .work-card.ai .work-subtitle {
+      color: #08776f;
+    }
+
+    .work-description {
+      font-size: 14px;
+      line-height: 1.9;
+      color: #5a687b;
+      margin-bottom: 20px;
+    }
+
+    .work-facts {
+      display: flex;
+      gap: 24px;
+      padding: 16px 0;
+      border-top: 1px solid #e4eaf2;
+      border-bottom: 1px solid #e4eaf2;
+      margin-bottom: 19px;
+    }
+
+    .work-facts strong {
+      display: block;
+      font-size: 22px;
+      color: #1e3452;
+      letter-spacing: -.04em;
+    }
+
+    .work-facts small {
+      font-size: 11px;
+      color: #66788d;
+    }
+
+    .work-note {
+      font-size: 11px;
+      line-height: 1.8;
+      color: #68798b;
+      margin-bottom: 20px;
+    }
+
+    .work-link {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      font-size: 14px;
+      color: #245fdb;
+      font-weight: 750;
+      text-decoration: none;
+      padding: 6px 0;
+    }
+
+    .work-card.ai .work-link {
+      color: #08776f;
+    }
+
+    .work-link::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+    }
+
+    .work-link:focus-visible {
+      outline: 3px solid #d39425;
+      outline-offset: 5px;
+    }
+
+    .work-link:hover {
+      text-decoration: underline;
+    }
+
+    @media(max-width:767px) {
+      .hero-section .row.g-5 {
+        --bs-gutter-x: 1.5rem;
+      }
+
+      .work-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .work-heading {
+        display: block
+      }
+
+      .work-heading-note {
+        margin-top: 10px
+      }
+
+      .work-visual,
+      .work-body {
+        padding: 24px
+      }
+
+      .work-symbol {
+        font-size: 36px
+      }
+
+      .work-visual.ai .work-symbol {
+        font-size: 30px
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      .work-card {
+        transition: none
+      }
+
+      .work-card:hover {
+        transform: none
+      }
+    }
   </style>
 
   <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
@@ -259,6 +512,10 @@
           <li class="nav-item">
             <a class="nav-link" href="assets/html/about.html">나의 소개</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./#work">실무 포트폴리오</a>
+          </li>
+
           <li class="nav-item">
             <a class="nav-link" href="ai_practice.html">AI 학습</a>
           </li>
@@ -324,8 +581,8 @@
                 AI와 백엔드 기술을 통해 가치를 만듭니다.
               </p>
               <div class="d-flex gap-3">
-                <a href="#projects" class="btn btn-primary btn-lg rounded-pill px-4 shadow-sm">
-                  프로젝트 보기
+                <a href="#work" class="btn btn-primary btn-lg rounded-pill px-4 shadow-sm">
+                  실무 포트폴리오
                 </a>
                 <a href="assets/html/about.html" class="btn btn-outline-secondary btn-lg rounded-pill px-4">
                   나의 소개
@@ -414,6 +671,64 @@
       </div>
     </header>
 
+
+    <!-- 실무 포트폴리오: 상세 파일 2개는 index.html과 같은 폴더에 둡니다. -->
+    <section id="work" class="section-pad" aria-labelledby="workTitle">
+      <div class="container">
+        <div class="work-heading">
+          <div><span class="text-primary fw-bold text-uppercase small">Professional Experience</span>
+            <h2 class="fw-bold" id="workTitle">실무 포트폴리오</h2>
+            <p class="text-secondary mb-0">제조업 업무시스템의 유지보수부터 CNC 공구 이상탐지 AI까지.<br>실제 요청과 개발 자료를 바탕으로 과정, 결과, 검증 범위를
+              기록합니다.</p>
+          </div>
+          <span class="work-heading-note">Engineering Portfolio · 2026.10</span>
+        </div>
+        <div class="work-grid">
+          <article class="work-card" id="work-ynv">
+            <div class="work-visual" aria-hidden="true">
+              <div class="work-kicker"><span>01 / MANUFACTURING SYSTEMS</span><span>MAINTENANCE</span></div>
+              <div class="work-symbol">PLM <span>⇄</span> MES</div>
+              <div class="work-mini-flow"><b>영업</b><b>기술연구</b><b>생산</b><span>→ 업무시스템 개선</span></div>
+            </div>
+            <div class="work-body">
+              <h3>와이엔브이(주)</h3>
+              <p class="work-subtitle">PLM·MES 운영 유지보수 및 기능 개선</p>
+              <p class="work-description">승인도 생성과 데이터 연계, 조회·저장 성능, 생산 문서 출력을 개선합니다. 화면의 현상에서 시스템 간 데이터의 원인까지 추적한 유지보수
+                사례입니다.</p>
+              <div class="work-facts">
+                <div><strong>125건</strong><small>SR 대응 기록</small></div>
+                <div><strong>122건</strong><small>완료 기록</small></div>
+                <div><strong>2개</strong><small>운영 서비스</small></div>
+              </div>
+              <p class="work-note">2026.06.16–10.13 첨부 원장 기준 · ‘불가’ 기록 3건은 별도 구분</p>
+              <a class="work-link" href="assets/projects/ynv-plm-mes.html"
+                aria-label="와이엔브이 PLM MES 유지보수 포트폴리오 상세 보기">유지보수 사례 보기 <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+          <article class="work-card ai" id="work-kyunghan">
+            <div class="work-visual ai" aria-hidden="true">
+              <div class="work-kicker"><span>02 / MANUFACTURING AI</span><span>ON-DEVICE</span></div>
+              <div class="work-symbol">CNC <span>→</span> Edge AI</div>
+              <div class="work-mini-flow"><b>IF + AE</b><b>TOOL_BREAK v6</b><span>▷ 프로젝트 영상 포함</span></div>
+            </div>
+            <div class="work-body">
+              <h3>경한코리아 AI실증</h3>
+              <p class="work-subtitle">공구별 이상탐지와 파손 위험점수 모델</p>
+              <p class="work-description">공구별 IF+AE 이상탐지와 약지도 MLP를 구분해 기록합니다. 데이터 전처리부터 TFLite 변환·배포·Raspberry Pi 추론까지
+                연결한 개발 과정입니다.</p>
+              <div class="work-facts">
+                <div><strong>IF + AE</strong><small>공구별 이상탐지</small></div>
+                <div><strong>3.633%p</strong><small>v6 Test MAE</small></div>
+              </div>
+              <p class="work-note">MAE는 Weak Label 재현 오차이며 실제 파손 정확도가 아닙니다.</p>
+              <a class="work-link" href="assets/projects/kyunghan-ai.html" aria-label="경한코리아 AI실증 포트폴리오와 영상 보기">개발 과정 ·
+                영상 보기 <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section id="projects" class="section-pad">
       <div class="container">
         <div class="text-center mb-5 reveal">
@@ -438,7 +753,8 @@
 
               <div class="card-body p-4 d-flex flex-column">
                 <h3 class="h4 fw-bold mb-2">Pangyo Coffee Legends</h3>
-                <p class="text-secondary small mb-3">NHN Academy 8인 팀에서 근태 분석 파이프라인, GenAI 리포트 자동화 등 5개 핵심 영역을 주도했습니다.</p>
+                <p class="text-secondary small mb-3">NHN Academy 8인 팀에서 근태 분석 파이프라인, GenAI 리포트 자동화 등 5개 핵심 영역을 주도했습니다.
+                </p>
 
                 <div class="mb-4">
                   <div class="d-flex gap-2 mb-2 text-secondary small">
@@ -461,7 +777,8 @@
 
             </article>
           </div>
-          <div class="col-md-6 col-lg-5 project-item reveal" data-tags="backend,infra,ai,realtime" style="--delay: 0.1s">
+          <div class="col-md-6 col-lg-5 project-item reveal" data-tags="backend,infra,ai,realtime"
+            style="--delay: 0.1s">
             <article class="card h-100 lift border-0">
               <div class="position-relative overflow-hidden" style="height: 200px; background: #e2e8f0;">
                 <div class="w-100 h-100 d-flex align-items-center justify-content-center"
@@ -476,7 +793,8 @@
 
               <div class="card-body p-4 d-flex flex-column">
                 <h3 class="h4 fw-bold mb-2">FIT-BOSS</h3>
-                <p class="text-secondary small mb-3">5인 팀에서 Backend & Infra를 단독 설계·구현. 53개 API와 실시간 30fps 스트리밍 파이프라인을 구축했습니다.</p>
+                <p class="text-secondary small mb-3">5인 팀에서 Backend & Infra를 단독 설계·구현. 53개 API와 실시간 30fps 스트리밍 파이프라인을
+                  구축했습니다.</p>
 
                 <div class="mb-4">
                   <div class="d-flex gap-2 mb-2 text-secondary small">

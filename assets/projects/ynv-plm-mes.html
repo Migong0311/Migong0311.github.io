@@ -1,0 +1,2502 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>와이엔브이(주) PLM·MES 유지보수 | Migong0311</title>
+  <meta name="description" content="밸브 제조업체 와이엔브이(주)의 PLM·MES 운영 유지보수. 125건의 SR 기록과 승인도·데이터 연계·성능·문서 출력 개선 사례.">
+  <meta name="author" content="김미성">
+  <meta name="theme-color" content="#0d203a">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:title" content="와이엔브이(주) PLM·MES 유지보수">
+  <meta property="og:description" content="밸브 제조업체 와이엔브이(주)의 PLM·MES 운영 유지보수. 125건의 SR 기록과 승인도·데이터 연계·성능·문서 출력 개선 사례.">
+  <meta property="og:url" content="https://migong0311.github.io/ynv-plm-mes.html">
+  <link rel="canonical" href="https://migong0311.github.io/ynv-plm-mes.html">
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23152c48'/%3E%3Ctext x='16' y='22' text-anchor='middle' fill='white' font-size='19' font-family='sans-serif'%3EM%3C/text%3E%3C/svg%3E">
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --paper: #fff;
+      --ink: #132238;
+      --muted: #526176;
+      --line: #dfe6f0;
+      --accent: #245fdb;
+      --soft: #edf3ff;
+      --navy: #0d203a;
+      --green: #16704d;
+      --warn: #995818;
+      --radius: 20px;
+      --shadow: 0 12px 35px -22px #1633584d
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 98px
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Pretendard, 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.8;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+      -webkit-font-smoothing: antialiased
+    }
+
+    body.ai {
+      --accent: #08776f;
+      --soft: #e9f7f4
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none
+    }
+
+    a:hover {
+      text-decoration: underline
+    }
+
+    button,
+    input,
+    select {
+      font: inherit
+    }
+
+    button {
+      cursor: pointer
+    }
+
+    button,
+    a,
+    input,
+    summary {
+      -webkit-tap-highlight-color: transparent
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid #e5a540;
+      outline-offset: 4px
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    p {
+      margin: 0
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      line-height: 1.35;
+      letter-spacing: -.045em
+    }
+
+    p+p {
+      margin-top: 15px
+    }
+
+    b,
+    strong {
+      font-weight: 750
+    }
+
+    svg {
+      display: block;
+      max-width: 100%
+    }
+
+    .wrap {
+      width: min(1220px, calc(100% - 64px));
+      margin: auto
+    }
+
+    .skip {
+      position: fixed;
+      top: -100px;
+      left: 20px;
+      background: var(--ink);
+      color: white;
+      padding: 10px 18px;
+      z-index: 100
+    }
+
+    .skip:focus {
+      top: 12px
+    }
+
+    .progress {
+      height: 3px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: var(--accent);
+      width: 0;
+      z-index: 99
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: #fffffff2;
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line)
+    }
+
+    .topbar .wrap {
+      display: flex;
+      min-height: 72px;
+      align-items: center;
+      gap: 28px;
+      justify-content: space-between
+    }
+
+    .brand {
+      color: var(--ink);
+      font-weight: 800;
+      font-size: 19px;
+      letter-spacing: -.6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 31px;
+      height: 31px;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #fff;
+      font: 700 14px monospace
+    }
+
+    .toplinks {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 650
+    }
+
+    .toplinks a {
+      color: var(--muted)
+    }
+
+    .toplinks a[aria-current=page] {
+      color: var(--accent)
+    }
+
+    .menu-toggle {
+      display: none;
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 10px;
+      padding: 6px 13px;
+      color: var(--ink)
+    }
+
+    .plain-btn {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 6px 13px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 13px
+    }
+
+    .hero {
+      background: var(--navy);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      padding: 62px 0 0
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 85% 10%, #2465c12b, transparent 55%), linear-gradient(#ffffff04 1px, transparent 1px), linear-gradient(90deg, #ffffff04 1px, transparent 1px);
+      background-size: auto, 44px 44px, 44px 44px;
+      pointer-events: none
+    }
+
+    .ai .hero {
+      --navy: #0b272e
+    }
+
+    .hero-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 65px;
+      align-items: center;
+      padding-bottom: 52px
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      letter-spacing: .17em;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 15px
+    }
+
+    .hero .eyebrow {
+      color: #a8c8ff
+    }
+
+    .ai .hero .eyebrow {
+      color: #8ae1cf
+    }
+
+    .status-row {
+      display: flex;
+      gap: 9px;
+      flex-wrap: wrap;
+      margin-bottom: 25px
+    }
+
+    .chip {
+      font-size: 12px;
+      font-weight: 650;
+      padding: 5px 12px;
+      border-radius: 30px;
+      background: var(--soft);
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      line-height: 1.5
+    }
+
+    .hero .chip {
+      background: #ffffff0b;
+      border: 1px solid #ffffff26;
+      color: #d4e2f5
+    }
+
+    .chip.live::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: #70dab3;
+      border-radius: 50%
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 3.6vw, 50px);
+      font-weight: 800;
+      line-height: 1.28
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: #91baff
+    }
+
+    .ai .hero h1 em {
+      color: #80dcc8
+    }
+
+    .hero-lead {
+      font-size: 17px;
+      color: #c8d5e5;
+      margin: 24px 0 27px;
+      max-width: 590px;
+      line-height: 1.85
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 11px 20px;
+      border-radius: 11px;
+      font-size: 14px;
+      font-weight: 750;
+      border: 1px solid transparent;
+      line-height: 1.5;
+      transition: transform .18s
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      text-decoration: none
+    }
+
+    .btn-primary {
+      color: white;
+      background: var(--accent)
+    }
+
+    .hero .btn-primary {
+      background: #fff;
+      color: #153252
+    }
+
+    .btn-ghost {
+      color: #e2edfc;
+      border-color: #ffffff42;
+      background: #ffffff04
+    }
+
+    .btn-soft {
+      color: var(--accent);
+      background: var(--soft);
+      border-color: var(--line)
+    }
+
+    .hero-board {
+      background: #07172ca8;
+      border: 1px solid #ffffff24;
+      border-radius: 24px;
+      padding: 26px;
+      box-shadow: 0 24px 65px #0002
+    }
+
+    .ai .hero-board {
+      background: #061e26b8
+    }
+
+    .board-top {
+      font-size: 10px;
+      letter-spacing: .17em;
+      display: flex;
+      justify-content: space-between;
+      color: #a9c1d8;
+      border-bottom: 1px solid #ffffff20;
+      padding-bottom: 16px;
+      margin-bottom: 25px
+    }
+
+    .dots {
+      color: #7795b8;
+      letter-spacing: 4px
+    }
+
+    .board-row {
+      display: flex;
+      gap: 9px;
+      align-items: stretch;
+      justify-content: center
+    }
+
+    .board-node {
+      flex: 1;
+      border: 1px solid #ffffff24;
+      background: #ffffff08;
+      border-radius: 12px;
+      padding: 15px 8px;
+      text-align: center;
+      min-width: 0
+    }
+
+    .board-node strong {
+      display: block;
+      color: #f4f8ff;
+      font-size: 23px;
+      letter-spacing: -.5px
+    }
+
+    .board-node small {
+      display: block;
+      font-size: 10px;
+      color: #a9c2dc;
+      margin-top: 4px
+    }
+
+    .board-label {
+      text-align: center;
+      font-size: 11px;
+      color: #a8bed6;
+      letter-spacing: .09em;
+      padding: 13px 0
+    }
+
+    .board-core {
+      border: 1px solid #649cfa80;
+      background: #2c63b52b;
+      border-radius: 14px;
+      text-align: center;
+      padding: 19px 12px;
+      color: #c6ddff;
+      font-size: 14px;
+      font-weight: 700
+    }
+
+    .ai .board-core {
+      border-color: #51c4ac70;
+      background: #2b887025;
+      color: #b1ecde
+    }
+
+    .board-tags {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 18px
+    }
+
+    .board-tags span {
+      font-size: 10px;
+      color: #adbed1;
+      border: 1px solid #ffffff20;
+      padding: 3px 10px;
+      border-radius: 20px
+    }
+
+    .hero-foot {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid #ffffff24
+    }
+
+    .hero-foot>div {
+      padding: 23px 28px;
+      border-right: 1px solid #ffffff20
+    }
+
+    .hero-foot>div:first-child {
+      padding-left: 0
+    }
+
+    .hero-foot>div:last-child {
+      border: 0
+    }
+
+    .hero-foot strong {
+      font-size: 24px;
+      font-weight: 800;
+      display: inline-block;
+      letter-spacing: -.03em;
+      margin-right: 11px
+    }
+
+    .hero-foot span {
+      font-size: 12px;
+      color: #b6c8df
+    }
+
+    .hero-foot small {
+      font-size: 11px;
+      color: #b6c8df;
+      display: block;
+      margin-top: 1px
+    }
+
+    .page-layout {
+      display: grid;
+      grid-template-columns: 210px minmax(0, 1fr);
+      gap: 50px;
+      padding: 52px 0 72px
+    }
+
+    .toc {
+      position: sticky;
+      top: 104px;
+      align-self: start;
+      border-left: 1px solid var(--line);
+      padding-left: 18px
+    }
+
+    .toc-title {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: .16em;
+      font-weight: 800;
+      margin-bottom: 16px
+    }
+
+    .toc a {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      padding: 8px 0;
+      transition: color .15s;
+      line-height: 1.5
+    }
+
+    .toc a.active {
+      color: var(--accent);
+      font-weight: 800
+    }
+
+    .toc .toc-meta {
+      font-size: 11px;
+      line-height: 1.9;
+      color: #6c7b8c;
+      margin-top: 22px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line)
+    }
+
+    .mobile-toc {
+      display: none
+    }
+
+    .content {
+      min-width: 0
+    }
+
+    .section {
+      padding-bottom: 53px;
+      margin-bottom: 44px;
+      border-bottom: 1px solid var(--line);
+      scroll-margin-top: 100px
+    }
+
+    .section:last-child {
+      border-bottom: 0;
+      margin-bottom: 0;
+      padding-bottom: 0
+    }
+
+    .section-head {
+      margin-bottom: 26px
+    }
+
+    .section-head .eyebrow {
+      margin-bottom: 7px
+    }
+
+    .section h2 {
+      font-size: 29px;
+      font-weight: 800
+    }
+
+    .section-head>p {
+      color: var(--muted);
+      font-size: 15px;
+      margin-top: 13px;
+      line-height: 1.85
+    }
+
+    .section h3 {
+      font-size: 20px;
+      margin-bottom: 12px
+    }
+
+    .section h4 {
+      font-size: 16px
+    }
+
+    .section p {
+      font-size: 15px;
+      line-height: 1.95
+    }
+
+    .lead-copy {
+      font-size: 17px !important;
+      line-height: 1.95 !important
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 26px;
+      margin: 25px 0 0
+    }
+
+    .meta-grid>div {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .meta-grid dt {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 5px
+    }
+
+    .meta-grid dd {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.8;
+      font-weight: 650
+    }
+
+    .note {
+      padding: 19px 22px;
+      border-radius: 13px;
+      background: var(--soft);
+      border-left: 3px solid var(--accent);
+      margin: 22px 0;
+      font-size: 14px;
+      line-height: 1.9
+    }
+
+    .note p {
+      font-size: 14px
+    }
+
+    .note.warn {
+      background: #fff7e9;
+      border-color: #bd7b20;
+      color: #754410
+    }
+
+    .note.subtle {
+      background: #edf1f6;
+      border-color: #9bafc4;
+      color: #4d5d70
+    }
+
+    .source {
+      font-size: 11px !important;
+      color: #67768a !important;
+      line-height: 1.7 !important;
+      margin-top: 14px !important
+    }
+
+    .source a {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-color: #becada;
+      text-underline-offset: 3px
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 15px
+    }
+
+    .card-grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr))
+    }
+
+    .panel {
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: var(--shadow)
+    }
+
+    .panel .small-label {
+      font-size: 10px;
+      letter-spacing: .13em;
+      font-weight: 800;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 10px
+    }
+
+    .panel h3 {
+      font-size: 18px
+    }
+
+    .panel p {
+      font-size: 14px;
+      line-height: 1.85;
+      color: var(--muted)
+    }
+
+    .number {
+      font-size: 34px;
+      line-height: 1.2;
+      font-weight: 800;
+      letter-spacing: -.055em;
+      color: var(--accent);
+      display: block;
+      margin: 4px 0 8px
+    }
+
+    .number small {
+      font-size: 17px;
+      letter-spacing: 0
+    }
+
+    .metric-label {
+      font-size: 13px;
+      color: var(--muted)
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 22px 0
+    }
+
+    .metrics .panel {
+      padding: 20px
+    }
+
+    .metrics .number {
+      font-size: 30px
+    }
+
+    .table-wrap {
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      margin: 22px 0;
+      overscroll-behavior-x: contain
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 13px;
+      line-height: 1.75
+    }
+
+    caption {
+      text-align: left;
+      padding: 15px 18px;
+      font-size: 12px;
+      color: var(--muted);
+      background: #fff;
+      font-weight: 650
+    }
+
+    th,
+    td {
+      padding: 14px 18px;
+      text-align: left;
+      vertical-align: middle;
+      border-bottom: 1px solid var(--line)
+    }
+
+    th {
+      background: #eef2f8;
+      color: #41546e;
+      font-size: 12px;
+      font-weight: 750
+    }
+
+    tbody tr:last-child td,
+    tbody tr:last-child th {
+      border-bottom: 0
+    }
+
+    td strong {
+      color: var(--ink)
+    }
+
+    tr.total td {
+      background: var(--soft);
+      font-weight: 800
+    }
+
+    td.num {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap
+    }
+
+    .compact th,
+    .compact td {
+      padding: 12px 15px
+    }
+
+    .numeric-table th:not(:first-child),
+    .numeric-table td:not(:first-child) {
+      text-align: right;
+      white-space: nowrap
+    }
+
+    .numeric-table td:first-child {
+      white-space: nowrap
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 11px;
+      margin: 24px 0
+    }
+
+    .flow>div {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: white;
+      padding: 18px 13px
+    }
+
+    .flow>div::after {
+      content: '›';
+      position: absolute;
+      right: -10px;
+      top: 41%;
+      font-size: 21px;
+      color: var(--accent);
+      z-index: 1
+    }
+
+    .flow>div:last-child::after {
+      display: none
+    }
+
+    .flow b {
+      font-size: 10px;
+      display: block;
+      color: var(--accent);
+      letter-spacing: .1em;
+      margin-bottom: 8px
+    }
+
+    .flow strong {
+      font-size: 13px;
+      display: block
+    }
+
+    .flow small {
+      font-size: 11px;
+      color: var(--muted);
+      display: block;
+      margin-top: 7px;
+      line-height: 1.65
+    }
+
+    .flow.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr))
+    }
+
+    .filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 20px 0
+    }
+
+    .filter {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 8px 14px;
+      border-radius: 30px
+    }
+
+    .filter[aria-pressed=true] {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white
+    }
+
+    .filter-count {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0 0 16px
+    }
+
+    .case {
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 16px;
+      margin-bottom: 14px;
+      overflow: hidden
+    }
+
+    .case[hidden] {
+      display: none
+    }
+
+    .case summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 17px;
+      padding: 24px
+    }
+
+    .case summary::-webkit-details-marker {
+      display: none
+    }
+
+    .case summary::after {
+      content: '+';
+      margin-left: auto;
+      color: var(--accent);
+      font-size: 23px;
+      line-height: 1.3;
+      flex-shrink: 0
+    }
+
+    .case[open] summary::after {
+      content: '−'
+    }
+
+    .case-no {
+      font-size: 12px;
+      background: var(--soft);
+      color: var(--accent);
+      border-radius: 9px;
+      min-width: 33px;
+      height: 33px;
+      display: grid;
+      place-items: center;
+      font-weight: 800
+    }
+
+    .case-title {
+      display: block;
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -.03em;
+      line-height: 1.55
+    }
+
+    .case-meta {
+      font-size: 11px;
+      color: var(--muted);
+      display: block;
+      margin-top: 7px
+    }
+
+    .case-body {
+      border-top: 1px solid var(--line);
+      padding: 22px 25px
+    }
+
+    .case-line {
+      display: grid;
+      grid-template-columns: 70px 1fr;
+      gap: 17px;
+      margin: 0 0 17px
+    }
+
+    .case-line:last-child {
+      margin: 0
+    }
+
+    .case-line>span {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--accent);
+      padding-top: 5px
+    }
+
+    .case-line p {
+      font-size: 14px;
+      line-height: 1.9
+    }
+
+    .case-body .outcome {
+      border-radius: 10px;
+      background: var(--soft);
+      padding: 14px 17px;
+      font-size: 13px;
+      margin-top: 10px
+    }
+
+    .detail {
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: #fff;
+      margin-top: 18px
+    }
+
+    .detail summary {
+      padding: 17px 20px;
+      font-size: 14px;
+      font-weight: 750;
+      cursor: pointer
+    }
+
+    .detail>div {
+      padding: 2px 20px 20px
+    }
+
+    .detail p {
+      font-size: 14px
+    }
+
+    .detail .table-wrap {
+      margin-bottom: 0
+    }
+
+    .code {
+      background: #102438;
+      color: #d2e3f4;
+      border-radius: 14px;
+      padding: 23px;
+      overflow: auto;
+      font: 12px/1.9 ui-monospace, SFMono-Regular, Consolas, monospace;
+      white-space: pre;
+      margin: 20px 0;
+      word-break: normal;
+      overflow-wrap: normal
+    }
+
+    .source-list {
+      display: grid;
+      gap: 11px
+    }
+
+    .source-item {
+      padding: 16px 19px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      font-size: 12px;
+      line-height: 1.9;
+      overflow-wrap: anywhere;
+      word-break: break-word
+    }
+
+    .source-item strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 4px
+    }
+
+    .source-item small {
+      display: block;
+      color: var(--muted);
+      font-size: 11px
+    }
+
+    .video-shell {
+      width: 100%;
+      min-width: 0;
+      position: relative;
+      aspect-ratio: 16/9;
+      min-height: 210px;
+      background: #081820;
+      border-radius: 19px;
+      overflow: hidden;
+      border: 1px solid #1d4551;
+      margin: 23px 0 16px
+    }
+
+    .video-shell iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0
+    }
+
+    .video-caption {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px
+    }
+
+    .video-caption p {
+      font-size: 12px;
+      color: var(--muted)
+    }
+
+    .timeline {
+      border-left: 2px solid var(--line);
+      margin: 23px 0 10px 7px;
+      padding-left: 26px
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 27px
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -32px;
+      top: 8px;
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 0 5px var(--bg)
+    }
+
+    .timeline-item time {
+      font-size: 11px;
+      letter-spacing: .08em;
+      color: var(--accent);
+      font-weight: 800
+    }
+
+    .timeline-item h3 {
+      margin: 5px 0 8px;
+      font-size: 17px
+    }
+
+    .timeline-item p {
+      font-size: 14px;
+      color: var(--muted)
+    }
+
+    .matrix td,
+    .matrix th {
+      text-align: center
+    }
+
+    .matrix td:first-child,
+    .matrix th:first-child {
+      text-align: left
+    }
+
+    .matrix .hit {
+      background: #e7f4ee;
+      color: #226149;
+      font-weight: 800
+    }
+
+    .matrix .miss {
+      background: #fff0e7;
+      color: #973e13;
+      font-weight: 800
+    }
+
+    .matrix tbody tr:nth-child(1) td:nth-child(2),
+    .matrix tbody tr:nth-child(2) td:nth-child(3),
+    .matrix tbody tr:nth-child(3) td:nth-child(4) {
+      background: #e7f4ee;
+      color: #226149;
+      font-weight: 800
+    }
+
+    .matrix tbody tr:nth-child(3) td:nth-child(2) {
+      background: #fff0e7;
+      color: #973e13;
+      font-weight: 800
+    }
+
+    .legend {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 11px
+    }
+
+    .legend span::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      background: var(--accent);
+      margin-right: 7px
+    }
+
+    .legend .other::before {
+      background: #acbdd9
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr) 30px;
+      align-items: center;
+      gap: 13px;
+      margin: 16px 0;
+      font-size: 12px
+    }
+
+    .bar-track {
+      height: 13px;
+      border-radius: 10px;
+      background: #edf2f8;
+      overflow: hidden
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 10px;
+      min-width: 2px
+    }
+
+    .bar-row strong {
+      text-align: right;
+      font-size: 12px
+    }
+
+    .score-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 22px 0
+    }
+
+    .score-box {
+      padding: 14px;
+      border-radius: 12px;
+      background: #fff;
+      border: 1px solid var(--line)
+    }
+
+    .score-box b {
+      font-size: 12px;
+      display: block
+    }
+
+    .score-box span {
+      font-size: 17px;
+      font-weight: 800;
+      display: block;
+      margin-top: 4px
+    }
+
+    .score-box small {
+      display: block;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 5px
+    }
+
+    .check-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 17px 0;
+      border-bottom: 1px solid var(--line)
+    }
+
+    .check-row:last-child {
+      border: 0
+    }
+
+    .check-mark {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      margin-top: 3px;
+      border: 1px solid #8fa8b2;
+      border-radius: 6px;
+      color: var(--accent);
+      font-size: 13px;
+      display: grid;
+      place-items: center
+    }
+
+    .check-row strong {
+      font-size: 14px
+    }
+
+    .check-row p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px
+    }
+
+    .related {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: #fff;
+      padding: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-top: 42px
+    }
+
+    .related small {
+      display: block;
+      font-size: 10px;
+      letter-spacing: .13em;
+      color: var(--muted);
+      margin-bottom: 7px
+    }
+
+    .related strong {
+      font-size: 19px;
+      letter-spacing: -.04em
+    }
+
+    .related>span {
+      font-size: 27px;
+      color: var(--accent)
+    }
+
+    .related:hover {
+      text-decoration: none;
+      background: var(--soft)
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0;
+      background: #fff
+    }
+
+    .footer-flex {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      color: var(--muted);
+      font-size: 11px
+    }
+
+    .top-button {
+      position: fixed;
+      bottom: 22px;
+      right: 22px;
+      width: 43px;
+      height: 43px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: var(--shadow);
+      color: var(--ink);
+      z-index: 30
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0
+    }
+
+    @media(min-width:1200px) {
+      .content {
+        max-width: 920px
+      }
+    }
+
+    @media(max-width:1050px) {
+      .hero-grid {
+        gap: 30px
+      }
+
+      .page-layout {
+        gap: 30px;
+        grid-template-columns: 170px minmax(0, 1fr)
+      }
+
+      .page-layout {
+        grid-template-columns: 170px minmax(0, 1fr)
+      }
+
+      .toc {
+        padding-left: 12px
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr
+      }
+
+      .card-grid.two {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .metrics {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .flow {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .flow>div::after {
+        display: none
+      }
+
+      .flow.three {
+        grid-template-columns: repeat(3, 1fr)
+      }
+
+      .score-row {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    @media(max-width:800px) {
+      .wrap {
+        width: calc(100% - 40px)
+      }
+
+      .hero {
+        padding-top: 37px
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding-bottom: 33px
+      }
+
+      .hero h1 {
+        font-size: 39px
+      }
+
+      .hero-board {
+        padding: 22px
+      }
+
+      .hero-lead {
+        font-size: 16px
+      }
+
+      .hero-foot>div {
+        padding: 17px 12px
+      }
+
+      .hero-foot strong {
+        display: block;
+        font-size: 23px
+      }
+
+      .hero-foot span {
+        font-size: 11px
+      }
+
+      .page-layout {
+        display: block;
+        padding: 22px 0 48px
+      }
+
+      .toc {
+        display: none
+      }
+
+      .mobile-toc {
+        display: block;
+        margin-bottom: 32px;
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: 12px
+      }
+
+      .mobile-toc summary {
+        padding: 14px 17px;
+        font-size: 13px;
+        font-weight: 750;
+        cursor: pointer
+      }
+
+      .mobile-toc nav {
+        padding: 0 17px 14px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px
+      }
+
+      .mobile-toc a {
+        font-size: 12px
+      }
+
+      .section h2 {
+        font-size: 25px
+      }
+
+      .section {
+        padding-bottom: 34px;
+        margin-bottom: 32px
+      }
+
+      .section p {
+        font-size: 14px
+      }
+
+      .meta-grid {
+        gap: 0 18px
+      }
+
+      .meta-grid dd {
+        font-size: 13px
+      }
+
+      .topbar .wrap {
+        min-height: 66px;
+        gap: 12px
+      }
+
+      .toplinks {
+        gap: 15px;
+        font-size: 12px
+      }
+
+      .plain-btn {
+        display: none
+      }
+
+      .card-grid.two {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .case summary {
+        padding: 19px 17px;
+        gap: 11px
+      }
+
+      .case-title {
+        font-size: 16px
+      }
+
+      .case-body {
+        padding: 18px
+      }
+
+      .case-line {
+        grid-template-columns: 1fr;
+        gap: 5px
+      }
+
+      .case-line>span {
+        padding: 0
+      }
+
+      .footer-flex {
+        flex-direction: column;
+        gap: 6px
+      }
+
+      .source {
+        font-size: 10px !important
+      }
+
+      .video-caption {
+        align-items: flex-start;
+        flex-direction: column
+      }
+
+      .numeric-table {
+        min-width: 480px
+      }
+    }
+
+    @media(max-width:560px) {
+      .wrap {
+        width: calc(100% - 32px)
+      }
+
+      .brand {
+        font-size: 17px
+      }
+
+      .menu-toggle {
+        display: block
+      }
+
+      .toplinks {
+        display: none;
+        position: absolute;
+        top: 65px;
+        left: 0;
+        right: 0;
+        background: #fff;
+        padding: 20px 24px;
+        box-shadow: 0 15px 25px #142f5515;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 19px;
+        border-bottom: 1px solid var(--line);
+        font-size: 14px
+      }
+
+      .toplinks.open {
+        display: flex
+      }
+
+      .hero h1 {
+        font-size: 32px
+      }
+
+      .hero-foot strong {
+        font-size: 20px
+      }
+
+      .hero-foot span {
+        font-size: 10px
+      }
+
+      .hero-foot small {
+        font-size: 10px
+      }
+
+      .board-node strong {
+        font-size: 21px
+      }
+
+      .meta-grid {
+        grid-template-columns: 1fr
+      }
+
+      .card-grid.two {
+        grid-template-columns: 1fr
+      }
+
+      .panel {
+        padding: 20px
+      }
+
+      .metrics .panel {
+        padding: 17px
+      }
+
+      .metrics .number {
+        font-size: 27px
+      }
+
+      .flow,
+      .flow.three {
+        grid-template-columns: 1fr
+      }
+
+      .flow>div {
+        padding: 16px
+      }
+
+      .flow>div strong {
+        font-size: 14px
+      }
+
+      .flow>div b {
+        margin-bottom: 4px
+      }
+
+      .flow>div small {
+        font-size: 12px;
+        margin-top: 4px
+      }
+
+      .hero-foot>div {
+        padding-right: 8px;
+        padding-left: 10px
+      }
+
+      .video-shell {
+        border-radius: 12px;
+        min-height: 205px
+      }
+
+      .note {
+        padding: 15px 17px;
+        font-size: 13px
+      }
+
+      .section h3 {
+        font-size: 18px
+      }
+
+      .btn {
+        padding: 10px 15px;
+        font-size: 13px
+      }
+
+      .related {
+        padding: 23px
+      }
+
+      .related strong {
+        font-size: 17px
+      }
+
+      .code {
+        font-size: 11px;
+        padding: 17px
+      }
+
+      .compare-table {
+        min-width: 580px
+      }
+
+      .source-item {
+        font-size: 11px
+      }
+
+      .top-button {
+        right: 14px;
+        bottom: 14px;
+        width: 38px;
+        height: 38px
+      }
+
+      th,
+      td {
+        padding: 12px 14px
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      html {
+        scroll-behavior: auto
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition: none !important;
+        animation: none !important
+      }
+    }
+
+    @media print {
+
+      .topbar,
+      .toc,
+      .mobile-toc,
+      .top-button,
+      .progress,
+      .actions,
+      .filters,
+      .related,
+      .video-shell,
+      .video-caption,
+      .print-hide {
+        display: none !important
+      }
+
+      body {
+        background: white;
+        font-size: 11pt
+      }
+
+      .wrap {
+        width: 100%
+      }
+
+      .hero {
+        background: white !important;
+        color: #111;
+        padding: 15px 0
+      }
+
+      .hero::before,
+      .hero-board {
+        display: none
+      }
+
+      .hero-grid {
+        display: block;
+        padding-bottom: 12px
+      }
+
+      .hero h1 {
+        font-size: 27pt;
+        color: #111
+      }
+
+      .hero h1 em,
+      .hero .eyebrow,
+      .hero-lead {
+        color: #333
+      }
+
+      .hero-foot {
+        color: #111;
+        border-color: #ccc
+      }
+
+      .hero-foot span,
+      .hero-foot small {
+        color: #333
+      }
+
+      .hero .chip {
+        color: #222;
+        border-color: #aaa
+      }
+
+      .page-layout {
+        display: block;
+        padding: 20px 0
+      }
+
+      .section {
+        break-inside: auto;
+        margin-bottom: 22px;
+        padding-bottom: 22px
+      }
+
+      .panel,
+      .case,
+      .table-wrap {
+        box-shadow: none;
+        break-inside: avoid
+      }
+
+      .section h2 {
+        font-size: 20pt
+      }
+
+      .section h3 {
+        font-size: 15pt
+      }
+
+      .section p {
+        font-size: 10pt
+      }
+
+      .content {
+        max-width: none
+      }
+
+      .table-wrap {
+        overflow: visible
+      }
+
+      table {
+        font-size: 9pt
+      }
+
+      .case-body {
+        display: block !important
+      }
+
+      .source {
+        color: #444 !important
+      }
+
+      .code {
+        white-space: pre-wrap;
+        overflow: visible;
+        background: #eee;
+        color: #111
+      }
+
+      .hero-foot>div {
+        padding: 10px
+      }
+
+      .card-grid {
+        grid-template-columns: repeat(3, 1fr)
+      }
+
+      .card-grid.two {
+        grid-template-columns: 1fr 1fr
+      }
+
+      a {
+        color: #222
+      }
+
+      .note {
+        background: #f0f0f0 !important
+      }
+
+      footer {
+        padding: 12px 0
+      }
+    }
+  </style>
+</head>
+
+<body class="ynv">
+  <a class="skip" href="#main">본문으로 건너뛰기</a>
+  <div class="progress" id="readingProgress" aria-hidden="true"></div>
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="/index.html#work"><span class="brand-mark" aria-hidden="true">M.</span>Migong0311</a>
+      <button class="menu-toggle" id="menuToggle" aria-controls="toplinks" aria-expanded="false">메뉴</button>
+      <nav class="toplinks" id="toplinks" aria-label="주요 메뉴"><a href="/index.html#work">전체 포트폴리오</a><a
+          href="ynv-plm-mes.html" aria-current="page">와이엔브이</a><a href="kyunghan-ai.html">경한코리아</a><button
+          class="plain-btn" data-print>인쇄</button></nav>
+    </div>
+  </header>
+  <div class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div><span class="eyebrow">FIELD WORK / 01 · MANUFACTURING SYSTEMS</span>
+          <div class="status-row"><span class="chip live">유지보수 진행 중</span><span class="chip">밸브 제조업</span></div>
+          <h1>와이엔브이(주)<br><em>PLM·MES</em><br>운영을 이해하고, 개선하다.</h1>
+          <p class="hero-lead">영업·기술연구·생산의 요청을<br>코드, 데이터, 문서의 변화로 연결합니다.<br>실제 유지보수 원장으로 기록한 문제 해결 과정입니다.</p>
+          <div class="actions"><a class="btn btn-primary" href="#cases">문제 해결 사례 보기 <span
+                aria-hidden="true">↗</span></a><a class="btn btn-ghost" href="#results">유지보수 실적</a></div>
+        </div>
+        <div class="hero-board" aria-label="영업, 기술연구, 생산 요청을 PLM과 MES의 데이터 및 문서 개선으로 연결하는 업무 범위">
+          <div class="board-top"><span>OPERATIONS / CONNECTED</span><span class="dots" aria-hidden="true">● ● ●</span>
+          </div>
+          <div class="board-row">
+            <div class="board-node"><strong>영업</strong><small>견적 · 수주</small></div>
+            <div class="board-node"><strong>기술연구</strong><small>설계 · 승인도</small></div>
+            <div class="board-node"><strong>생산</strong><small>지시 · 발주 · 출하</small></div>
+          </div>
+          <div class="board-label">↓ &nbsp; 업무 요청 · 원인 분석 &nbsp; ↓</div>
+          <div class="board-core">PLM &nbsp; ⇄ &nbsp; MES</div>
+          <div class="board-label">↓ &nbsp; 데이터와 문서의 일관성 &nbsp; ↓</div>
+          <div class="board-row">
+            <div class="board-node"><strong>조회</strong><small>Query & Mapping</small></div>
+            <div class="board-node"><strong>저장</strong><small>Logic & Revision</small></div>
+            <div class="board-node"><strong>출력</strong><small>Document & Report</small></div>
+          </div>
+          <div class="board-tags"><span>원인 추적</span><span>연계 개선</span><span>처리 이력</span></div>
+        </div>
+      </div>
+      <div class="hero-foot">
+        <div><strong>2</strong><span>운영 서비스</span><small>PLM · MES</small></div>
+        <div><strong>3</strong><span>요청 부서</span><small>영업 · 기술연구 · 생산</small></div>
+        <div><strong>125</strong><span>SR 대응 기록</span><small>첨부 원장의 고유 SR 기준</small></div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap page-layout">
+    <aside class="toc">
+      <div class="toc-title">ON THIS PAGE</div>
+      <nav aria-label="페이지 목차"><a href="#overview">01 프로젝트와 역할</a><a href="#scope">02 부서별 업무 범위</a><a href="#results">03
+          유지보수 실적</a><a href="#cases">04 문제 해결 사례</a><a href="#capabilities">05 기술 역량</a><a href="#evidence">06 결과와 검증
+          범위</a><a href="#sources">07 자료와 작성 기준</a></nav>
+      <div class="toc-meta">김미성 · 개발 포트폴리오<br>자료 기준: 2026.06–10 원장<br>기록: 2026.10.15</div>
+    </aside>
+    <main class="content" id="main">
+      <details class="mobile-toc">
+        <summary>이 페이지의 목차</summary>
+        <nav aria-label="모바일 목차"><a href="#overview">01 프로젝트와 역할</a><a href="#scope">02 부서별 업무 범위</a><a
+            href="#results">03 유지보수 실적</a><a href="#cases">04 문제 해결 사례</a><a href="#capabilities">05 기술 역량</a><a
+            href="#evidence">06 결과와 검증 범위</a><a href="#sources">07 자료와 작성 기준</a></nav>
+      </details>
+      <section class="section" id="overview">
+        <div class="section-head"><span class="eyebrow">01 / OVERVIEW</span>
+          <h2>운영 중인 서비스를 책임지는 일</h2>
+          <p>신규 구축이 아니라, 사용 중인 업무시스템의 오류 수정과 기능 개선 경험입니다.</p>
+        </div>
+        <p class="lead-copy">밸브 제조업체 <strong>와이엔브이(주)의 PLM과 MES 유지보수</strong>를 담당하고 있습니다. 영업·기술연구·생산 부서에서 의뢰하는 문제를 확인하고,
+          조회·계산·저장·출력과 시스템 간 데이터 연계를 수정합니다.</p>
+        <p>화면에서 나타나는 현상을 처리하는 데 그치지 않고, 승인도 생성 정보나 공통정보, 수주 데이터, 생산 문서까지 연결된 원인을 확인합니다. 실제 업무에서 필요한 값이 올바르게 저장되고 다음 화면과
+          출력물로 전달되도록 개선하는 것이 이 업무의 핵심입니다.</p>
+        <dl class="meta-grid">
+          <div>
+            <dt>대상 서비스</dt>
+            <dd>PLM · MES</dd>
+          </div>
+          <div>
+            <dt>나의 역할</dt>
+            <dd>요청 대응 · 원인 분석 · 오류 수정 · 기능 개선</dd>
+          </div>
+          <div>
+            <dt>유지보수 대상</dt>
+            <dd>화면 / 서비스 로직 / SQL·Mapper / 문서 출력</dd>
+          </div>
+          <div>
+            <dt>원장 수록 기간</dt>
+            <dd>2026.06.16 – 2026.10.13 · 접수일 기준</dd>
+          </div>
+          <div>
+            <dt>요청 부서</dt>
+            <dd>영업 · 기술연구 · 생산</dd>
+          </div>
+          <div>
+            <dt>개인 수행 근거</dt>
+            <dd>125건 모두 접수자·처리자가 김미성으로 기재</dd>
+          </div>
+        </dl>
+        <div class="note subtle">원장의 수록 기간은 <strong>프로젝트 전체 참여 기간이나 계약기간을 뜻하지 않습니다.</strong> 현재 유지보수 진행 여부는 본인의 설명을 기준으로
+          했으며, 단독 구축·기여도 100%로 표현하지 않았습니다.</div>
+        <p class="source"><a href="#sources">Y1 · TODO 목록.xlsx, Excel!A2:S126 / U1 · 업무 및 요청 부서 설명</a></p>
+      </section>
+      <section class="section" id="scope">
+        <div class="section-head"><span class="eyebrow">02 / BUSINESS CONTEXT</span>
+          <h2>부서의 언어를 시스템의 동작으로</h2>
+          <p>견적과 설계 정보가 생산 문서로 이어지는 흐름 안에서 유지보수합니다.</p>
+        </div>
+        <div class="card-grid">
+          <article class="panel"><span class="small-label">SALES</span>
+            <h3>영업 업무 지원</h3>
+            <p>견적·수주·데이터시트의 계산, 공급율·조건정보 저장, Revision, 견적서·밸브리스트 출력 등을 다룹니다.</p>
+          </article>
+          <article class="panel"><span class="small-label">ENGINEERING</span>
+            <h3>기술연구 업무 지원</h3>
+            <p>승인도 자동 생성, 모델별 Orifice·치수 매핑, 공통정보와 재질 BOM의 데이터 연결을 확인합니다.</p>
+          </article>
+          <article class="panel"><span class="small-label">PRODUCTION</span>
+            <h3>생산 업무 지원</h3>
+            <p>생산 접수 이후 비고·납기·재질 변경이 작업·조립지시서에 반영되도록 하고 발주·출하 문서 출력을 개선합니다.</p>
+          </article>
+        </div>
+        <div class="flow ">
+          <div><b>01</b><strong>견적·수주</strong><small>가격 · 조건정보 · Revision</small></div>
+          <div><b>02</b><strong>데이터시트</strong><small>사양 · 계산 · 모델 정보</small></div>
+          <div><b>03</b><strong>PLM 승인도</strong><small>도면 · 결재정보 · 공통정보</small></div>
+          <div><b>04</b><strong>작업·조립</strong><small>재질 · 비고 · 생산납기</small></div>
+          <div><b>05</b><strong>발주·출하</strong><small>거래처별 발주 · 출력물</small></div>
+        </div>
+        <div class="note subtle">위 분류와 흐름은 <strong>실제 요청의 업무 성격을 재구성한 범위도</strong>입니다. 원장에는 별도 부서 컬럼이 없어 부서별 건수나 요청자 소속을
+          추정하지 않았습니다. 실제 서버·API 배치도와도 구분합니다.</div>
+        <p class="source"><a href="#sources">Y1 · B열 제목, M열 요청 내용, S열 처리 내용 / U1 · 영업·기술연구·생산 요청 부서</a></p>
+      </section>
+      <section class="section" id="results">
+        <div class="section-head"><span class="eyebrow">03 / DELIVERY RECORD</span>
+          <h2>125건의 요청, 기록으로 보는 유지보수</h2>
+          <p>성과를 과장하지 않고 원장의 서비스 분류와 상태를 그대로 집계했습니다.</p>
+        </div>
+        <div class="metrics">
+          <div class="panel"><span class="number">109</span>
+            <div class="metric-label">MES 기록</div>
+          </div>
+          <div class="panel"><span class="number">16</span>
+            <div class="metric-label">PLM 기록</div>
+          </div>
+          <div class="panel"><span class="number">122</span>
+            <div class="metric-label">완료 기록</div>
+          </div>
+          <div class="panel"><span class="number">3</span>
+            <div class="metric-label">불가 기록</div>
+          </div>
+        </div>
+        <div class="card-grid two">
+          <div class="panel">
+            <h3>접수 월별 SR 건수</h3>
+            <div class="bar-row"><span>06월</span>
+              <div class="bar-track">
+                <div class="bar-fill" style="width:13.64%"></div>
+              </div><strong>9</strong>
+            </div>
+            <div class="bar-row"><span>07월</span>
+              <div class="bar-track">
+                <div class="bar-fill" style="width:100.00%"></div>
+              </div><strong>66</strong>
+            </div>
+            <div class="bar-row"><span>08월</span>
+              <div class="bar-track">
+                <div class="bar-fill" style="width:36.36%"></div>
+              </div><strong>24</strong>
+            </div>
+            <div class="bar-row"><span>09월</span>
+              <div class="bar-track">
+                <div class="bar-fill" style="width:36.36%"></div>
+              </div><strong>24</strong>
+            </div>
+            <div class="bar-row"><span>10월</span>
+              <div class="bar-track">
+                <div class="bar-fill" style="width:3.03%"></div>
+              </div><strong>2</strong>
+            </div>
+            <p class="source">단위: 건 · 2026년 · 접수일 기준</p>
+          </div>
+          <div class="panel">
+            <h3>집계 기준</h3>
+            <p><strong>고유 SR 번호 1개를 1건</strong>으로 계산했습니다. MES에 등록된 PLM 연계 요청도 원장의 System 구분을 유지했습니다.</p>
+            <p>MES는 완료 106건·불가 3건, PLM은 완료 16건입니다. 유사 요청과 후속 수정은 별도 SR로 존재하므로 122개의 서로 다른 근본 원인을 제거했다는 뜻은 아닙니다.</p>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="compact">
+            <caption>2026년 월별 유지보수 원장 집계</caption>
+            <thead>
+              <tr>
+                <th scope="col">접수 월</th>
+                <th scope="col">MES</th>
+                <th scope="col">PLM</th>
+                <th scope="col">전체</th>
+                <th scope="col">완료 / 불가</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2026-06</td>
+                <td>9건</td>
+                <td>0건</td>
+                <td>9건</td>
+                <td>9 / 0</td>
+              </tr>
+              <tr>
+                <td>2026-07</td>
+                <td>59건</td>
+                <td>7건</td>
+                <td>66건</td>
+                <td>63 / 3</td>
+              </tr>
+              <tr>
+                <td>2026-08</td>
+                <td>19건</td>
+                <td>5건</td>
+                <td>24건</td>
+                <td>24 / 0</td>
+              </tr>
+              <tr>
+                <td>2026-09</td>
+                <td>21건</td>
+                <td>3건</td>
+                <td>24건</td>
+                <td>24 / 0</td>
+              </tr>
+              <tr>
+                <td>2026-10</td>
+                <td>1건</td>
+                <td>1건</td>
+                <td>2건</td>
+                <td>2 / 0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note subtle">이 파일에는 진행 중 상태 행이 없지만, 이를 <strong>현재 미처리 요청 0건 또는 유지보수 종료</strong>로 해석하지 않습니다. ‘불가’는 당시
+          원장의 분류이며 후속 개발 완료 여부와 별도로 관리합니다. 접수일·처리일만으로 실제 대응시간이나 SLA를 계산하지 않았습니다.</div>
+        <p class="source"><a href="#sources">Y1 · Excel!A2:A126 고유 SR, E2:E126 System, H2:H126 접수일, Q2:Q126 상태</a></p>
+      </section>
+      <section class="section" id="cases">
+        <div class="section-head"><span class="eyebrow">04 / ENGINEERING CASES</span>
+          <h2>화면의 현상에서 데이터의 원인까지</h2>
+          <p>사례 제목을 선택하면 문제·원인·수정 내용을 펼쳐 볼 수 있습니다.</p>
+        </div>
+        <div class="filters" role="group" aria-label="대표 사례 분류"><button class="filter" data-filter="all"
+            aria-pressed="true">전체</button><button class="filter" data-filter="link" aria-pressed="false">PLM·MES
+            연계</button><button class="filter" data-filter="data" aria-pressed="false">성능·데이터</button><button
+            class="filter" data-filter="production" aria-pressed="false">생산·출력</button><button class="filter"
+            data-filter="input" aria-pressed="false">입력·계산</button></div>
+        <div class="filter-count" id="caseCount" role="status">8개의 대표 사례</div>
+        <details class="case" data-case data-category="link" open>
+          <summary><span class="case-no">01</span><span><span class="case-title">비활성화된 승인도 버튼에서 PLM 결재자 정보까지
+                역추적</span><span class="case-meta">SR2610-0001 · MES 등록 · 2026.09.30 · 완료</span></span></summary>
+          <div class="case-body">
+            <div class="case-line"><span>문제</span>
+              <p>견적·수주 상세에서 승인도는 출력되지만, 승인도 확인 버튼은 활성화되지 않았습니다.</p>
+            </div>
+            <div class="case-line"><span>원인·맥락</span>
+              <p>MES는 PLM 결재자가 NULL이면 버튼을 비활성화하도록 되어 있었습니다. PLM 승인도 생성 메서드의 하드코딩된 사번이 변경된 사번과 맞지 않아 결재자 조회 결과가 NULL이 되는
+                상황이 확인됐습니다.</p>
+            </div>
+            <div class="case-line"><span>수정 내용</span>
+              <p>변경된 사번을 조회 파라미터에 반영하고, 이미 결재자 정보가 NULL로 저장된 데이터는 DB에 보완했습니다.</p>
+            </div>
+            <div class="outcome">화면 버튼만 강제로 활성화하지 않고, 연결된 시스템의 원천 데이터까지 따라가 문제를 수정한 사례입니다.</div>
+            <p class="source"><a href="#sources">Y1 · Excel!M4:S4</a></p>
+          </div>
+        </details>
+        <details class="case" data-case data-category="link" open>
+          <summary><span class="case-no">02</span><span><span class="case-title">Orifice 복수 매핑과 승인도 자동 생성 지연
+                대응</span><span class="case-meta">SR2609-0983 · PLM · 2026.09.17 · 완료</span></span></summary>
+          <div class="case-body">
+            <div class="case-line"><span>문제</span>
+              <p>평균 1분 내외로 생성되던 승인도가 간헐적으로 10분 이상 지연됐고, Orifice(dt)가 두 가지인 모델에서는 자동 생성이 되지 않았습니다.</p>
+            </div>
+            <div class="case-line"><span>원인·맥락</span>
+              <p>처리기록에는 psig 압력단위 변환 시 Orifice 복수 매핑·오선택과 상위 Base Size 연결 문제에 대한 수정이 기재되어 있습니다.</p>
+            </div>
+            <div class="case-line"><span>수정 내용</span>
+              <p>GetOrificeListWithMes 조회 조건을 정제하고 상위 Base Size와 1:1 매핑을 적용했습니다. upperSeq를 우선 검증하도록 하여 데이터 불일치와 스케줄러 반복
+                오류를 방지하는 처리를 반영했습니다.</p>
+            </div>
+            <div class="outcome">밸브 모델·압력단위·상위 규격의 관계를 함께 다뤘습니다. 다만 수정 후 평균·최대 생성시간 수치는 원장에 없어, “항상 1분 이내” 등의 성과로 표현하지
+              않습니다.</div>
+            <p class="source"><a href="#sources">Y1 · Excel!M8:S8</a></p>
+          </div>
+        </details>
+        <details class="case" data-case data-category="data" open>
+          <summary><span class="case-no">03</span><span><span class="case-title">주요 조회 쿼리와 사양서 커버 생성의 반복 비용
+                개선</span><span class="case-meta">SR2609-0984 · MES · 2026.09.18 · 완료</span></span></summary>
+          <div class="case-body">
+            <div class="case-line"><span>문제</span>
+              <p>MES의 조회·저장·처리 지연이 사용 부서의 업무 속도에 영향을 주고 있었습니다.</p>
+            </div>
+            <div class="case-line"><span>원인·맥락</span>
+              <p>처리기록에는 수주현황·성적서·출하지시 조회 쿼리 개선과, 품목마다 반복되던 사양서 커버 복제 로직 정리가 함께 남아 있습니다.</p>
+            </div>
+            <div class="case-line"><span>수정 내용</span>
+              <p>주요 조회 쿼리를 개선하고, 사양서 커버 복제를 루프 시작 전 1회 수행하도록 변경했습니다. Revision의 Hull No. 복사 누락, 견적→수주 전환 실패 메시지, 유니크 키 중복
+                충돌도 함께 보완했습니다.</p>
+            </div>
+            <div class="outcome"><strong>주요 조회의 평균 시간 60% 이상 단축</strong>이 원장에 기록되어 있습니다. 전체 서비스의 성능 향상률이 아니며, 전후
+              SQL·데이터량·측정 로그는 별도 증빙이 필요합니다.</div>
+            <p class="source"><a href="#sources">Y1 · Excel!M7:S7</a></p>
+          </div>
+        </details>
+        <details class="case" data-case data-category="data">
+          <summary><span class="case-no">04</span><span><span class="case-title">수주확정 BOM 처리와 동시처리 문제 개선</span><span
+                class="case-meta">SR2609-0484 · MES · 원장 상태: 완료</span></span></summary>
+          <div class="case-body">
+            <div class="case-line"><span>문제</span>
+              <p>수주확정 시 DEADLOCK 문제가 요청 내용에 포함되어 있었습니다.</p>
+            </div>
+            <div class="case-line"><span>원인·맥락</span>
+              <p>수주확정 과정의 BOM 처리가 동시처리 개선 대상으로 기록되어 있습니다. 다만 정확한 잠금 순서·격리 수준·트랜잭션 경계는 이 원장에 없습니다.</p>
+            </div>
+            <div class="case-line"><span>수정 내용</span>
+              <p>SP_CONFIRM_ODR_BOM 저장 프로시저를 통한 수주확정 BOM 처리와 동시처리 개선이 처리 내용에 기재되어 있습니다.</p>
+            </div>
+            <div class="outcome">화면 기능뿐 아니라 수주확정 시 DB 처리까지 유지보수한 사례입니다. 특정 잠금 전략이나 DEADLOCK 재발률 0%를 임의로 성과에 추가하지 않습니다.
+            </div>
+            <p class="source"><a href="#sources">Y1 · Excel!M51:S51</a></p>
+          </div>
+        </details>
+        <details class="case" data-case data-category="production">
+          <summary><span class="case-no">05</span><span><span class="case-title">생산 접수 이후에도 비고·납기·재질을 문서에 반영</span><span
+                class="case-meta">SR2609-0982 / SR2609-0513 · MES · 완료</span></span></summary>
+          <div class="case-body">
+            <div class="case-line"><span>문제</span>
+              <p>생산 접수 이후 비고나 생산납기를 변경해도 작업·조립지시서가 이전 정보를 표시하는 문제가 있었습니다. LSV·HSV 계열의 재질 표시 기준도 수정 요청됐습니다.</p>
+            </div>
+            <div class="case-line"><span>원인·맥락</span>
+              <p>화면에서 수정되는 수주 정보와 문서 생성·출력에 사용하는 데이터 연결을 함께 확인해야 하는 요구였습니다.</p>
+            </div>
+            <div class="case-line"><span>수정 내용</span>
+              <p>LSV·HSV 모델 조건에서는 BONNET 재질을 표시하도록 서비스 로직을 변경했습니다. 상세 비고 수정 시 작업지시서의 특이사항을 갱신하도록 연계했고, 생산납기 변경의 조립지시서
+                반영도 처리했습니다.</p>
+            </div>
+            <div class="outcome">수주 관리의 변경사항이 생산 현장에서 사용하는 문서까지 이어지도록 연결한 사례입니다.</div>
+            <p class="source"><a href="#sources">Y1 · Excel!M9:S9, M22:S22</a></p>
+          </div>
+        </details>
+        <details class="case" data-case data-category="production">
+          <summary><span class="case-no">06</span><span><span class="case-title">같은 거래처의 여러 재질을 하나의 발주서로 통합</span><span
+                class="case-meta">SR2610-0002 · MES · 2026.10.07 · 완료</span></span></summary>
+          <div class="case-body">
+            <div class="case-line"><span>문제</span>
+              <p>동일 거래처에 발주하는 여러 재질도 각각 따로 출력해야 했습니다.</p>
+            </div>
+            <div class="case-line"><span>원인·맥락</span>
+              <p>실제 발주 업무는 거래처 단위로 묶이지만, 기존 기능은 개별 발주서 다운로드 중심이었습니다.</p>
+            </div>
+            <div class="case-line"><span>수정 내용</span>
+              <p>같은 거래처의 발주 항목을 선택하면 하나의 발주서로 출력하도록 개선했습니다. 서로 다른 거래처를 함께 선택하면 출력을 제한하고, 기존 개별 다운로드 기능은 유지했습니다.</p>
+            </div>
+            <div class="outcome">기존 사용 방식을 없애지 않으면서 거래처별 통합 출력 경로를 추가했습니다. 과거 유사 요청의 “불가” 기록과 이번 완료 기록은 별도 이력으로 구분합니다.
+            </div>
+            <p class="source"><a href="#sources">Y1 · Excel!M3:S3 / 유사 과거 요청 M90:S90</a></p>
+          </div>
+        </details>
+        <details class="case" data-case data-category="link">
+          <summary><span class="case-no">07</span><span><span class="case-title">밸브 모델별 치수와 재질 BOM의 매핑 차이 반영</span><span
+                class="case-meta">SR2610-0003 / SR2609-0985 · PLM · 완료</span></span></summary>
+          <div class="case-body">
+            <div class="case-line"><span>문제</span>
+              <p>AFSV 승인도에서 T와 f1이 각각 나와야 하는데 T−f1로 계산됐고, DPRE3 공통정보의 Return Spring 재질 매핑도 누락됐습니다.</p>
+            </div>
+            <div class="case-line"><span>원인·맥락</span>
+              <p>모델 간 공통 로직을 그대로 적용했을 때 각 모델의 개별 출력·재질 규칙과 맞지 않는 부분이 있었습니다.</p>
+            </div>
+            <div class="case-line"><span>수정 내용</span>
+              <p>AFSV는 T−f1 계산 부분을 주석 처리하여 DB에 저장된 T값을 그대로 출력하도록 변경했습니다. DPRE3의 Return Spring은 요청된 Spring 재질 데이터와 동일하게
+                받도록 서비스·HTML 매핑을 반영했습니다.</p>
+            </div>
+            <div class="outcome">밸브 제조 도메인의 모델별 예외를 파악하고, 공통정보와 출력물이 일치하도록 수정한 사례입니다.</div>
+            <p class="source"><a href="#sources">Y1 · Excel!M2:S2, M6:S6</a></p>
+          </div>
+        </details>
+        <details class="case" data-case data-category="input">
+          <summary><span class="case-no">08</span><span><span class="case-title">0 입력값과 계산·표시 조건을 일관되게 처리</span><span
+                class="case-meta">SR2609-0986 / SR2609-0981 · MES · 완료</span></span></summary>
+          <div class="case-body">
+            <div class="case-line"><span>문제</span>
+              <p>공급율을 0으로 입력하면 값이 화면에서 사라지고 금액에 반영되지 않았습니다. 감압밸브 데이터시트의 환산값·단위·표시 조건에도 오류가 있었습니다.</p>
+            </div>
+            <div class="case-line"><span>원인·맥락</span>
+              <p>유효한 0 입력과 미입력 처리, 화면과 서비스 계산 방어 로직, 모델별 출력 조건을 구분해야 했습니다.</p>
+            </div>
+            <div class="case-line"><span>수정 내용</span>
+              <p>HTML·서비스에서 공급율 0의 입력 및 계산 제한을 수정했습니다. 별도 요청에서는 P2 환산·Delta P 계산과 Design Pressure·Hydrostatic Test 표시,
+                단위 누락·중복 조회 조건을 보완했습니다.</p>
+            </div>
+            <div class="outcome">입력값이 저장·계산·출력까지 같은 의미로 유지되도록 개선했습니다. 표준식의 적합성을 별도로 인증하거나 검증했다는 의미는 아닙니다.</div>
+            <p class="source"><a href="#sources">Y1 · Excel!M5:S5, M10:S10</a></p>
+          </div>
+        </details>
+        <details class="detail">
+          <summary>추가 기록 · 기존 코드값과 직접입력 TEXT의 하위 호환</summary>
+          <div>
+            <p>SR2609-0511의 요청 상세에는 견적 조건정보의 직접입력, TEXT 우선 표시와 기존 CODE_SEQ 코드명 fallback, Revision·수주전환·견적서 출력 연계가 상세하게
+              정리되어 있습니다.</p>
+            <p>상태는 완료이지만 처리 내용은 중복 조회·저장 조건 수정으로 짧게 기록되어 있어, <strong>요청 상세 전체를 개별 검증 완료 성과로 단정하지 않았습니다.</strong> 코드 변경
+              이력과 테스트 결과를 연결하면 추가 사례로 보완할 수 있습니다.</p>
+            <p class="source"><a href="#sources">Y1 · Excel!M24:S24</a></p>
+          </div>
+        </details>
+      </section>
+      <section class="section" id="capabilities">
+        <div class="section-head"><span class="eyebrow">05 / ROLE & CAPABILITIES</span>
+          <h2>이 업무에서 쌓고 있는 개발 역량</h2>
+          <p>원장에 실제로 드러난 작업 범위를 기준으로 정리했습니다.</p>
+        </div>
+        <div class="card-grid two">
+          <article class="panel"><span class="small-label">01 · TRACE</span>
+            <h3>시스템 간 원인 추적</h3>
+            <p>MES에서 보이는 오류를 PLM 결재정보·공통정보·사양 데이터까지 따라가며 확인합니다. 화면, 서비스, DB 조회와 출력의 연결 관계를 다룹니다.</p>
+          </article>
+          <article class="panel"><span class="small-label">02 · DATA</span>
+            <h3>조회·저장·동시처리 개선</h3>
+            <p>조회 조건과 매핑, 유니크 키 충돌, Revision 데이터 복사, 수주확정 BOM 처리 등 운영 데이터의 일관성을 개선합니다.</p>
+          </article>
+          <article class="panel"><span class="small-label">03 · DOMAIN</span>
+            <h3>밸브 제조 업무 규칙 반영</h3>
+            <p>Orifice, Base Size, 압력단위, 모델별 치수·재질처럼 제조 도메인의 조건을 이해하고 모델별 예외를 처리합니다.</p>
+          </article>
+          <article class="panel"><span class="small-label">04 · COMPATIBILITY</span>
+            <h3>기존 기능을 유지하는 확장</h3>
+            <p>통합 발주서를 추가하면서 개별 다운로드를 유지하는 등 기존 업무 경로와 새로운 요청을 함께 고려합니다.</p>
+          </article>
+        </div>
+        <div class="note subtle"><strong>자료에서 확인되는 기술 작업:</strong> HTML, 서비스 로직, SQL·Mapper, 저장 프로시저, 문서 생성·출력.
+          언어·프레임워크·DBMS의 정확한 제품명과 버전은 이 원장만으로 확정하지 않았습니다.</div>
+        <p class="source"><a href="#sources">Y1 · 대표 사례의 처리 내용(S열), SR2609-0511 요청 상세(M24)</a></p>
+      </section>
+      <section class="section" id="evidence">
+        <div class="section-head"><span class="eyebrow">06 / IMPACT & EVIDENCE</span>
+          <h2>결과와 검증 범위를 함께 기록합니다</h2>
+          <p>기능 수정 기록, 정량 성과, 추가 증빙이 필요한 내용을 구분합니다.</p>
+        </div>
+        <div class="table-wrap">
+          <table class="">
+            <thead>
+              <tr>
+                <th scope="col">항목</th>
+                <th scope="col">확인 가능한 결과</th>
+                <th scope="col">기록의 범위</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>유지보수 대응</td>
+                <td>고유 SR 125건 / 완료 122건</td>
+                <td>첨부 원장 집계. 모든 요청의 전체 모집단이라고 단정하지 않음</td>
+              </tr>
+              <tr>
+                <td>주요 조회 성능</td>
+                <td>평균 조회 시간 60% 이상 단축 기록</td>
+                <td>특정 조회 대상에 대한 처리기록. 전후 측정 로그는 별도</td>
+              </tr>
+              <tr>
+                <td>승인도 자동 생성</td>
+                <td>Orifice 매핑·반복 오류·지연 관련 수정</td>
+                <td>수정 후 평균·최대 생성시간과 재발률 미제시</td>
+              </tr>
+              <tr>
+                <td>생산 문서 연계</td>
+                <td>비고·납기·재질의 문서 반영 수정</td>
+                <td>사용자 검수 화면·출력물은 추가 증빙 대상</td>
+              </tr>
+              <tr>
+                <td>발주서 출력</td>
+                <td>동일 거래처 통합 출력 + 기존 다운로드 유지</td>
+                <td>정량 업무시간 절감 수치는 원장에 없음</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>계속 이어갈 기록</h3>
+        <div class="check-row"><span class="check-mark" aria-hidden="true">＋</span>
+          <div><strong>성능 개선의 재현 근거</strong>
+            <p>변경 전후 SQL, 같은 조회 조건, 데이터 건수, 응답시간을 함께 보관합니다.</p>
+          </div>
+        </div>
+        <div class="check-row"><span class="check-mark" aria-hidden="true">＋</span>
+          <div><strong>수정 후 정상 동작 확인</strong>
+            <p>재현 절차와 수정 전후 화면·출력물을 같은 SR에 연결합니다.</p>
+          </div>
+        </div>
+        <div class="check-row"><span class="check-mark" aria-hidden="true">＋</span>
+          <div><strong>반복·후속 요청 연결</strong>
+            <p>기존 SR과 후속 개선을 연결하여 완료·불가·추가 개발 이력을 구분합니다.</p>
+          </div>
+        </div>
+        <p class="source"><a href="#sources">Y1 · 집계 및 사례 근거 / “계속 이어갈 기록”은 포트폴리오 보완을 위한 제안</a></p>
+      </section>
+      <section class="section" id="sources">
+        <div class="section-head"><span class="eyebrow">07 / SOURCE NOTES</span>
+          <h2>자료와 작성 기준</h2>
+          <p>개인정보와 내부 업무 데이터의 원문 공개 대신, 근거 위치를 남깁니다.</p>
+        </div>
+        <div class="source-list">
+          <div class="source-item" id="source-y1"><strong>Y1 · TODO 목록.xlsx</strong>Excel 시트 · 헤더 1행, 데이터 2–126행.<br>SR
+            번호(A), System(E), 접수일(H), 접수자(J), 요청 내용(M), 처리자(O), 처리일(P), 상태(Q), 처리 내용(S).<small>첨부 파일 직접 집계 · 중복 없는 SR
+              125건 · 원장 최신 접수일 2026.10.13</small></div>
+          <div class="source-item"><strong>U1 · 본인의 업무 설명</strong>와이엔브이(주)는 밸브 제조업체이며 현재 PLM·MES를 운영하고, 영업·기술연구·생산에서
+            유지보수를 의뢰합니다.<small>현재 담당 업무 소개의 기준</small></div>
+        </div>
+        <p class="source">작성일: 2026.10.15. 요청자 개인명, 사번, 거래처, 특정 견적·수주번호, 원본 첨부파일은 이 공개 페이지에 포함하지 않았습니다. 내용은 원장의 기록이며
+          소스코드 실행·실제 운영 상태를 별도로 검증한 결과는 아닙니다.</p>
+      </section>
+      <a class="related" href="kyunghan-ai.html">
+        <div><small>EXPLORE ANOTHER PROJECT</small><strong>경한코리아 AI실증 · CNC 공구 이상탐지</strong></div><span
+          aria-hidden="true">↗</span>
+      </a>
+    </main>
+  </div>
+  <footer>
+    <div class="wrap footer-flex"><span>© 2026 김미성 · Migong0311 / Engineering Portfolio</span><span>자료에 기록된 구현·성과·검증 범위를
+        구분합니다.</span></div>
+  </footer>
+  <button class="top-button" id="backToTop" aria-label="맨 위로 이동">↑</button>
+  <script>
+    (() => {
+      'use strict';
+      const menu = document.getElementById('menuToggle');
+      const nav = document.getElementById('toplinks');
+      if (menu && nav) {
+        menu.addEventListener('click', () => {
+          const open = nav.classList.toggle('open');
+          menu.setAttribute('aria-expanded', String(open));
+        });
+        nav.addEventListener('click', e => { if (e.target.closest('a')) { nav.classList.remove('open'); menu.setAttribute('aria-expanded', 'false'); } });
+      }
+      const progress = document.getElementById('readingProgress');
+      let pending = false;
+      function updateProgress() {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        progress.style.width = (max > 0 ? Math.min(100, scrollY / max * 100) : 0) + '%';
+        pending = false;
+      }
+      addEventListener('scroll', () => { if (!pending) { pending = true; requestAnimationFrame(updateProgress); } }, { passive: true });
+      addEventListener('resize', updateProgress); updateProgress();
+      const links = [...document.querySelectorAll('.toc a[href^="#"]')];
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              links.forEach(a => { const active = a.hash === '#' + entry.target.id; a.classList.toggle('active', active); if (active) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); });
+            }
+          });
+        }, { rootMargin: '-10% 0px -65% 0px', threshold: 0 });
+        document.querySelectorAll('main .section[id]').forEach(el => observer.observe(el));
+      }
+      document.querySelectorAll('[data-filter]').forEach(button => {
+        button.addEventListener('click', () => {
+          const filter = button.dataset.filter;
+          document.querySelectorAll('[data-filter]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
+          let shown = 0;
+          document.querySelectorAll('[data-case]').forEach(card => { card.hidden = filter !== 'all' && card.dataset.category !== filter; if (!card.hidden) shown++; });
+          const label = document.getElementById('caseCount'); if (label) label.textContent = shown + '개의 대표 사례';
+        });
+      });
+      document.querySelectorAll('[data-video-play]').forEach(button => {
+        button.addEventListener('click', () => {
+          const iframe = document.getElementById('demoPlayer');
+          if (!iframe) return;
+          const url = new URL(iframe.src); url.searchParams.set('autoplay', '1'); iframe.src = url.toString();
+          document.getElementById('demo').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+          document.getElementById('videoStatus').textContent = '재생을 요청했습니다. 시작되지 않으면 플레이어의 재생 버튼 또는 YouTube에서 보기를 선택하세요.';
+        });
+      });
+      const localHint = document.getElementById('localVideoHint');
+      if (localHint && location.protocol === 'file:') localHint.hidden = false;
+      document.getElementById('backToTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }));
+      document.querySelectorAll('[data-print]').forEach(b => b.addEventListener('click', () => window.print()));
+      let beforePrint = [];
+      addEventListener('beforeprint', () => { beforePrint = [...document.querySelectorAll('details')].map(d => [d, d.open]); beforePrint.forEach(([d]) => d.open = true); });
+      addEventListener('afterprint', () => beforePrint.forEach(([d, open]) => d.open = open));
+    })();
+  </script>
+</body>
+
+</html>
